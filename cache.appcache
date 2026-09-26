@@ -21,6 +21,8 @@ patches/1300.bin
 patches/1302.bin
 patches/1350.bin
 patches/1352.bin
+core.js?v=10
+jb.js?v=10
 
 NETWORK:
 *
