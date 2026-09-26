@@ -38,7 +38,6 @@
             overflow: hidden;
         }
 
-
         /* MAIN */
 
         #main-container {
@@ -83,6 +82,9 @@
 
         #brand span {
             color: #4d8dff;
+
+            transition:
+                color 0.3s ease;
         }
 
         #subtitle {
@@ -170,6 +172,10 @@
             border-color: rgba(245, 197, 66, 0.45);
         }
 
+        body.done #brand span {
+            color: #f5c542;
+        }
+
         body.done .pulse {
             border-color: #f5c542;
             animation: none;
@@ -197,7 +203,10 @@
 
         body.fail #main-container {
             border-color: rgba(255, 92, 92, 0.4);
+        }
 
+        body.fail #brand span {
+            color: #ff5c5c;
         }
 
         body.fail .pulse {
@@ -208,7 +217,6 @@
 
         body.fail .core {
             background: #ff5c5c;
-
         }
 
         body.fail #spin {
