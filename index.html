@@ -29,6 +29,26 @@
             justify-content: center;
             overflow: hidden;
             cursor: pointer;
+
+            /* Bloqueia seleção de texto */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+            /* Evita menu de seleção em alguns navegadores */
+            -webkit-touch-callout: none;
+        }
+
+        img {
+            -webkit-user-drag: none;
+            user-drag: none;
+            pointer-events: none;
+        }
+
+        button {
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .container {
@@ -139,6 +159,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
+
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .icon-button:hover {
@@ -148,6 +171,7 @@
         .icon-button svg {
             width: 20px;
             height: 20px;
+            pointer-events: none;
         }
 
         .modal {
@@ -185,7 +209,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             margin-bottom: 20px;
         }
 
@@ -250,6 +273,7 @@
         }
 
         @media (max-width: 430px) {
+
             .container {
                 padding: 32px 22px;
             }
@@ -257,13 +281,12 @@
             .firmware-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
         }
     </style>
 </head>
 
 <body>
-
-    <!-- BOTÕES SUPERIORES -->
 
     <div class="top-buttons">
 
@@ -340,7 +363,7 @@
     </div>
 
 
-    <!-- CONTEÚDO -->
+    <!-- CONTEÚDO PRINCIPAL -->
 
     <div class="container">
 
@@ -467,6 +490,42 @@
         }
 
 
+        /*
+         * IDENTIFICA O TIPO DE DISPOSITIVO
+         */
+
+        function detectDevice() {
+
+            var ua =
+                navigator.userAgent || "";
+
+            if (
+                /PlayStation 4/i.test(ua) ||
+                /PlayStation 4 Pro/i.test(ua)
+            ) {
+
+                return "PS4";
+
+            }
+
+            if (
+                /Android/i.test(ua) ||
+                /iPhone|iPad|iPod/i.test(ua)
+            ) {
+
+                return "celular/tablet";
+
+            }
+
+            return "computador";
+
+        }
+
+
+        /*
+         * DETECÇÃO DO FIRMWARE
+         */
+
         function detectFirmware() {
 
             var ua =
@@ -502,6 +561,7 @@
                     var minor =
                         parseInt(match[2], 10);
 
+
                     if (
                         !isNaN(major) &&
                         !isNaN(minor)
@@ -516,8 +576,11 @@
                             );
 
                         break;
+
                     }
+
                 }
+
             }
 
 
@@ -527,6 +590,7 @@
                     "Firmware: " + firmware,
                     "info"
                 );
+
 
                 if (SUPPORTED[firmware]) {
 
@@ -589,15 +653,18 @@
 
         document
             .getElementById("infoBtn")
-            .addEventListener("click", function(event) {
+            .addEventListener(
+                "click",
+                function(event) {
 
-                event.stopPropagation();
+                    event.stopPropagation();
 
-                document
-                    .getElementById("infoModal")
-                    .classList.add("show");
+                    document
+                        .getElementById("infoModal")
+                        .classList.add("show");
 
-            });
+                }
+            );
 
 
         /*
@@ -606,37 +673,43 @@
 
         document
             .getElementById("closeModal")
-            .addEventListener("click", function(event) {
+            .addEventListener(
+                "click",
+                function(event) {
 
-                event.stopPropagation();
-
-                document
-                    .getElementById("infoModal")
-                    .classList.remove("show");
-
-            });
-
-
-        /*
-         * CLIQUE FORA DO CONTEÚDO DO MODAL
-         */
-
-        document
-            .getElementById("infoModal")
-            .addEventListener("click", function(event) {
-
-                if (
-                    event.target ===
-                    document.getElementById("infoModal")
-                ) {
+                    event.stopPropagation();
 
                     document
                         .getElementById("infoModal")
                         .classList.remove("show");
 
                 }
+            );
 
-            });
+
+        /*
+         * FECHAR CLICANDO FORA
+         */
+
+        document
+            .getElementById("infoModal")
+            .addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target ===
+                        document.getElementById("infoModal")
+                    ) {
+
+                        document
+                            .getElementById("infoModal")
+                            .classList.remove("show");
+
+                    }
+
+                }
+            );
 
 
         /*
@@ -645,60 +718,149 @@
 
         document
             .getElementById("cacheBtn")
-            .addEventListener("click", function(event) {
+            .addEventListener(
+                "click",
+                function(event) {
 
-                event.stopPropagation();
+                    event.stopPropagation();
 
-                location.href = "cache.html";
+                    location.href = "cache.html";
 
-            });
+                }
+            );
 
 
         /*
          * CLIQUE NA ÁREA PRINCIPAL
          *
-         * Qualquer clique fora dos botões e do modal
-         * abre a página do desbloqueio (jb).
+         * Vai para a página de desbloqueio.
          */
 
-        document.addEventListener("click", function(event) {
+        document.addEventListener(
+            "click",
+            function(event) {
 
-            if (
-                event.target.closest("#infoBtn") ||
-                event.target.closest("#cacheBtn") ||
-                event.target.closest("#infoModal")
-            ) {
-                return;
+                if (
+                    event.target.closest("#infoBtn") ||
+                    event.target.closest("#cacheBtn") ||
+                    event.target.closest("#infoModal")
+                ) {
+                    return;
+                }
+
+                location.href = "jb.html";
+
             }
-
-            location.href = "jb.html";
-
-        });
+        );
 
 
         /*
-         * TOUCH NA ÁREA PRINCIPAL
+         * TOUCH
+         */
+
+        document.addEventListener(
+            "touchend",
+            function(event) {
+
+                if (
+                    event.target.closest("#infoBtn") ||
+                    event.target.closest("#cacheBtn") ||
+                    event.target.closest("#infoModal")
+                ) {
+                    return;
+                }
+
+                location.href = "jb.html";
+
+            },
+            { passive: true }
+        );
+
+
+        /*
+         * BLOQUEIA MENU DE CONTEXTO
+         */
+
+        document.addEventListener(
+            "contextmenu",
+            function(event) {
+
+                event.preventDefault();
+
+            }
+        );
+
+
+        /*
+         * BLOQUEIA COPIAR
+         */
+
+        document.addEventListener(
+            "copy",
+            function(event) {
+
+                event.preventDefault();
+
+            }
+        );
+
+
+        /*
+         * BLOQUEIA RECORTAR
+         */
+
+        document.addEventListener(
+            "cut",
+            function(event) {
+
+                event.preventDefault();
+
+            }
+        );
+
+
+        /*
+         * BLOQUEIA COLAR
+         */
+
+        document.addEventListener(
+            "paste",
+            function(event) {
+
+                event.preventDefault();
+
+            }
+        );
+
+
+        /*
+         * BLOQUEIA ARRASTAR
+         */
+
+        document.addEventListener(
+            "dragstart",
+            function(event) {
+
+                event.preventDefault();
+
+            }
+        );
+
+
+        /*
+         * INFORMAÇÕES DO DISPOSITIVO
          *
-         * Útil para telas sensíveis ao toque.
+         * Mantemos a função disponível para futuras
+         * personalizações sem adicionar outra caixa
+         * visual à interface.
          */
 
-        document.addEventListener("touchend", function(event) {
-
-            if (
-                event.target.closest("#infoBtn") ||
-                event.target.closest("#cacheBtn") ||
-                event.target.closest("#infoModal")
-            ) {
-                return;
-            }
-
-            location.href = "jb.html";
-
-        }, { passive: true });
+        var deviceType =
+            detectDevice();
 
 
         /*
-         * DETECTAR FIRMWARE
+         * INICIA DETECÇÃO
          */
 
         detectFirmware();
