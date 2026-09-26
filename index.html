@@ -102,34 +102,6 @@
             color: #bbbbc5;
         }
 
-        /* FIRMWARE STATUS */
-
-        .firmware-status {
-            margin-top: 12px;
-
-            font-family: monospace;
-
-            font-size: 15px;
-
-            line-height: 1.7;
-        }
-
-        .firmware-version {
-            color: #f5c542;
-        }
-
-        .firmware-compatible {
-            color: #4d8dff;
-        }
-
-        .firmware-incompatible {
-            color: #ff5c5c;
-        }
-
-        .firmware-unknown {
-            color: #bbbbc5;
-        }
-
         .footer {
             margin-top: 28px;
 
@@ -572,30 +544,6 @@
 
         <pre id="console"></pre>
 
-        <div
-            id="firmware-status"
-            class="firmware-status"
-        >
-
-            Firmware:
-            <span
-                id="firmware-version"
-                class="firmware-version"
-            >
-                Detectando...
-            </span>
-
-            <br>
-
-            <span
-                id="firmware-compatibility"
-                class="firmware-unknown"
-            >
-                Verificando compatibilidade...
-            </span>
-
-        </div>
-
         <div class="footer">
             <b>KS4-JB</b> · 2026
         </div>
@@ -804,50 +752,35 @@
         }
 
 
-        var params =
-            new URLSearchParams(
-                location.search
-            );
-
-
         /*
-         * Firmware suportado apenas
-         * para informação visual.
+         * FIRMWARE
+         *
+         * A compatibilidade é somente
+         * uma comparação visual com as
+         * versões mostradas no modal.
          */
 
         var SUPPORTED = {
 
-            1302: 1,
-            1304: 1,
-            1350: 1,
-            1352: 1
+            "11.00": true,
+            "11.50": true,
+            "12.00": true,
+            "12.50": true,
+            "13.00": true,
+            "13.02": true,
+            "13.50": true,
+            "13.52": true
 
         };
 
 
-        var key = null,
-            fwnum = null;
-
-
-        var firmwareVersion =
-            document.getElementById(
-                "firmware-version"
-            );
-
-
-        var firmwareCompatibility =
-            document.getElementById(
-                "firmware-compatibility"
-            );
-
-
         /*
-         * Tenta identificar a versão
-         * informada pelo User-Agent.
+         * Tenta identificar o firmware
+         * informado pelo User-Agent.
          */
 
         var m =
-            /PlayStation\s+4[\/ ]\((\d+)\.(\d+)/
+            /PlayStation\s+4[\/ ]\((\d+)\.(\d+)/i
                 .exec(
                     navigator.userAgent
                 );
@@ -865,105 +798,79 @@
             var minor =
                 parseInt(
                     m[2],
-                    16
+                    10
                 );
 
 
             var minorText =
-                minor.toString(10);
+                minor < 10
+                    ? "0" + minor
+                    : String(minor);
 
 
-            if (
-                minorText.length < 2
-            ) {
-
-                minorText =
-                    "0" + minorText;
-
-            }
-
-
-            key =
+            var key =
                 major +
                 "." +
                 minorText;
 
 
-            fwnum =
-                major * 100 +
-                parseInt(
-                    minorText,
-                    10
-                );
-
-
             /*
-             * Mostra a versão detectada.
+             * Mostra o firmware detectado
+             * diretamente no console.
              */
 
-            firmwareVersion.textContent =
-                key;
-
-
-            firmwareVersion.className =
-                "firmware-version";
+            print(
+                "Firmware: " + key,
+                "warn"
+            );
 
 
             /*
-             * Compara apenas com a
-             * tabela existente.
+             * Compara com as versões
+             * listadas no modal.
              */
 
             if (
-                SUPPORTED[fwnum] === 1
+                SUPPORTED[key]
             ) {
 
-                firmwareCompatibility.textContent =
-                    "Compatibilidade: Compatível";
-
-
-                firmwareCompatibility.className =
-                    "firmware-compatible";
+                print(
+                    "Compatibilidade: OK",
+                    "ok"
+                );
 
             } else {
 
-                firmwareCompatibility.textContent =
-                    "Compatibilidade: Não compatível";
-
-
-                firmwareCompatibility.className =
-                    "firmware-incompatible";
+                print(
+                    "Compatibilidade: NÃO SUPORTADO",
+                    "bad"
+                );
 
             }
 
         } else {
 
             /*
-             * O navegador não informou
-             * a versão.
+             * Se o User-Agent não fornecer
+             * a versão, não inventa uma.
              */
 
-            firmwareVersion.textContent =
-                "Não identificado";
+            print(
+                "Firmware: não identificado",
+                "warn"
+            );
 
 
-            firmwareVersion.className =
-                "firmware-unknown";
-
-
-            firmwareCompatibility.textContent =
-                "Compatibilidade: Desconhecida";
-
-
-            firmwareCompatibility.className =
-                "firmware-unknown";
+            print(
+                "Compatibilidade: desconhecida",
+                "warn"
+            );
 
         }
 
 
         /*
-         * O restante da interface continua
-         * funcionando normalmente.
+         * DESTINO DA INTERFACE
          */
 
         var target =
