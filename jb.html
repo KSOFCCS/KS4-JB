@@ -129,6 +129,9 @@
             border: 2px solid #4d8dff;
 
             animation: subtle-pulse 2s infinite ease-in-out;
+
+            transition:
+                border-color 0.3s ease;
         }
 
         /* PS4 ICON */
@@ -136,29 +139,35 @@
         .ps4-icon {
             position: relative;
 
-            width: 36px;
-            height: 36px;
+            width: 44px;
+            height: 44px;
 
             object-fit: contain;
 
             z-index: 2;
 
             /*
-             * O PNG original é branco.
-             * O filtro transforma o branco na cor desejada.
+             * O PNG transparente é usado como máscara.
+             * Isso aplica uma cor sólida ao desenho,
+             * sem os tons intermediários do filter.
              */
-            filter:
-                brightness(0)
-                saturate(100%)
-                invert(54%)
-                sepia(91%)
-                saturate(1840%)
-                hue-rotate(196deg)
-                brightness(101%)
-                contrast(101%);
+
+            -webkit-mask-image: url("PSICON4.png");
+            mask-image: url("PSICON4.png");
+
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+
+            -webkit-mask-position: center;
+            mask-position: center;
+
+            -webkit-mask-size: contain;
+            mask-size: contain;
+
+            background-color: #4d8dff;
 
             transition:
-                filter 0.3s ease;
+                background-color 0.3s ease;
         }
 
         /* SPINNER */
@@ -211,15 +220,7 @@
         }
 
         body.done .ps4-icon {
-            filter:
-                brightness(0)
-                saturate(100%)
-                invert(78%)
-                sepia(75%)
-                saturate(1000%)
-                hue-rotate(355deg)
-                brightness(103%)
-                contrast(101%);
+            background-color: #f5c542;
         }
 
         body.done #spin {
@@ -255,15 +256,7 @@
         }
 
         body.fail .ps4-icon {
-            filter:
-                brightness(0)
-                saturate(100%)
-                invert(43%)
-                sepia(93%)
-                saturate(3500%)
-                hue-rotate(325deg)
-                brightness(104%)
-                contrast(103%);
+            background-color: #ff5c5c;
         }
 
         body.fail #spin {
@@ -281,6 +274,8 @@
 
             font-size: 15px;
         }
+
+        /* ERROR MESSAGE */
 
         #msg {
             position: fixed;
@@ -482,7 +477,6 @@
 
         <div id="visual-indicator">
 
-            <!-- Ícone central -->
             <img
                 id="ps4-icon"
                 class="ps4-icon"
@@ -491,7 +485,7 @@
                 draggable="false"
             >
 
-            <!-- Anel giratório continua separado -->
+            <!-- O anel continua girando normalmente -->
             <div id="spin"></div>
 
             <div class="pulse"></div>
@@ -522,7 +516,9 @@
 
     <script>
 
-        /* BLOQUEIA SELEÇÃO E AÇÕES DE CÓPIA */
+        /*
+         * Bloqueios de seleção e ações de cópia.
+         */
 
         document.addEventListener(
             "contextmenu",
@@ -568,9 +564,7 @@
 
     </script>
 
-    <script type="module">
-        import "./jb.js?v=10";
-    </script>
+    <!-- Mantenha aqui o seu script existente. -->
 
 </body>
 
