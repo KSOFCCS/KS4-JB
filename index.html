@@ -114,9 +114,7 @@
             color: #777783;
         }
 
-        /* =========================
-           PS4 CROSS BUTTON
-        ========================= */
+        /* PS4 CROSS BUTTON */
 
         .cross-icon {
             width: 18px;
@@ -133,6 +131,7 @@
 
         #info-button {
             position: fixed;
+
             top: 18px;
             left: 18px;
 
@@ -140,6 +139,7 @@
             height: 44px;
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
@@ -150,7 +150,9 @@
             color: #cfd3dc;
 
             cursor: pointer;
+
             font-family: Arial, Helvetica, sans-serif;
+
             font-size: 21px;
             font-weight: 700;
 
@@ -164,13 +166,17 @@
         #info-button:hover,
         #info-button:focus {
             background: #17171f;
+
             border-color: #3a3a45;
+
             color: #ffffff;
+
             outline: none;
         }
 
         #info-button:active {
             background: #0e0e13;
+
             transform: scale(0.96);
         }
 
@@ -178,6 +184,7 @@
 
         #cache-button {
             position: fixed;
+
             top: 18px;
             left: 70px;
 
@@ -185,6 +192,7 @@
             height: 44px;
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
@@ -195,7 +203,9 @@
             color: #cfd3dc;
 
             cursor: pointer;
+
             font-family: Arial, Helvetica, sans-serif;
+
             font-size: 21px;
             font-weight: 700;
 
@@ -209,13 +219,17 @@
         #cache-button:hover,
         #cache-button:focus {
             background: #17171f;
+
             border-color: #3a3a45;
+
             color: #ffffff;
+
             outline: none;
         }
 
         #cache-button:active {
             background: #0e0e13;
+
             transform: scale(0.96);
         }
 
@@ -223,13 +237,16 @@
 
         #info-modal {
             position: fixed;
+
             inset: 0;
 
             display: none;
+
             align-items: center;
             justify-content: center;
 
             padding: 20px;
+
             background: rgba(0, 0, 0, 0.65);
 
             z-index: 1000;
@@ -242,15 +259,19 @@
         #info-panel {
             width: 90%;
             max-width: 520px;
+
             max-height: 90vh;
+
             overflow-y: auto;
 
             padding: 30px;
 
             background: #111117;
+
             color: #ffffff;
 
             border: 1px solid #292932;
+
             border-radius: 18px;
 
             text-align: center;
@@ -260,7 +281,9 @@
             margin: 0 0 6px;
 
             font-size: 32px;
+
             font-weight: 800;
+
             letter-spacing: -1px;
         }
 
@@ -272,6 +295,7 @@
             margin-bottom: 22px;
 
             color: #8f8f9d;
+
             font-size: 14px;
         }
 
@@ -279,8 +303,11 @@
             margin: 0 0 26px;
 
             color: #eeeeee;
+
             font-family: monospace;
+
             font-size: 15px;
+
             line-height: 1.6;
         }
 
@@ -300,7 +327,9 @@
             color: #f5c542;
 
             font-family: monospace;
+
             font-size: 14px;
+
             line-height: 1.6;
         }
 
@@ -308,13 +337,17 @@
             margin: 0 0 18px;
 
             color: #ffffff;
+
             font-size: 20px;
+
             font-weight: 700;
         }
 
         .firmware-grid {
             display: grid;
+
             grid-template-columns: repeat(4, 1fr);
+
             gap: 10px;
 
             margin-bottom: 28px;
@@ -322,6 +355,7 @@
             color: #f5c542;
 
             font-family: monospace;
+
             font-size: 15px;
         }
 
@@ -329,7 +363,9 @@
             padding: 8px 4px;
 
             background: #15151c;
+
             border: 1px solid #292932;
+
             border-radius: 8px;
 
             color: #f5c542;
@@ -337,15 +373,19 @@
 
         #close-info {
             width: 100%;
+
             height: 48px;
 
             border: 0;
+
             border-radius: 8px;
 
             background: #4d8dff;
+
             color: #ffffff;
 
             font-size: 16px;
+
             font-weight: 700;
 
             cursor: pointer;
@@ -354,6 +394,7 @@
         #close-info:hover,
         #close-info:focus {
             background: #3f7ee8;
+
             outline: none;
         }
 
@@ -398,6 +439,7 @@
 
             .firmware-grid {
                 font-size: 17px;
+
                 gap: 10px 12px;
             }
 
@@ -417,6 +459,7 @@
     >
         ⓘ
     </button>
+
 
     <button
         id="cache-button"
@@ -484,7 +527,10 @@
         >
 
             <h2 id="info-title">
-                Sobre o <span class="info-accent">KS4-JB</span>
+                Sobre o
+                <span class="info-accent">
+                    KS4-JB
+                </span>
             </h2>
 
             <div class="version">
@@ -558,20 +604,28 @@
     (function () {
 
         var infoButton =
-            document.getElementById("info-button");
+            document.getElementById(
+                "info-button"
+            );
 
         var infoModal =
-            document.getElementById("info-modal");
+            document.getElementById(
+                "info-modal"
+            );
 
         var closeInfo =
-            document.getElementById("close-info");
+            document.getElementById(
+                "close-info"
+            );
 
 
         function openInfo(event) {
 
             event.stopPropagation();
 
-            infoModal.classList.add("open");
+            infoModal.classList.add(
+                "open"
+            );
 
             infoModal.setAttribute(
                 "aria-hidden",
@@ -589,7 +643,9 @@
                 event.stopPropagation();
             }
 
-            infoModal.classList.remove("open");
+            infoModal.classList.remove(
+                "open"
+            );
 
             infoModal.setAttribute(
                 "aria-hidden",
@@ -620,10 +676,13 @@
                 event.stopPropagation();
 
                 if (
-                    event.target === infoModal
+                    event.target ===
+                    infoModal
                 ) {
 
-                    closeInfoModal(event);
+                    closeInfoModal(
+                        event
+                    );
 
                 }
 
@@ -637,7 +696,9 @@
 
                 if (
                     event.key === "Escape" &&
-                    infoModal.classList.contains("open")
+                    infoModal.classList.contains(
+                        "open"
+                    )
                 ) {
 
                     closeInfoModal();
@@ -649,7 +710,9 @@
 
 
         var cacheButton =
-            document.getElementById("cache-button");
+            document.getElementById(
+                "cache-button"
+            );
 
 
         cacheButton.addEventListener(
@@ -669,20 +732,24 @@
     </script>
 
 
-    <!-- CONSOLE -->
+    <!-- CONSOLE / FIRMWARE -->
 
     <script>
 
     (function () {
 
         var con =
-            document.getElementById("console");
+            document.getElementById(
+                "console"
+            );
 
 
         function print(msg, cls) {
 
             var span =
-                document.createElement("span");
+                document.createElement(
+                    "span"
+                );
 
 
             if (cls) {
@@ -720,22 +787,24 @@
                 ) {
 
                     var img =
-                        document.createElement("img");
+                        document.createElement(
+                            "img"
+                        );
 
 
                     img.src =
                         "PS4%20Cross.png";
 
-
                     img.className =
                         "cross-icon";
-
 
                     img.alt =
                         "X";
 
 
-                    span.appendChild(img);
+                    span.appendChild(
+                        img
+                    );
 
                 }
 
@@ -743,11 +812,15 @@
 
 
             span.appendChild(
-                document.createTextNode("\n")
+                document.createTextNode(
+                    "\n"
+                )
             );
 
 
-            con.appendChild(span);
+            con.appendChild(
+                span
+            );
 
         }
 
@@ -755,9 +828,9 @@
         /*
          * FIRMWARE
          *
-         * A compatibilidade é somente
-         * uma comparação visual com as
-         * versões mostradas no modal.
+         * Apenas comparação visual
+         * com as versões mostradas
+         * no painel de informações.
          */
 
         var SUPPORTED = {
@@ -773,11 +846,6 @@
 
         };
 
-
-        /*
-         * Tenta identificar o firmware
-         * informado pelo User-Agent.
-         */
 
         var m =
             /PlayStation\s+4[\/ ]\((\d+)\.(\d+)/i
@@ -814,21 +882,12 @@
                 minorText;
 
 
-            /*
-             * Mostra o firmware detectado
-             * diretamente no console.
-             */
-
             print(
-                "Firmware: " + key,
+                "Firmware: " +
+                key,
                 "warn"
             );
 
-
-            /*
-             * Compara com as versões
-             * listadas no modal.
-             */
 
             if (
                 SUPPORTED[key]
@@ -850,11 +909,6 @@
 
         } else {
 
-            /*
-             * Se o User-Agent não fornecer
-             * a versão, não inventa uma.
-             */
-
             print(
                 "Firmware: não identificado",
                 "warn"
@@ -870,74 +924,13 @@
 
 
         /*
-         * DESTINO DA INTERFACE
-         */
-
-        var target =
-            "jb.html" +
-            location.search;
-
-
-        function go() {
-
-            print(
-                "Iniciando...",
-                "warn"
-            );
-
-            location.replace(target);
-
-        }
-
-
-        function waitForTap(
-            msg,
-            action
-        ) {
-
-            if (msg) {
-
-                print(
-                    msg,
-                    "warn"
-                );
-
-            }
-
-
-            function fire() {
-
-                window.removeEventListener(
-                    "click",
-                    fire
-                );
-
-                window.removeEventListener(
-                    "keydown",
-                    fire
-                );
-
-                action();
-
-            }
-
-
-            window.addEventListener(
-                "click",
-                fire
-            );
-
-
-            window.addEventListener(
-                "keydown",
-                fire
-            );
-
-        }
-
-
-        /*
-         * CACHE
+         * O Application Cache continua
+         * associado à página, mas o
+         * index.html não exibe seus
+         * eventos/progresso.
+         *
+         * Nenhum evento de cache é
+         * impresso no console.
          */
 
         var ac =
@@ -945,258 +938,13 @@
 
 
         if (
-            !ac ||
-            !document.documentElement.hasAttribute(
-                "manifest"
-            )
-        ) {
-
-            go();
-
-        } else if (
-            !navigator.onLine
-        ) {
-
-            print(
-                "Modo offline — usando cache",
-                "ok"
-            );
-
-            go();
-
-        } else if (
-            ac.status === ac.IDLE
-        ) {
-
-            print(
-                "Cache disponível",
-                "ok"
-            );
-
-            go();
-
-        } else if (
+            ac &&
             ac.status === ac.UPDATEREADY
         ) {
 
             try {
-
                 ac.swapCache();
-
             } catch (e) {}
-
-
-            print(
-                "Atualização disponível",
-                "ok"
-            );
-
-
-            waitForTap(
-
-                "Pressione [[X]] para recarregar",
-
-                function () {
-
-                    location.reload();
-
-                }
-
-            );
-
-        } else {
-
-            print(
-                "Verificando cache..."
-            );
-
-
-            ac.addEventListener(
-
-                "downloading",
-
-                function () {
-
-                    print(
-                        "Preparando cache para uso offline..."
-                    );
-
-                },
-
-                false
-
-            );
-
-
-            ac.addEventListener(
-
-                "progress",
-
-                function (e) {
-
-                    if (
-                        e &&
-                        e.total
-                    ) {
-
-                        print(
-                            "Cache: " +
-                            Math.round(
-                                (
-                                    e.loaded /
-                                    e.total
-                                ) * 100
-                            ) +
-                            "%"
-                        );
-
-                    }
-
-                },
-
-                false
-
-            );
-
-
-            ac.addEventListener(
-
-                "cached",
-
-                function () {
-
-                    print(
-                        "Cache instalado com sucesso",
-                        "ok"
-                    );
-
-
-                    waitForTap(
-
-                        "Pressione [[X]] para iniciar",
-
-                        go
-
-                    );
-
-                },
-
-                false
-
-            );
-
-
-            ac.addEventListener(
-
-                "updateready",
-
-                function () {
-
-                    try {
-
-                        ac.swapCache();
-
-                    } catch (e) {}
-
-
-                    print(
-                        "Atualização baixada",
-                        "ok"
-                    );
-
-
-                    waitForTap(
-
-                        "Pressione [[X]] para recarregar",
-
-                        function () {
-
-                            location.reload();
-
-                        }
-
-                    );
-
-                },
-
-                false
-
-            );
-
-
-            ac.addEventListener(
-
-                "noupdate",
-
-                function () {
-
-                    print(
-                        "Cache pronto para uso offline",
-                        "ok"
-                    );
-
-
-                    go();
-
-                },
-
-                false
-
-            );
-
-
-            ac.addEventListener(
-
-                "error",
-
-                function () {
-
-                    print(
-                        "Não foi possível acessar o cache",
-                        "bad"
-                    );
-
-
-                    waitForTap(
-
-                        "Pressione [[X]] para continuar mesmo assim",
-
-                        go
-
-                    );
-
-                },
-
-                false
-
-            );
-
-
-            ac.addEventListener(
-
-                "obsolete",
-
-                function () {
-
-                    print(
-                        "Cache obsoleto",
-                        "bad"
-                    );
-
-
-                    waitForTap(
-
-                        "Pressione [[X]] para continuar",
-
-                        go
-
-                    );
-
-                },
-
-                false
-
-            );
 
         }
 
