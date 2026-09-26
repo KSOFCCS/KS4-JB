@@ -2,8 +2,6 @@
 <html lang="pt-BR" manifest="cache.appcache">
 
 <head>
-
-    <link rel="icon" type="image/png" href="Icon.png">
     <meta charset="utf-8">
 
     <meta
@@ -13,18 +11,16 @@
 
     <title>KS4-JB · PS4 Exploit</title>
 
-    <style>
+    <link rel="icon" type="image/png" href="Icon.png">
 
+    <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
 
             -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
             user-select: none;
-
             -webkit-touch-callout: none;
         }
 
@@ -36,7 +32,7 @@
 
         body {
             background: #0b0b0f;
-            color: #ffffff;
+            color: #fff;
             font-family: Arial, Helvetica, sans-serif;
 
             display: flex;
@@ -46,21 +42,17 @@
             overflow: hidden;
         }
 
-        /* MAIN */
-
         #main-container {
             position: relative;
 
             width: 90%;
             max-width: 520px;
-
             min-height: 330px;
 
             padding: 38px 30px;
 
             display: flex;
             flex-direction: column;
-
             justify-content: center;
             align-items: center;
 
@@ -70,40 +62,25 @@
 
             border: 1px solid #292932;
             border-radius: 18px;
-
-            transition:
-                border-color 0.3s ease;
         }
-
-        /* LOGO */
 
         #brand {
             font-size: 42px;
             font-weight: 800;
-
             letter-spacing: -2px;
-
             margin-bottom: 8px;
-
-            color: #ffffff;
+            color: #fff;
         }
 
         #brand span {
             color: #4d8dff;
-
-            transition:
-                color 0.3s ease;
         }
 
         #subtitle {
             color: #8f8f9d;
-
             font-size: 14px;
-
             margin-bottom: 34px;
         }
-
-        /* INDICATOR */
 
         #visual-indicator {
             position: relative;
@@ -118,6 +95,22 @@
             margin-bottom: 26px;
         }
 
+        /*
+         * PNG original.
+         * Sem mask, sem filter e sem troca de cor.
+         */
+        .ps4-icon {
+            position: relative;
+
+            width: 44px;
+            height: 44px;
+
+            display: block;
+            object-fit: contain;
+
+            z-index: 2;
+        }
+
         .pulse {
             position: absolute;
 
@@ -125,52 +118,10 @@
             height: 100%;
 
             border-radius: 50%;
-
             border: 2px solid #4d8dff;
 
             animation: subtle-pulse 2s infinite ease-in-out;
-
-            transition:
-                border-color 0.3s ease;
         }
-
-        /* PS4 ICON */
-
-        .ps4-icon {
-            position: relative;
-
-            width: 44px;
-            height: 44px;
-
-            object-fit: contain;
-
-            z-index: 2;
-
-            /*
-             * O PNG transparente é usado como máscara.
-             * Isso aplica uma cor sólida ao desenho,
-             * sem os tons intermediários do filter.
-             */
-
-            -webkit-mask-image: url("PSICON4.png");
-            mask-image: url("PSICON4.png");
-
-            -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-
-            -webkit-mask-position: center;
-            mask-position: center;
-
-            -webkit-mask-size: contain;
-            mask-size: contain;
-
-            background-color: #4d8dff;
-
-            transition:
-                background-color 0.3s ease;
-        }
-
-        /* SPINNER */
 
         #spin {
             position: absolute;
@@ -179,8 +130,7 @@
             height: 125%;
 
             border: 2px solid transparent;
-
-            border-top-color: #ffffff;
+            border-top-color: #fff;
 
             border-radius: 50%;
 
@@ -189,120 +139,32 @@
             opacity: 0.25;
         }
 
-        /* STATUS */
-
         #status {
             min-height: 22px;
 
-            color: #eeeeee;
+            color: #eee;
 
             font-family: monospace;
-
             font-size: 15px;
-
             line-height: 1.5;
         }
-
-        /* SUCCESS */
-
-        body.done #main-container {
-            border-color: rgba(245, 197, 66, 0.45);
-        }
-
-        body.done #brand span {
-            color: #f5c542;
-        }
-
-        body.done .pulse {
-            border-color: #f5c542;
-
-            animation: none;
-        }
-
-        body.done .ps4-icon {
-            background-color: #f5c542;
-        }
-
-        body.done #spin {
-            opacity: 0;
-        }
-
-        body.done #status {
-            color: #f5c542;
-
-            font-size: 0;
-        }
-
-        body.done #status::after {
-            content: "Concluído";
-
-            font-size: 15px;
-        }
-
-        /* ERROR */
-
-        body.fail #main-container {
-            border-color: rgba(255, 92, 92, 0.4);
-        }
-
-        body.fail #brand span {
-            color: #ff5c5c;
-        }
-
-        body.fail .pulse {
-            border-color: #ff5c5c;
-
-            animation: none;
-        }
-
-        body.fail .ps4-icon {
-            background-color: #ff5c5c;
-        }
-
-        body.fail #spin {
-            opacity: 0;
-        }
-
-        body.fail #status {
-            color: #ff5c5c;
-
-            font-size: 0;
-        }
-
-        body.fail #status::after {
-            content: "Não foi possível concluir.";
-
-            font-size: 15px;
-        }
-
-        /* ERROR MESSAGE */
 
         #msg {
             position: fixed;
 
             bottom: 62px;
-
             left: 0;
             right: 0;
 
             text-align: center;
 
             font-family: monospace;
-
             font-size: 13px;
 
             color: #ff5c5c;
 
-            letter-spacing: 0.05em;
-
             display: none;
         }
-
-        body.fail #msg {
-            display: block;
-        }
-
-        /* LOG */
 
         #wrap {
             padding: 0;
@@ -315,16 +177,8 @@
 
         body.log {
             display: block;
-
             overflow: auto;
-
             padding: 20px;
-
-            background: #0b0b0f;
-        }
-
-        body.log::before {
-            display: none;
         }
 
         body.log #main-container,
@@ -344,10 +198,9 @@
         body.log #state {
             display: block;
 
-            color: #ffffff;
+            color: #fff;
 
             font-size: 18px;
-
             font-weight: 700;
 
             margin-bottom: 12px;
@@ -365,7 +218,6 @@
             background: #111117;
 
             border: 1px solid #292932;
-
             border-radius: 14px;
 
             padding: 16px;
@@ -374,16 +226,15 @@
 
             overflow-y: auto;
 
-            color: #eeeeee;
+            color: #eee;
         }
-
-        /* LOG COLORS */
 
         .ok {
             color: #4d8dff;
         }
 
-        .bad {
+        .bad,
+        .danger {
             color: #ff5c5c;
         }
 
@@ -395,30 +246,21 @@
             color: #4d8dff;
         }
 
-        .danger {
-            color: #ff5c5c;
-        }
-
         code {
             color: #8f8f9d;
-
             font-family: monospace;
         }
-
-        /* FOOTER */
 
         #footer {
             position: fixed;
 
             bottom: 20px;
-
             left: 0;
             right: 0;
 
             text-align: center;
 
             font-family: monospace;
-
             font-size: 11px;
 
             color: #555560;
@@ -430,37 +272,29 @@
             color: #777783;
         }
 
-        /* ANIMATIONS */
-
         @keyframes real-spin {
-
             to {
                 transform: rotate(360deg);
             }
-
         }
 
         @keyframes subtle-pulse {
-
             0% {
-                transform: scale(0.92);
+                transform: scale(0.96);
                 opacity: 0.45;
             }
 
             50% {
-                transform: scale(1.06);
+                transform: scale(1.04);
                 opacity: 0.8;
             }
 
             100% {
-                transform: scale(0.92);
+                transform: scale(0.96);
                 opacity: 0.45;
             }
-
         }
-
     </style>
-
 </head>
 
 <body>
@@ -485,7 +319,6 @@
                 draggable="false"
             >
 
-            <!-- O anel continua girando normalmente -->
             <div id="spin"></div>
 
             <div class="pulse"></div>
@@ -503,11 +336,8 @@
     </div>
 
     <div id="wrap">
-
         <div id="state"></div>
-
         <div id="out"></div>
-
     </div>
 
     <div id="footer">
@@ -515,59 +345,36 @@
     </div>
 
     <script>
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault();
+        });
 
-        /*
-         * Bloqueios de seleção e ações de cópia.
-         */
+        document.addEventListener("copy", function (e) {
+            e.preventDefault();
+        });
 
-        document.addEventListener(
-            "contextmenu",
-            function (event) {
-                event.preventDefault();
-            }
-        );
+        document.addEventListener("cut", function (e) {
+            e.preventDefault();
+        });
 
-        document.addEventListener(
-            "copy",
-            function (event) {
-                event.preventDefault();
-            }
-        );
+        document.addEventListener("paste", function (e) {
+            e.preventDefault();
+        });
 
-        document.addEventListener(
-            "cut",
-            function (event) {
-                event.preventDefault();
-            }
-        );
+        document.addEventListener("selectstart", function (e) {
+            e.preventDefault();
+        });
 
-        document.addEventListener(
-            "paste",
-            function (event) {
-                event.preventDefault();
-            }
-        );
-
-        document.addEventListener(
-            "selectstart",
-            function (event) {
-                event.preventDefault();
-            }
-        );
-
-        document.addEventListener(
-            "dragstart",
-            function (event) {
-                event.preventDefault();
-            }
-        );
-
+        document.addEventListener("dragstart", function (e) {
+            e.preventDefault();
+        });
     </script>
 
+    <!--
+
     <script type="module">
-    import "./jb.js?v=10";
+        // import "./jb.js?v=10";
     </script>
 
 </body>
-
 </html>
