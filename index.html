@@ -52,8 +52,6 @@
 
             border: 1px solid #292932;
             border-radius: 18px;
-
-    
         }
 
         .logo {
@@ -221,6 +219,8 @@
             transform: scale(0.96);
         }
 
+        /* INFO MODAL */
+
         #info-modal {
             position: fixed;
             inset: 0;
@@ -284,6 +284,26 @@
             line-height: 1.6;
         }
 
+        /* AVISO */
+
+        #info-panel .warning {
+            margin: 0 0 26px;
+
+            padding: 14px 16px;
+
+            background: rgba(245, 197, 66, 0.08);
+
+            border: 1px solid rgba(245, 197, 66, 0.25);
+
+            border-radius: 10px;
+
+            color: #f5c542;
+
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
         #info-panel h3 {
             margin: 0 0 18px;
 
@@ -299,7 +319,8 @@
 
             margin-bottom: 28px;
 
-            color: #8f8f9d;
+            color: #f5c542;
+
             font-family: monospace;
             font-size: 15px;
         }
@@ -310,6 +331,8 @@
             background: #15151c;
             border: 1px solid #292932;
             border-radius: 8px;
+
+            color: #f5c542;
         }
 
         #close-info {
@@ -335,6 +358,7 @@
         }
 
         @media (max-width: 600px) {
+
             #info-button {
                 top: 12px;
                 left: 12px;
@@ -368,6 +392,10 @@
                 font-size: 22px;
             }
 
+            #info-panel .warning {
+                font-size: 17px;
+            }
+
             .firmware-grid {
                 font-size: 17px;
                 gap: 10px 12px;
@@ -380,11 +408,21 @@
 
 <body>
 
-    <button id="info-button" type="button" aria-label="Informações" title="Informações">
+    <button
+        id="info-button"
+        type="button"
+        aria-label="Informações"
+        title="Informações"
+    >
         ⓘ
     </button>
 
-    <button id="cache-button" type="button" aria-label="Cache" title="Cache">
+    <button
+        id="cache-button"
+        type="button"
+        aria-label="Cache"
+        title="Cache"
+    >
         <svg
             viewBox="0 0 24 24"
             width="21"
@@ -392,527 +430,656 @@
             aria-hidden="true"
             focusable="false"
         >
-            <ellipse cx="12" cy="5" rx="7" ry="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M5 5v7c0 1.7 3.1 3 7 3s7-1.3 7-3V5"
-                  fill="none" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"
-                  fill="none" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M8 10.5c1.1.5 2.5.8 4 .8s2.9-.3 4-.8"
-                  fill="none" stroke="currentColor" stroke-width="1.4"/>
+            <ellipse
+                cx="12"
+                cy="5"
+                rx="7"
+                ry="3"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+
+            <path
+                d="M5 5v7c0 1.7 3.1 3 7 3s7-1.3 7-3V5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+
+            <path
+                d="M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+            />
+
+            <path
+                d="M8 10.5c1.1.5 2.5.8 4 .8s2.9-.3 4-.8"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+            />
         </svg>
     </button>
 
+    <!-- INFO MODAL -->
+
     <div id="info-modal" aria-hidden="true">
-        <div id="info-panel" role="dialog" aria-modal="true" aria-labelledby="info-title">
 
-            <h2 id="info-title">Sobre o <span class="info-accent">KS4-JB</span></h2>
+        <div
+            id="info-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="info-title"
+        >
 
-            <div class="version">Versão: 1.1 · PS4</div>
+            <h2 id="info-title">
+                Sobre o <span class="info-accent">KS4-JB</span>
+            </h2>
+
+            <div class="version">
+                Versão: 1.1 · PS4
+            </div>
 
             <p>
                 Uma interface para desbloquear seu PS4.
             </p>
 
-            <h3>Firmware PS4 compatível</h3>
+            <div class="warning">
+                ⚠ Aviso: não execute novamente caso o desbloqueio
+                já esteja ativo no console.
+            </div>
+
+            <h3>
+                Firmware PS4 compatível
+            </h3>
 
             <div class="firmware-grid">
+
                 <div>11.00</div>
                 <div>11.50</div>
                 <div>12.00</div>
                 <div>12.50</div>
+
                 <div>13.00</div>
                 <div>13.02</div>
                 <div>13.50</div>
                 <div>13.52</div>
+
             </div>
 
-            <button id="close-info" type="button">Fechar</button>
+            <button
+                id="close-info"
+                type="button"
+            >
+                Fechar
+            </button>
 
         </div>
+
     </div>
 
-<div class="container">
+    <!-- MAIN -->
 
-    <div class="logo">
-        KS<span>4</span>
+    <div class="container">
+
+        <div class="logo">
+            KS<span>4</span>
+        </div>
+
+        <div class="subtitle">
+            KSOFCC · PS4 EXPLOIT
+        </div>
+
+        <pre id="console"></pre>
+
+        <div class="footer">
+            <b>KS4-JB</b> · 2026
+        </div>
+
     </div>
 
-    <div class="subtitle">
-        KSOFCC · PS4 EXPLOIT
-    </div>
+    <!-- INFO / CACHE UI -->
 
-    <pre id="console"></pre>
+    <script>
 
-    <div class="footer">
-        <b>KS4-JB</b> · 2026
-    </div>
+    (function () {
 
-</div>
+        var infoButton =
+            document.getElementById("info-button");
 
-<script>
+        var infoModal =
+            document.getElementById("info-modal");
 
-(function () {
+        var closeInfo =
+            document.getElementById("close-info");
 
-    var infoButton = document.getElementById("info-button");
-    var infoModal = document.getElementById("info-modal");
-    var closeInfo = document.getElementById("close-info");
+        function openInfo(event) {
 
-    function openInfo(event) {
-        event.stopPropagation();
-
-        infoModal.classList.add("open");
-        infoModal.setAttribute("aria-hidden", "false");
-        closeInfo.focus();
-    }
-
-    function closeInfoModal(event) {
-        if (event) {
             event.stopPropagation();
-        }
-        infoModal.classList.remove("open");
-        infoModal.setAttribute("aria-hidden", "true");
-        infoButton.focus();
-    }
 
-    infoButton.addEventListener("click", openInfo);
-    closeInfo.addEventListener("click", closeInfoModal);
+            infoModal.classList.add("open");
 
-    infoModal.addEventListener("click", function (event) {
-        event.stopPropagation();
-
-        if (event.target === infoModal) {
-            closeInfoModal(event);
-        }
-    });
-
-    document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape" && infoModal.classList.contains("open")) {
-            closeInfoModal();
-        }
-    });
-
-    var cacheButton = document.getElementById("cache-button");
-
-    cacheButton.addEventListener("click", function (event) {
-        event.stopPropagation();
-        window.location.href = "cache.html";
-    });
-
-})();
-</script>
-
-<script>
-
-(function () {
-
-    var con = document.getElementById("console");
-
-    function print(msg, cls) {
-
-        var span = document.createElement("span");
-
-        if (cls) {
-            span.className = cls;
-        }
-
-        var parts = msg.split("[[X]]");
-
-        for (var i = 0; i < parts.length; i++) {
-
-            if (parts[i]) {
-                span.appendChild(
-                    document.createTextNode(parts[i])
-                );
-            }
-
-            if (i < parts.length - 1) {
-
-                var img = document.createElement("img");
-
-                img.src = "PS4%20Cross.png";
-
-                img.className = "cross-icon";
-
-                img.alt = "X";
-
-                span.appendChild(img);
-            }
-
-        }
-
-        span.appendChild(
-            document.createTextNode("\n")
-        );
-
-        con.appendChild(span);
-    }
-
-    var params =
-        new URLSearchParams(location.search);
-
-    // Firmwares with measured kernel table — KEEP IN SYNC with ps4_offsets.js
-
-    var SUPPORTED = {
-
-        1302: 1,
-        1304: 1,
-        1350: 1,
-        1352: 1
-
-    };
-
-    var key = null,
-        fwnum = null;
-
-    var m =
-        /PlayStation\s+4[\/ ]\((\d+)\.(\d+)/.exec(
-            navigator.userAgent
-        );
-
-    if (m) {
-
-        var ms =
-            parseInt(m[2], 16).toString(16);
-
-        if (ms.length < 2) {
-            ms = "0" + ms;
-        }
-
-        key =
-            m[1] + "." + ms;
-
-        fwnum =
-            parseInt(m[1], 10) * 100 +
-            parseInt(ms, 10);
-    }
-
-    var forced =
-        params.get("force") === "1";
-
-    var supported =
-        forced ||
-        (
-            fwnum !== null &&
-            SUPPORTED[fwnum] === 1
-        );
-
-    print(
-        "Firmware: " +
-        (key || "unknown")
-    );
-
-    print(
-        "Compatibilidade: " +
-        (
-            supported
-                ? "OK"
-                : "NÃO SUPORTADO"
-        ),
-        supported
-            ? "ok"
-            : "bad"
-    );
-
-    var target =
-        "jb.html" +
-        location.search;
-
-    function go() {
-
-        print(
-            "Iniciando...",
-            "warn"
-        );
-
-        location.replace(target);
-    }
-
-    function waitForTap(msg, action) {
-
-        if (msg) {
-            print(msg, "warn");
-        }
-
-        function fire() {
-
-            window.removeEventListener(
-                "click",
-                fire
+            infoModal.setAttribute(
+                "aria-hidden",
+                "false"
             );
 
-            window.removeEventListener(
-                "keydown",
-                fire
-            );
-
-            action();
+            closeInfo.focus();
         }
 
-        window.addEventListener(
+        function closeInfoModal(event) {
+
+            if (event) {
+                event.stopPropagation();
+            }
+
+            infoModal.classList.remove("open");
+
+            infoModal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+            infoButton.focus();
+        }
+
+        infoButton.addEventListener(
             "click",
-            fire
+            openInfo
         );
 
-        window.addEventListener(
-            "keydown",
-            fire
-        );
-    }
-
-    if (!supported) {
-
-        print(
-            "FIRMWARE NÃO SUPORTADO",
-            "bad"
+        closeInfo.addEventListener(
+            "click",
+            closeInfoModal
         );
 
-        print(
-            "Toque na tela / pressione [[X]] para continuar",
-            "warn"
-        );
+        infoModal.addEventListener(
+            "click",
+            function (event) {
 
-        waitForTap(
-            "",
-            go
-        );
+                event.stopPropagation();
 
-        return;
-    }
-
-    var ac =
-        window.applicationCache;
-
-    if (
-        !ac ||
-        !document.documentElement.hasAttribute(
-            "manifest"
-        )
-    ) {
-
-        go();
-
-    } else if (!navigator.onLine) {
-
-        print(
-            "Modo offline — usando cache",
-            "ok"
-        );
-
-        go();
-
-    } else if (
-        ac.status === ac.IDLE
-    ) {
-
-        print(
-            "Cache disponível",
-            "ok"
-        );
-
-        go();
-
-    } else if (
-        ac.status === ac.UPDATEREADY
-    ) {
-
-        try {
-
-            ac.swapCache();
-
-        } catch (e) {}
-
-        print(
-            "Atualização disponível",
-            "ok"
-        );
-
-        waitForTap(
-            "Pressione [[X]] para recarregar",
-
-            function () {
-
-                location.reload();
+                if (event.target === infoModal) {
+                    closeInfoModal(event);
+                }
 
             }
         );
 
-    } else {
+        document.addEventListener(
+            "keydown",
+            function (event) {
 
-        print(
-            "Verificando cache..."
+                if (
+                    event.key === "Escape" &&
+                    infoModal.classList.contains("open")
+                ) {
+                    closeInfoModal();
+                }
+
+            }
         );
 
-        ac.addEventListener(
+        var cacheButton =
+            document.getElementById("cache-button");
 
-            "downloading",
+        cacheButton.addEventListener(
+            "click",
+            function (event) {
 
-            function () {
+                event.stopPropagation();
 
-                print(
-                    "Preparando cache para uso offline..."
-                );
+                window.location.href =
+                    "cache.html";
 
-            },
-
-            false
-
+            }
         );
 
-        ac.addEventListener(
+    })();
 
-            "progress",
+    </script>
 
-            function (e) {
+    <!-- CONSOLE -->
 
-                if (e && e.total) {
+    <script>
 
-                    print(
-                        "Cache: " +
-                        Math.round(
-                            (e.loaded / e.total) * 100
-                        ) +
-                        "%"
+    (function () {
+
+        var con =
+            document.getElementById("console");
+
+        function print(msg, cls) {
+
+            var span =
+                document.createElement("span");
+
+            if (cls) {
+                span.className = cls;
+            }
+
+            var parts =
+                msg.split("[[X]]");
+
+            for (
+                var i = 0;
+                i < parts.length;
+                i++
+            ) {
+
+                if (parts[i]) {
+
+                    span.appendChild(
+                        document.createTextNode(
+                            parts[i]
+                        )
                     );
 
                 }
 
-            },
+                if (i < parts.length - 1) {
 
-            false
+                    var img =
+                        document.createElement("img");
 
-        );
+                    img.src =
+                        "PS4%20Cross.png";
 
-        ac.addEventListener(
+                    img.className =
+                        "cross-icon";
 
-            "cached",
+                    img.alt = "X";
 
-            function () {
+                    span.appendChild(img);
 
-                print(
-                    "Cache instalado com sucesso",
-                    "ok"
+                }
+
+            }
+
+            span.appendChild(
+                document.createTextNode("\n")
+            );
+
+            con.appendChild(span);
+        }
+
+        var params =
+            new URLSearchParams(
+                location.search
+            );
+
+        /*
+         * Firmware table.
+         * Mantida para a lógica existente.
+         */
+
+        var SUPPORTED = {
+
+            1302: 1,
+            1304: 1,
+            1350: 1,
+            1352: 1
+
+        };
+
+        var key = null,
+            fwnum = null;
+
+        var m =
+            /PlayStation\s+4[\/ ]\((\d+)\.(\d+)/
+                .exec(
+                    navigator.userAgent
                 );
 
-                waitForTap(
-                    "Pressione [[X]] para iniciar",
-                    go
+        if (m) {
+
+            var ms =
+                parseInt(
+                    m[2],
+                    16
+                ).toString(16);
+
+            if (ms.length < 2) {
+                ms =
+                    "0" + ms;
+            }
+
+            key =
+                m[1] + "." + ms;
+
+            fwnum =
+                parseInt(
+                    m[1],
+                    10
+                ) * 100 +
+                parseInt(
+                    ms,
+                    10
+                );
+        }
+
+        var forced =
+            params.get("force") === "1";
+
+        var supported =
+            forced ||
+            (
+                fwnum !== null &&
+                SUPPORTED[fwnum] === 1
+            );
+
+        /*
+         * Firmware e compatibilidade não são
+         * mais exibidos normalmente na interface.
+         */
+
+        var target =
+            "jb.html" +
+            location.search;
+
+        function go() {
+
+            print(
+                "Iniciando...",
+                "warn"
+            );
+
+            location.replace(target);
+        }
+
+        function waitForTap(msg, action) {
+
+            if (msg) {
+                print(msg, "warn");
+            }
+
+            function fire() {
+
+                window.removeEventListener(
+                    "click",
+                    fire
                 );
 
-            },
-
-            false
-
-        );
-
-        ac.addEventListener(
-
-            "updateready",
-
-            function () {
-
-                try {
-
-                    ac.swapCache();
-
-                } catch (e) {}
-
-                print(
-                    "Atualização baixada",
-                    "ok"
+                window.removeEventListener(
+                    "keydown",
+                    fire
                 );
 
-                waitForTap(
+                action();
+            }
 
-                    "Pressione [[X]] para recarregar",
+            window.addEventListener(
+                "click",
+                fire
+            );
 
-                    function () {
+            window.addEventListener(
+                "keydown",
+                fire
+            );
+        }
 
-                        location.reload();
+        /*
+         * Em firmware não suportado,
+         * mantém-se o aviso de segurança.
+         */
+
+        if (!supported) {
+
+            print(
+                "FIRMWARE NÃO SUPORTADO",
+                "bad"
+            );
+
+            print(
+                "Toque na tela / pressione [[X]] para continuar",
+                "warn"
+            );
+
+            waitForTap(
+                "",
+                go
+            );
+
+            return;
+        }
+
+        var ac =
+            window.applicationCache;
+
+        if (
+            !ac ||
+            !document.documentElement.hasAttribute(
+                "manifest"
+            )
+        ) {
+
+            go();
+
+        } else if (!navigator.onLine) {
+
+            print(
+                "Modo offline — usando cache",
+                "ok"
+            );
+
+            go();
+
+        } else if (
+            ac.status === ac.IDLE
+        ) {
+
+            print(
+                "Cache disponível",
+                "ok"
+            );
+
+            go();
+
+        } else if (
+            ac.status === ac.UPDATEREADY
+        ) {
+
+            try {
+
+                ac.swapCache();
+
+            } catch (e) {}
+
+            print(
+                "Atualização disponível",
+                "ok"
+            );
+
+            waitForTap(
+
+                "Pressione [[X]] para recarregar",
+
+                function () {
+
+                    location.reload();
+
+                }
+            );
+
+        } else {
+
+            print(
+                "Verificando cache..."
+            );
+
+            ac.addEventListener(
+
+                "downloading",
+
+                function () {
+
+                    print(
+                        "Preparando cache para uso offline..."
+                    );
+
+                },
+
+                false
+            );
+
+            ac.addEventListener(
+
+                "progress",
+
+                function (e) {
+
+                    if (
+                        e &&
+                        e.total
+                    ) {
+
+                        print(
+                            "Cache: " +
+                            Math.round(
+                                (
+                                    e.loaded /
+                                    e.total
+                                ) * 100
+                            ) +
+                            "%"
+                        );
 
                     }
 
-                );
+                },
 
-            },
+                false
+            );
 
-            false
+            ac.addEventListener(
 
-        );
+                "cached",
 
-        ac.addEventListener(
+                function () {
 
-            "noupdate",
+                    print(
+                        "Cache instalado com sucesso",
+                        "ok"
+                    );
 
-            function () {
+                    waitForTap(
 
-                print(
-                    "Cache pronto para uso offline",
-                    "ok"
-                );
+                        "Pressione [[X]] para iniciar",
 
-                go();
+                        go
+                    );
 
-            },
+                },
 
-            false
+                false
+            );
 
-        );
+            ac.addEventListener(
 
-        ac.addEventListener(
+                "updateready",
 
-            "error",
+                function () {
 
-            function () {
+                    try {
 
-                print(
-                    "Não foi possível acessar o cache",
-                    "bad"
-                );
+                        ac.swapCache();
 
-                waitForTap(
+                    } catch (e) {}
 
-                    "Pressione [[X]] para continuar mesmo assim",
+                    print(
+                        "Atualização baixada",
+                        "ok"
+                    );
 
-                    go
+                    waitForTap(
 
-                );
+                        "Pressione [[X]] para recarregar",
 
-            },
+                        function () {
 
-            false
+                            location.reload();
 
-        );
+                        }
+                    );
 
-        ac.addEventListener(
+                },
 
-            "obsolete",
+                false
+            );
 
-            function () {
+            ac.addEventListener(
 
-                print(
-                    "Cache obsoleto",
-                    "bad"
-                );
+                "noupdate",
 
-                waitForTap(
+                function () {
 
-                    "Pressione [[X]] para continuar",
+                    print(
+                        "Cache pronto para uso offline",
+                        "ok"
+                    );
 
-                    go
+                    go();
 
-                );
+                },
 
-            },
+                false
+            );
 
-            false
+            ac.addEventListener(
 
-        );
+                "error",
 
-    }
+                function () {
 
-})();
+                    print(
+                        "Não foi possível acessar o cache",
+                        "bad"
+                    );
 
-</script>
+                    waitForTap(
+
+                        "Pressione [[X]] para continuar mesmo assim",
+
+                        go
+
+                    );
+
+                },
+
+                false
+            );
+
+            ac.addEventListener(
+
+                "obsolete",
+
+                function () {
+
+                    print(
+                        "Cache obsoleto",
+                        "bad"
+                    );
+
+                    waitForTap(
+
+                        "Pressione [[X]] para continuar",
+
+                        go
+
+                    );
+
+                },
+
+                false
+            );
+
+        }
+
+    })();
+
+    </script>
 
 </body>
 
