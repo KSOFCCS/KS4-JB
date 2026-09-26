@@ -85,7 +85,7 @@
 
             white-space: pre-wrap;
 
-            min-height: 90px;
+            min-height: 40px;
 
             color: #eeeeee;
         }
@@ -99,6 +99,34 @@
         }
 
         .warn {
+            color: #bbbbc5;
+        }
+
+        /* FIRMWARE STATUS */
+
+        .firmware-status {
+            margin-top: 12px;
+
+            font-family: monospace;
+
+            font-size: 15px;
+
+            line-height: 1.7;
+        }
+
+        .firmware-version {
+            color: #f5c542;
+        }
+
+        .firmware-compatible {
+            color: #4d8dff;
+        }
+
+        .firmware-incompatible {
+            color: #ff5c5c;
+        }
+
+        .firmware-unknown {
             color: #bbbbc5;
         }
 
@@ -400,6 +428,7 @@
                 font-size: 17px;
                 gap: 10px 12px;
             }
+
         }
 
     </style>
@@ -423,6 +452,7 @@
         aria-label="Cache"
         title="Cache"
     >
+
         <svg
             viewBox="0 0 24 24"
             width="21"
@@ -430,6 +460,7 @@
             aria-hidden="true"
             focusable="false"
         >
+
             <ellipse
                 cx="12"
                 cy="5"
@@ -460,12 +491,18 @@
                 stroke="currentColor"
                 stroke-width="1.4"
             />
+
         </svg>
+
     </button>
+
 
     <!-- INFO MODAL -->
 
-    <div id="info-modal" aria-hidden="true">
+    <div
+        id="info-modal"
+        aria-hidden="true"
+    >
 
         <div
             id="info-panel"
@@ -520,6 +557,7 @@
 
     </div>
 
+
     <!-- MAIN -->
 
     <div class="container">
@@ -534,11 +572,36 @@
 
         <pre id="console"></pre>
 
+        <div
+            id="firmware-status"
+            class="firmware-status"
+        >
+
+            Firmware:
+            <span
+                id="firmware-version"
+                class="firmware-version"
+            >
+                Detectando...
+            </span>
+
+            <br>
+
+            <span
+                id="firmware-compatibility"
+                class="firmware-unknown"
+            >
+                Verificando compatibilidade...
+            </span>
+
+        </div>
+
         <div class="footer">
             <b>KS4-JB</b> · 2026
         </div>
 
     </div>
+
 
     <!-- INFO / CACHE UI -->
 
@@ -555,6 +618,7 @@
         var closeInfo =
             document.getElementById("close-info");
 
+
         function openInfo(event) {
 
             event.stopPropagation();
@@ -567,7 +631,9 @@
             );
 
             closeInfo.focus();
+
         }
+
 
         function closeInfoModal(event) {
 
@@ -583,17 +649,21 @@
             );
 
             infoButton.focus();
+
         }
+
 
         infoButton.addEventListener(
             "click",
             openInfo
         );
 
+
         closeInfo.addEventListener(
             "click",
             closeInfoModal
         );
+
 
         infoModal.addEventListener(
             "click",
@@ -601,12 +671,17 @@
 
                 event.stopPropagation();
 
-                if (event.target === infoModal) {
+                if (
+                    event.target === infoModal
+                ) {
+
                     closeInfoModal(event);
+
                 }
 
             }
         );
+
 
         document.addEventListener(
             "keydown",
@@ -616,14 +691,18 @@
                     event.key === "Escape" &&
                     infoModal.classList.contains("open")
                 ) {
+
                     closeInfoModal();
+
                 }
 
             }
         );
 
+
         var cacheButton =
             document.getElementById("cache-button");
+
 
         cacheButton.addEventListener(
             "click",
@@ -641,6 +720,7 @@
 
     </script>
 
+
     <!-- CONSOLE -->
 
     <script>
@@ -650,17 +730,24 @@
         var con =
             document.getElementById("console");
 
+
         function print(msg, cls) {
 
             var span =
                 document.createElement("span");
 
+
             if (cls) {
-                span.className = cls;
+
+                span.className =
+                    cls;
+
             }
+
 
             var parts =
                 msg.split("[[X]]");
+
 
             for (
                 var i = 0;
@@ -678,18 +765,27 @@
 
                 }
 
-                if (i < parts.length - 1) {
+
+                if (
+                    i <
+                    parts.length - 1
+                ) {
 
                     var img =
                         document.createElement("img");
 
+
                     img.src =
                         "PS4%20Cross.png";
+
 
                     img.className =
                         "cross-icon";
 
-                    img.alt = "X";
+
+                    img.alt =
+                        "X";
+
 
                     span.appendChild(img);
 
@@ -697,21 +793,26 @@
 
             }
 
+
             span.appendChild(
                 document.createTextNode("\n")
             );
 
+
             con.appendChild(span);
+
         }
+
 
         var params =
             new URLSearchParams(
                 location.search
             );
 
+
         /*
-         * Firmware table.
-         * Mantida para a lógica existente.
+         * Firmware suportado apenas
+         * para informação visual.
          */
 
         var SUPPORTED = {
@@ -723,8 +824,27 @@
 
         };
 
+
         var key = null,
             fwnum = null;
+
+
+        var firmwareVersion =
+            document.getElementById(
+                "firmware-version"
+            );
+
+
+        var firmwareCompatibility =
+            document.getElementById(
+                "firmware-compatibility"
+            );
+
+
+        /*
+         * Tenta identificar a versão
+         * informada pelo User-Agent.
+         */
 
         var m =
             /PlayStation\s+4[\/ ]\((\d+)\.(\d+)/
@@ -732,51 +852,124 @@
                     navigator.userAgent
                 );
 
+
         if (m) {
 
-            var ms =
-                parseInt(
-                    m[2],
-                    16
-                ).toString(16);
-
-            if (ms.length < 2) {
-                ms =
-                    "0" + ms;
-            }
-
-            key =
-                m[1] + "." + ms;
-
-            fwnum =
+            var major =
                 parseInt(
                     m[1],
                     10
-                ) * 100 +
+                );
+
+
+            var minor =
                 parseInt(
-                    ms,
+                    m[2],
+                    16
+                );
+
+
+            var minorText =
+                minor.toString(10);
+
+
+            if (
+                minorText.length < 2
+            ) {
+
+                minorText =
+                    "0" + minorText;
+
+            }
+
+
+            key =
+                major +
+                "." +
+                minorText;
+
+
+            fwnum =
+                major * 100 +
+                parseInt(
+                    minorText,
                     10
                 );
+
+
+            /*
+             * Mostra a versão detectada.
+             */
+
+            firmwareVersion.textContent =
+                key;
+
+
+            firmwareVersion.className =
+                "firmware-version";
+
+
+            /*
+             * Compara apenas com a
+             * tabela existente.
+             */
+
+            if (
+                SUPPORTED[fwnum] === 1
+            ) {
+
+                firmwareCompatibility.textContent =
+                    "Compatibilidade: Compatível";
+
+
+                firmwareCompatibility.className =
+                    "firmware-compatible";
+
+            } else {
+
+                firmwareCompatibility.textContent =
+                    "Compatibilidade: Não compatível";
+
+
+                firmwareCompatibility.className =
+                    "firmware-incompatible";
+
+            }
+
+        } else {
+
+            /*
+             * O navegador não informou
+             * a versão.
+             */
+
+            firmwareVersion.textContent =
+                "Não identificado";
+
+
+            firmwareVersion.className =
+                "firmware-unknown";
+
+
+            firmwareCompatibility.textContent =
+                "Compatibilidade: Desconhecida";
+
+
+            firmwareCompatibility.className =
+                "firmware-unknown";
+
         }
 
-        var forced =
-            params.get("force") === "1";
-
-        var supported =
-            forced ||
-            (
-                fwnum !== null &&
-                SUPPORTED[fwnum] === 1
-            );
 
         /*
-         * Firmware e compatibilidade não são
-         * mais exibidos normalmente na interface.
+         * O restante da interface continua
+         * funcionando normalmente.
          */
 
         var target =
             "jb.html" +
             location.search;
+
 
         function go() {
 
@@ -786,13 +979,24 @@
             );
 
             location.replace(target);
+
         }
 
-        function waitForTap(msg, action) {
+
+        function waitForTap(
+            msg,
+            action
+        ) {
 
             if (msg) {
-                print(msg, "warn");
+
+                print(
+                    msg,
+                    "warn"
+                );
+
             }
+
 
             function fire() {
 
@@ -807,46 +1011,31 @@
                 );
 
                 action();
+
             }
+
 
             window.addEventListener(
                 "click",
                 fire
             );
 
+
             window.addEventListener(
                 "keydown",
                 fire
             );
+
         }
+
 
         /*
-         * Em firmware não suportado,
-         * mantém-se o aviso de segurança.
+         * CACHE
          */
-
-        if (!supported) {
-
-            print(
-                "FIRMWARE NÃO SUPORTADO",
-                "bad"
-            );
-
-            print(
-                "Toque na tela / pressione [[X]] para continuar",
-                "warn"
-            );
-
-            waitForTap(
-                "",
-                go
-            );
-
-            return;
-        }
 
         var ac =
             window.applicationCache;
+
 
         if (
             !ac ||
@@ -857,7 +1046,9 @@
 
             go();
 
-        } else if (!navigator.onLine) {
+        } else if (
+            !navigator.onLine
+        ) {
 
             print(
                 "Modo offline — usando cache",
@@ -887,10 +1078,12 @@
 
             } catch (e) {}
 
+
             print(
                 "Atualização disponível",
                 "ok"
             );
+
 
             waitForTap(
 
@@ -901,6 +1094,7 @@
                     location.reload();
 
                 }
+
             );
 
         } else {
@@ -908,6 +1102,7 @@
             print(
                 "Verificando cache..."
             );
+
 
             ac.addEventListener(
 
@@ -922,7 +1117,9 @@
                 },
 
                 false
+
             );
+
 
             ac.addEventListener(
 
@@ -951,7 +1148,9 @@
                 },
 
                 false
+
             );
+
 
             ac.addEventListener(
 
@@ -964,17 +1163,21 @@
                         "ok"
                     );
 
+
                     waitForTap(
 
                         "Pressione [[X]] para iniciar",
 
                         go
+
                     );
 
                 },
 
                 false
+
             );
+
 
             ac.addEventListener(
 
@@ -988,10 +1191,12 @@
 
                     } catch (e) {}
 
+
                     print(
                         "Atualização baixada",
                         "ok"
                     );
+
 
                     waitForTap(
 
@@ -1002,12 +1207,15 @@
                             location.reload();
 
                         }
+
                     );
 
                 },
 
                 false
+
             );
+
 
             ac.addEventListener(
 
@@ -1020,12 +1228,15 @@
                         "ok"
                     );
 
+
                     go();
 
                 },
 
                 false
+
             );
+
 
             ac.addEventListener(
 
@@ -1038,6 +1249,7 @@
                         "bad"
                     );
 
+
                     waitForTap(
 
                         "Pressione [[X]] para continuar mesmo assim",
@@ -1049,7 +1261,9 @@
                 },
 
                 false
+
             );
+
 
             ac.addEventListener(
 
@@ -1062,6 +1276,7 @@
                         "bad"
                     );
 
+
                     waitForTap(
 
                         "Pressione [[X]] para continuar",
@@ -1073,6 +1288,7 @@
                 },
 
                 false
+
             );
 
         }
