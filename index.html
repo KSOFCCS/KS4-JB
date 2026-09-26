@@ -28,6 +28,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .container {
@@ -116,11 +117,6 @@
             color: #777783;
         }
 
-        /*
-         * Botões superiores
-         * Informações + Cache ficam juntos.
-         */
-
         .top-buttons {
             position: fixed;
             top: 18px;
@@ -128,6 +124,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            z-index: 10;
         }
 
         .icon-button {
@@ -153,10 +150,6 @@
             height: 20px;
         }
 
-        /*
-         * Modal
-         */
-
         .modal {
             position: fixed;
             inset: 0;
@@ -167,6 +160,8 @@
             justify-content: center;
 
             padding: 20px;
+            z-index: 20;
+            cursor: default;
         }
 
         .modal.show {
@@ -247,18 +242,14 @@
             background: #18181f;
             border: 1px solid #292932;
             border-radius: 8px;
-
             padding: 10px 5px;
-
             text-align: center;
-
             color: #cfcfd8;
             font-family: monospace;
             font-size: 13px;
         }
 
         @media (max-width: 430px) {
-
             .container {
                 padding: 32px 22px;
             }
@@ -266,18 +257,17 @@
             .firmware-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
         }
     </style>
 </head>
 
 <body>
 
-    <!-- INFORMAÇÕES + CACHE -->
+    <!-- BOTÕES SUPERIORES -->
 
     <div class="top-buttons">
 
-        <!-- Informações -->
+        <!-- INFORMAÇÕES -->
 
         <button
             class="icon-button"
@@ -315,7 +305,7 @@
         </button>
 
 
-        <!-- Cache -->
+        <!-- CACHE -->
 
         <button
             class="icon-button"
@@ -350,7 +340,7 @@
     </div>
 
 
-    <!-- CONTEÚDO PRINCIPAL -->
+    <!-- CONTEÚDO -->
 
     <div class="container">
 
@@ -362,11 +352,7 @@
             KSOFCC · PS4 EXPLOIT
         </div>
 
-
         <div id="console"></div>
-
-
-        <!-- INSTRUÇÃO VISUAL -->
 
         <div class="continue">
 
@@ -381,7 +367,6 @@
 
         </div>
 
-
         <div class="footer">
             <b>KS4-JB</b> · 2026
         </div>
@@ -389,7 +374,7 @@
     </div>
 
 
-    <!-- MODAL DE INFORMAÇÕES -->
+    <!-- MODAL -->
 
     <div
         class="modal"
@@ -413,26 +398,21 @@
 
             </div>
 
-
             <div class="version">
                 Versão: 1.1 · PS4
             </div>
-
 
             <p>
                 Uma interface para desbloquear seu PS4.
             </p>
 
-
             <div class="warning">
                 ⚠ Aviso: não execute novamente caso o desbloqueio já esteja ativo no console.
             </div>
 
-
             <div class="firmware-title">
                 Firmwares listados
             </div>
-
 
             <div class="firmware-grid">
 
@@ -514,7 +494,6 @@
                 var match =
                     patterns[i].exec(ua);
 
-
                 if (match) {
 
                     var major =
@@ -522,7 +501,6 @@
 
                     var minor =
                         parseInt(match[2], 10);
-
 
                     if (
                         !isNaN(major) &&
@@ -549,7 +527,6 @@
                     "Firmware: " + firmware,
                     "info"
                 );
-
 
                 if (SUPPORTED[firmware]) {
 
@@ -585,16 +562,13 @@
 
 
         /*
-         * CACHE
-         *
-         * Nenhuma mensagem de cache é mostrada aqui.
+         * CACHE SILENCIOSO
          */
 
         try {
 
             var appCache =
                 window.applicationCache;
-
 
             if (
                 appCache &&
@@ -610,34 +584,46 @@
 
 
         /*
-         * MODAL
+         * BOTÃO DE INFORMAÇÕES
          */
 
         document
             .getElementById("infoBtn")
-            .onclick = function () {
+            .addEventListener("click", function(event) {
+
+                event.stopPropagation();
 
                 document
                     .getElementById("infoModal")
                     .classList.add("show");
 
-            };
+            });
 
+
+        /*
+         * FECHAR MODAL
+         */
 
         document
             .getElementById("closeModal")
-            .onclick = function () {
+            .addEventListener("click", function(event) {
+
+                event.stopPropagation();
 
                 document
                     .getElementById("infoModal")
                     .classList.remove("show");
 
-            };
+            });
 
+
+        /*
+         * CLIQUE FORA DO CONTEÚDO DO MODAL
+         */
 
         document
             .getElementById("infoModal")
-            .onclick = function (event) {
+            .addEventListener("click", function(event) {
 
                 if (
                     event.target ===
@@ -650,24 +636,69 @@
 
                 }
 
-            };
+            });
 
 
         /*
-         * CACHE
+         * BOTÃO DE CACHE
          */
 
         document
             .getElementById("cacheBtn")
-            .onclick = function () {
+            .addEventListener("click", function(event) {
+
+                event.stopPropagation();
 
                 location.href = "cache.html";
 
-            };
+            });
 
 
         /*
-         * DETECÇÃO
+         * CLIQUE NA ÁREA PRINCIPAL
+         *
+         * Qualquer clique fora dos botões e do modal
+         * abre a página de demonstração.
+         */
+
+        document.addEventListener("click", function(event) {
+
+            if (
+                event.target.closest("#infoBtn") ||
+                event.target.closest("#cacheBtn") ||
+                event.target.closest("#infoModal")
+            ) {
+                return;
+            }
+
+            location.href = "demo.html";
+
+        });
+
+
+        /*
+         * TOUCH NA ÁREA PRINCIPAL
+         *
+         * Útil para telas sensíveis ao toque.
+         */
+
+        document.addEventListener("touchend", function(event) {
+
+            if (
+                event.target.closest("#infoBtn") ||
+                event.target.closest("#cacheBtn") ||
+                event.target.closest("#infoModal")
+            ) {
+                return;
+            }
+
+            location.href = "demo.html";
+
+        }, { passive: true });
+
+
+        /*
+         * DETECTAR FIRMWARE
          */
 
         detectFirmware();
