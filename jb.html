@@ -14,6 +14,7 @@
     <title>KS4-JB · PS4 Exploit</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -130,17 +131,37 @@
             animation: subtle-pulse 2s infinite ease-in-out;
         }
 
-        .core {
-            width: 28px;
-            height: 28px;
+        /* PS4 ICON */
 
-            border-radius: 50%;
+        .ps4-icon {
+            position: relative;
 
-            background: #4d8dff;
+            width: 36px;
+            height: 36px;
+
+            object-fit: contain;
+
+            z-index: 2;
+
+            /*
+             * O PNG original é branco.
+             * O filtro transforma o branco na cor desejada.
+             */
+            filter:
+                brightness(0)
+                saturate(100%)
+                invert(54%)
+                sepia(91%)
+                saturate(1840%)
+                hue-rotate(196deg)
+                brightness(101%)
+                contrast(101%);
 
             transition:
-                background 0.3s ease;
+                filter 0.3s ease;
         }
+
+        /* SPINNER */
 
         #spin {
             position: absolute;
@@ -185,11 +206,20 @@
 
         body.done .pulse {
             border-color: #f5c542;
+
             animation: none;
         }
 
-        body.done .core {
-            background: #f5c542;
+        body.done .ps4-icon {
+            filter:
+                brightness(0)
+                saturate(100%)
+                invert(78%)
+                sepia(75%)
+                saturate(1000%)
+                hue-rotate(355deg)
+                brightness(103%)
+                contrast(101%);
         }
 
         body.done #spin {
@@ -198,11 +228,13 @@
 
         body.done #status {
             color: #f5c542;
+
             font-size: 0;
         }
 
         body.done #status::after {
             content: "Concluído";
+
             font-size: 15px;
         }
 
@@ -222,8 +254,16 @@
             animation: none;
         }
 
-        body.fail .core {
-            background: #ff5c5c;
+        body.fail .ps4-icon {
+            filter:
+                brightness(0)
+                saturate(100%)
+                invert(43%)
+                sepia(93%)
+                saturate(3500%)
+                hue-rotate(325deg)
+                brightness(104%)
+                contrast(103%);
         }
 
         body.fail #spin {
@@ -238,6 +278,7 @@
 
         body.fail #status::after {
             content: "Não foi possível concluir.";
+
             font-size: 15px;
         }
 
@@ -397,12 +438,15 @@
         /* ANIMATIONS */
 
         @keyframes real-spin {
+
             to {
                 transform: rotate(360deg);
             }
+
         }
 
         @keyframes subtle-pulse {
+
             0% {
                 transform: scale(0.92);
                 opacity: 0.45;
@@ -417,8 +461,11 @@
                 transform: scale(0.92);
                 opacity: 0.45;
             }
+
         }
+
     </style>
+
 </head>
 
 <body>
@@ -435,11 +482,19 @@
 
         <div id="visual-indicator">
 
+            <!-- Ícone central -->
+            <img
+                id="ps4-icon"
+                class="ps4-icon"
+                src="PSICON4.png"
+                alt=""
+                draggable="false"
+            >
+
+            <!-- Anel giratório continua separado -->
             <div id="spin"></div>
 
             <div class="pulse"></div>
-
-            <div class="core"></div>
 
         </div>
 
@@ -466,31 +521,51 @@
     </div>
 
     <script>
+
         /* BLOQUEIA SELEÇÃO E AÇÕES DE CÓPIA */
 
-        document.addEventListener("contextmenu", function (e) {
-            e.preventDefault();
-        });
+        document.addEventListener(
+            "contextmenu",
+            function (event) {
+                event.preventDefault();
+            }
+        );
 
-        document.addEventListener("copy", function (e) {
-            e.preventDefault();
-        });
+        document.addEventListener(
+            "copy",
+            function (event) {
+                event.preventDefault();
+            }
+        );
 
-        document.addEventListener("cut", function (e) {
-            e.preventDefault();
-        });
+        document.addEventListener(
+            "cut",
+            function (event) {
+                event.preventDefault();
+            }
+        );
 
-        document.addEventListener("paste", function (e) {
-            e.preventDefault();
-        });
+        document.addEventListener(
+            "paste",
+            function (event) {
+                event.preventDefault();
+            }
+        );
 
-        document.addEventListener("dragstart", function (e) {
-            e.preventDefault();
-        });
+        document.addEventListener(
+            "selectstart",
+            function (event) {
+                event.preventDefault();
+            }
+        );
 
-        document.addEventListener("selectstart", function (e) {
-            e.preventDefault();
-        });
+        document.addEventListener(
+            "dragstart",
+            function (event) {
+                event.preventDefault();
+            }
+        );
+
     </script>
 
     <script type="module">
