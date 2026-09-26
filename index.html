@@ -2,10 +2,9 @@
 <html manifest="cache.appcache">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" type="image/png" href="Icon.png">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>KS4-JB · PS4 Exploit</title>
 
@@ -23,7 +22,7 @@
 
         body {
             background: #0b0b0f;
-            color: #ffffff;
+            color: #fff;
             font-family: Arial, Helvetica, sans-serif;
             display: flex;
             align-items: center;
@@ -55,37 +54,60 @@
         .subtitle {
             color: #8f8f9d;
             font-size: 14px;
-            margin-bottom: 32px;
+            margin-bottom: 30px;
         }
 
         #console {
-            min-height: 60px;
+            min-height: 100px;
             font-family: monospace;
             font-size: 15px;
             line-height: 1.7;
-            text-align: left;
+            text-align: center;
             white-space: pre-wrap;
-            word-break: break-word;
-            color: #eeeeee;
+            color: #d9d9e2;
+        }
+
+        #console .info {
+            color: #8faeff;
         }
 
         #console .ok {
-            color: #66e08a;
+            color: #8faeff;
         }
 
         #console .bad {
-            color: #ff5c5c;
+            color: #ff7070;
         }
 
-        #console .warn {
-            color: #f5c542;
+        #console .unknown {
+            color: #a7a7b3;
+        }
+
+        .firmware-line {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            min-height: 27px;
         }
 
         .cross-icon {
             width: 18px;
             height: 18px;
+            object-fit: contain;
             vertical-align: middle;
-            margin-right: 6px;
+            margin-left: 4px;
+        }
+
+        .continue {
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            color: #9b9ba8;
+            font-family: monospace;
+            font-size: 14px;
         }
 
         .footer {
@@ -108,17 +130,14 @@
             pointer-events: none;
         }
 
-        .top-buttons button {
-            pointer-events: auto;
-        }
-
         .icon-button {
+            pointer-events: auto;
             width: 42px;
             height: 42px;
             border-radius: 12px;
             border: 1px solid #292932;
             background: #111117;
-            color: #ffffff;
+            color: #fff;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -137,7 +156,7 @@
         .modal {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(0, 0, 0, .75);
             display: none;
             align-items: center;
             justify-content: center;
@@ -192,9 +211,9 @@
         }
 
         .warning {
-            background: #191811;
-            border: 1px solid #403916;
-            color: #d8c96b;
+            background: #151922;
+            border: 1px solid #29354d;
+            color: #9baccb;
             border-radius: 10px;
             padding: 12px;
             font-size: 13px;
@@ -204,7 +223,7 @@
         .firmware-title {
             margin-top: 25px;
             margin-bottom: 12px;
-            color: #ffffff;
+            color: #fff;
             font-size: 14px;
             font-weight: bold;
         }
@@ -254,7 +273,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <ellipse cx="12" cy="5" rx="7" ry="3"></ellipse>
                 <path d="M5 5v7c0 1.7 3.1 3 7 3s7-1.3 7-3V5"></path>
-                <path d="M5 12v7c0 1.7 3.1 3 7 3s7-1.3 7-3v-7"></path>
+                <path d="M5 12v7c0 1.7 3 3 7 3s7-1.3 7-3v-7"></path>
             </svg>
         </button>
 
@@ -270,7 +289,13 @@
             KSOFCC · PS4 EXPLOIT
         </div>
 
-        <pre id="console"></pre>
+        <div id="console"></div>
+
+        <div class="continue">
+            Pressione
+            <img class="cross-icon" src="PS4 Cross.png" alt="">
+            para continuar
+        </div>
 
         <div class="footer">
             <b>KS4-JB</b> · 2026
@@ -335,64 +360,23 @@
             "13.52": true
         };
 
-        function print(message, cls) {
+        function addLine(text, className) {
             var line = document.createElement("div");
 
-            if (cls) {
-                line.className = cls;
-            }
-
-            if (message.indexOf("[[X]]") !== -1) {
-
-                var parts = message.split("[[X]]");
-
-                line.appendChild(
-                    document.createTextNode(parts[0])
-                );
-
-                var img = document.createElement("img");
-
-                img.src = "PS4 Cross.png";
-                img.className = "cross-icon";
-                img.alt = "";
-
-                line.appendChild(img);
-
-                if (parts[1]) {
-                    line.appendChild(
-                        document.createTextNode(parts[1])
-                    );
-                }
-
-            } else {
-
-                line.textContent = message;
-
-            }
+            line.className = "firmware-line " + className;
+            line.textContent = text;
 
             consoleBox.appendChild(line);
         }
-
-
-        /*
-         * Detecção visual do firmware.
-         *
-         * O PS4 pode apresentar formatos diferentes de User-Agent.
-         * Tentamos alguns formatos conhecidos.
-         */
 
         function detectFirmware() {
 
             var ua = navigator.userAgent || "";
 
             var patterns = [
-
                 /PlayStation\s*4[\/\s;_-]+(\d+)\.(\d+)/i,
-
                 /PlayStation\s*4.*?(\d+)\.(\d+)/i,
-
                 /PS4.*?(\d+)\.(\d+)/i
-
             ];
 
             var firmware = null;
@@ -408,62 +392,54 @@
 
                     if (!isNaN(major) && !isNaN(minor)) {
 
-                        var minorText =
-                            minor < 10
-                                ? "0" + minor
-                                : String(minor);
-
                         firmware =
-                            major + "." + minorText;
+                            major + "." +
+                            (minor < 10 ? "0" + minor : minor);
 
                         break;
                     }
                 }
             }
 
-
             if (firmware) {
 
-                print(
+                addLine(
                     "Firmware: " + firmware,
-                    "warn"
+                    "info"
                 );
 
                 if (SUPPORTED[firmware]) {
 
-                    print(
+                    addLine(
                         "Compatibilidade: OK",
                         "ok"
                     );
 
                 } else {
 
-                    print(
+                    addLine(
                         "Compatibilidade: NÃO SUPORTADO",
                         "bad"
                     );
-
                 }
 
             } else {
 
-                print(
+                addLine(
                     "Firmware: não identificado",
-                    "warn"
+                    "unknown"
                 );
 
-                print(
+                addLine(
                     "Compatibilidade: desconhecida",
-                    "warn"
+                    "unknown"
                 );
             }
         }
 
 
         /*
-         * O index.html NÃO mostra mensagens de cache.
-         * Apenas troca silenciosamente para o cache atualizado,
-         * quando o navegador já tiver uma atualização pronta.
+         * O index.html permanece silencioso sobre o cache.
          */
 
         try {
@@ -477,12 +453,8 @@
                 appCache.swapCache();
             }
 
-        } catch (e) {
-            // Silencioso de propósito.
-        }
+        } catch (e) {}
 
-
-        /* Botão de informações */
 
         document.getElementById("infoBtn").onclick =
             function () {
@@ -494,8 +466,6 @@
             };
 
 
-        /* Fechar informações */
-
         document.getElementById("closeModal").onclick =
             function () {
 
@@ -505,8 +475,6 @@
 
             };
 
-
-        /* Fechar clicando fora */
 
         document.getElementById("infoModal").onclick =
             function (event) {
@@ -525,8 +493,6 @@
             };
 
 
-        /* Abrir página de cache */
-
         document.getElementById("cacheBtn").onclick =
             function () {
 
@@ -535,10 +501,7 @@
             };
 
 
-        /* Iniciar detecção */
-
         detectFirmware();
-
     </script>
 
 </body>
