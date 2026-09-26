@@ -1,4 +1,5 @@
-<html manifest="cache.appcache">
+<!doctype html>
+<html lang="pt-BR" manifest="cache.appcache">
 
 <head>
 
@@ -17,6 +18,13 @@
 
         * {
             box-sizing: border-box;
+
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+            -webkit-touch-callout: none;
         }
 
         html,
@@ -367,6 +375,54 @@
         </div>
 
     </div>
+
+    <script>
+
+        /* Bloquear seleção e ações de cópia */
+
+        document.addEventListener(
+            "contextmenu",
+            function (event) {
+                event.preventDefault();
+            }
+        );
+
+        document.addEventListener(
+            "copy",
+            function (event) {
+                event.preventDefault();
+            }
+        );
+
+        document.addEventListener(
+            "cut",
+            function (event) {
+                event.preventDefault();
+            }
+        );
+
+        document.addEventListener(
+            "paste",
+            function (event) {
+                event.preventDefault();
+            }
+        );
+
+        document.addEventListener(
+            "selectstart",
+            function (event) {
+                event.preventDefault();
+            }
+        );
+
+        document.addEventListener(
+            "dragstart",
+            function (event) {
+                event.preventDefault();
+            }
+        );
+
+    </script>
 
 </body>
 
