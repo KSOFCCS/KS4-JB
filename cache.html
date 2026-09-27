@@ -2,32 +2,25 @@
 <html lang="pt-BR" manifest="cache.appcache">
 
 <head>
-
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <link
-        rel="icon"
-        type="image/png"
-        href="Icon.png"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     >
 
     <title>KS4-JB · PS4 Exploit</title>
 
-    <style>
+    <link rel="icon" type="image/png" href="Icon.png">
 
+    <style>
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
 
             -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
             user-select: none;
-
             -webkit-touch-callout: none;
         }
 
@@ -35,17 +28,12 @@
         body {
             width: 100%;
             height: 100%;
-            margin: 0;
         }
 
         body {
             background: #0b0b0f;
             color: #fff;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
 
             display: flex;
             align-items: center;
@@ -54,279 +42,276 @@
             overflow: hidden;
         }
 
-        img {
-            -webkit-user-drag: none;
-            user-drag: none;
-            pointer-events: none;
-        }
+        #main-container {
+            position: relative;
 
-        .container {
             width: 90%;
             max-width: 520px;
+            min-height: 330px;
 
             padding: 38px 30px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
 
             text-align: center;
 
             background: #111117;
 
             border: 1px solid #292932;
-
             border-radius: 18px;
         }
 
-        .logo {
+        #brand {
             font-size: 42px;
             font-weight: 800;
-
             letter-spacing: -2px;
-
             margin-bottom: 8px;
+            color: #fff;
         }
 
-        .logo span {
+        #brand span {
             color: #4d8dff;
         }
 
-        .subtitle {
+        #subtitle {
             color: #8f8f9d;
-
             font-size: 14px;
-
-            margin-bottom: 28px;
+            margin-bottom: 34px;
         }
 
-        /*
-         * ÁREA DO CACHE
-         */
-
-        .cache-area {
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: center;
-        }
-
-        /*
-         * ÍCONE + SPINNER
-         */
-
-        .visual-indicator {
+        #visual-indicator {
             position: relative;
 
-            width: 100px;
-            height: 100px;
+            width: 72px;
+            height: 72px;
 
             display: flex;
-
             align-items: center;
             justify-content: center;
 
-            margin: 5px auto 20px;
+            margin-bottom: 26px;
         }
 
         /*
-         * Spinner externo
+         * Mesmo ícone usado no jb.html.
          */
+        .ps4-icon {
+            position: relative;
 
+            width: 44px;
+            height: 44px;
+
+            display: block;
+            object-fit: contain;
+
+            z-index: 2;
+        }
+
+        /*
+         * Mesmo pulso do jb.html.
+         */
+        .pulse {
+            position: absolute;
+
+            width: 100%;
+            height: 100%;
+
+            border-radius: 50%;
+            border: 2px solid #4d8dff;
+
+            animation: subtle-pulse 2s infinite ease-in-out;
+        }
+
+        /*
+         * Mesmo spinner do jb.html.
+         */
         #spin {
             position: absolute;
 
-            width: 82px;
-            height: 82px;
+            width: 125%;
+            height: 125%;
+
+            border: 2px solid transparent;
+            border-top-color: #fff;
 
             border-radius: 50%;
 
-            border: 2px solid rgba(77, 141, 255, 0.16);
+            animation: real-spin 0.9s linear infinite;
 
-            border-top-color: #4d8dff;
-
-            animation:
-                rotate 1s linear infinite;
+            opacity: 0.25;
         }
-
-        /*
-         * PSICON4
-         *
-         * O PNG é usado como máscara.
-         * Isso permite manter uma cor sólida.
-         */
-
-        #ps4-icon {
-            position: relative;
-
-            width: 46px;
-            height: 46px;
-
-            z-index: 2;
-
-            background-color: #4d8dff;
-
-            -webkit-mask-image:
-                url("PSICON4.png");
-
-            mask-image:
-                url("PSICON4.png");
-
-            -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-
-            -webkit-mask-position: center;
-            mask-position: center;
-
-            -webkit-mask-size: contain;
-            mask-size: contain;
-
-            transition:
-                background-color 0.3s ease;
-        }
-
-        /*
-         * STATUS
-         */
 
         #status {
-            min-height: 23px;
+            min-height: 22px;
 
-            color: #d9d9e2;
+            color: #eee;
 
             font-family: monospace;
-
             font-size: 15px;
-
-            line-height: 1.45;
+            line-height: 1.5;
         }
 
-        /*
-         * PORCENTAGEM
-         */
-
         #percent {
-            margin-top: 8px;
+            min-height: 20px;
 
-            min-height: 22px;
+            margin-top: 5px;
 
             color: #8faeff;
 
             font-family: monospace;
-
-            font-size: 14px;
-
-            font-weight: bold;
+            font-size: 13px;
+            line-height: 1.5;
         }
 
-        /*
-         * RODAPÉ
-         */
+        #footer {
+            position: fixed;
 
-        .footer {
-            margin-top: 28px;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+
+            text-align: center;
+
+            font-family: monospace;
+            font-size: 11px;
 
             color: #555560;
 
-            font-size: 12px;
+            letter-spacing: 0.08em;
         }
 
-        .footer b {
+        #footer b {
             color: #777783;
         }
 
         /*
-         * SUCESSO
+         * Quando o cache termina.
          */
-
-        body.done #ps4-icon {
-            background-color: #f5c542;
-        }
 
         body.done #spin {
             animation: none;
 
-            border-color:
-                rgba(245, 197, 66, 0.16);
-
             border-top-color: #f5c542;
+            border-left-color: rgba(245, 197, 66, 0.12);
+            border-right-color: rgba(245, 197, 66, 0.12);
+            border-bottom-color: rgba(245, 197, 66, 0.12);
+        }
+
+        body.done .pulse {
+            animation: none;
+            border-color: #f5c542;
+            opacity: 0.65;
+        }
+
+        body.done #brand span {
+            color: #f5c542;
         }
 
         body.done #percent {
             color: #f5c542;
         }
 
-        body.done .logo span {
-            color: #f5c542;
-        }
-
         /*
-         * ERRO
+         * Animações
          */
 
-        body.fail #ps4-icon {
-            background-color: #ff5c5c;
-        }
-
-        body.fail #spin {
-            animation: none;
-
-            border-color:
-                rgba(255, 92, 92, 0.16);
-
-            border-top-color: #ff5c5c;
-        }
-
-        body.fail #percent {
-            color: #ff7070;
-        }
-
-        body.fail .logo span {
-            color: #ff7070;
-        }
-
-        /*
-         * ANIMAÇÃO DO SPINNER
-         */
-
-        @keyframes rotate {
-
-            from {
-                transform: rotate(0deg);
-            }
-
+        @keyframes real-spin {
             to {
                 transform: rotate(360deg);
             }
+        }
 
+        @keyframes subtle-pulse {
+            0% {
+                transform: scale(0.96);
+                opacity: 0.45;
+            }
+
+            50% {
+                transform: scale(1.04);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(0.96);
+                opacity: 0.45;
+            }
         }
 
         /*
-         * CELULARES PEQUENOS
+         * Tela pequena
          */
 
         @media (max-width: 430px) {
 
-            .container {
-                padding: 32px 22px;
+            #main-container {
+                padding: 34px 22px;
             }
 
-            .logo {
-                font-size: 38px;
+            #brand {
+                font-size: 40px;
             }
 
         }
-
     </style>
+</head>
+
+<body>
+
+    <div id="main-container">
+
+        <div id="brand">
+            KS<span>4</span>
+        </div>
+
+        <div id="subtitle">
+            KSOFCC · PS4 EXPLOIT
+        </div>
+
+        <div id="visual-indicator">
+
+            <img
+                id="ps4-icon"
+                class="ps4-icon"
+                src="PSICON4.png"
+                alt=""
+                draggable="false"
+            >
+
+            <div id="spin"></div>
+
+            <div class="pulse"></div>
+
+        </div>
+
+        <div id="status">
+            Preparando cache...
+        </div>
+
+        <div id="percent">
+            0%
+        </div>
+
+    </div>
+
+    <div id="footer">
+        <b>KS4-JB</b> · 2026
+    </div>
+
 
     <script>
 
         /*
-         * MANTIDO DO CACHE ORIGINAL
+         * Mantido do cache.html original.
          */
 
         history.replaceState(
             null,
             null,
-            'index.html'
+            "index.html"
         );
 
         var histlength =
@@ -336,7 +321,7 @@
 
 
         /*
-         * PROGRESSO DO CACHE
+         * Atualiza a porcentagem.
          */
 
         function DLProgress(e) {
@@ -362,7 +347,7 @@
 
 
         /*
-         * CACHE CONCLUÍDO
+         * Cache concluído.
          */
 
         function DisplayCacheProgress() {
@@ -395,7 +380,7 @@
 
 
         /*
-         * APPLICATION CACHE
+         * Application Cache
          */
 
         window.applicationCache.addEventListener(
@@ -422,139 +407,56 @@
 
     </script>
 
-</head>
-
-
-<body>
-
-    <div class="container">
-
-        <div class="logo">
-            KS<span>4</span>
-        </div>
-
-        <div class="subtitle">
-            KSOFCC · PS4 EXPLOIT
-        </div>
-
-
-        <div class="cache-area">
-
-            <div class="visual-indicator">
-
-                <div id="spin"></div>
-
-                <div id="ps4-icon"></div>
-
-            </div>
-
-
-            <div id="status">
-                Preparando cache...
-            </div>
-
-
-            <div id="percent">
-                0%
-            </div>
-
-        </div>
-
-
-        <div class="footer">
-            <b>KS4-JB</b> · 2026
-        </div>
-
-    </div>
-
 
     <script>
 
         /*
-         * BLOQUEIA MENU DE CONTEXTO
+         * Bloqueios de interface.
          */
 
         document.addEventListener(
             "contextmenu",
-            function (event) {
-
-                event.preventDefault();
-
+            function (e) {
+                e.preventDefault();
             }
         );
-
-
-        /*
-         * BLOQUEIA COPIAR
-         */
 
         document.addEventListener(
             "copy",
-            function (event) {
-
-                event.preventDefault();
-
+            function (e) {
+                e.preventDefault();
             }
         );
-
-
-        /*
-         * BLOQUEIA RECORTAR
-         */
 
         document.addEventListener(
             "cut",
-            function (event) {
-
-                event.preventDefault();
-
+            function (e) {
+                e.preventDefault();
             }
         );
-
-
-        /*
-         * BLOQUEIA COLAR
-         */
 
         document.addEventListener(
             "paste",
-            function (event) {
-
-                event.preventDefault();
-
+            function (e) {
+                e.preventDefault();
             }
         );
-
-
-        /*
-         * BLOQUEIA SELEÇÃO
-         */
 
         document.addEventListener(
             "selectstart",
-            function (event) {
-
-                event.preventDefault();
-
+            function (e) {
+                e.preventDefault();
             }
         );
 
-
-        /*
-         * BLOQUEIA ARRASTAR
-         */
-
         document.addEventListener(
             "dragstart",
-            function (event) {
-
-                event.preventDefault();
-
+            function (e) {
+                e.preventDefault();
             }
         );
 
     </script>
 
 </body>
-
 </html>
