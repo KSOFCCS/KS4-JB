@@ -1,429 +1,50 @@
-<!doctype html>
-<html lang="pt-BR" manifest="cache.appcache">
-
+<html manifest="cache.appcache">
 <head>
-
-    <link rel="icon" type="image/png" href="Icon.png">
-
-    <meta charset="utf-8">
-
-    <title>KS4-JB · PS4 Exploit</title>
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-
-            -webkit-touch-callout: none;
-        }
-
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-        }
-
-        body {
-            background: #0b0b0f;
-            color: #ffffff;
-            font-family: Arial, Helvetica, sans-serif;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            overflow: hidden;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 520px;
-
-            padding: 38px 30px;
-
-            text-align: center;
-
-            background: #111117;
-
-            border: 1px solid #292932;
-            border-radius: 18px;
-        }
-
-        .logo {
-            font-size: 42px;
-            font-weight: 800;
-            letter-spacing: -2px;
-
-            margin-bottom: 8px;
-        }
-
-        .logo span {
-            color: #4d8dff;
-        }
-
-        .subtitle {
-            color: #8f8f9d;
-
-            font-size: 14px;
-
-            margin-bottom: 32px;
-        }
-
-        .status {
-            font-family: monospace;
-
-            font-size: 17px;
-
-            color: #eeeeee;
-
-            min-height: 24px;
-        }
-
-        .progress-container {
-            width: 100%;
-
-            height: 7px;
-
-            margin-top: 22px;
-
-            background: #24242d;
-
-            border-radius: 20px;
-
-            overflow: hidden;
-        }
-
-        .progress {
-            width: 0%;
-
-            height: 100%;
-
-            background: #4d8dff;
-
-            border-radius: 20px;
-
-            transition: width 0.2s ease;
-        }
-
-        .progress.error {
-            background: #ff5c5c;
-        }
-
-        .footer {
-            margin-top: 28px;
-
-            color: #555560;
-
-            font-size: 12px;
-        }
-
-        .footer b {
-            color: #777783;
-        }
-
-    </style>
-
-    <script>
-
-    (function () {
-
-        var appCache =
-            window.applicationCache;
-
-
-        function setStatus(text) {
-
-            var msgs =
-                document.getElementById("msgs");
-
-            if (msgs) {
-                msgs.textContent = text;
-            }
-
-        }
-
-
-        function setProgress(value) {
-
-            var progress =
-                document.getElementById("progress");
-
-            if (progress) {
-                progress.style.width =
-                    value + "%";
-            }
-
-        }
-
-
-        function success() {
-
-            setStatus(
-                "Cache instalado com sucesso"
-            );
-
-            setProgress(100);
-
-
-            setTimeout(function () {
-
-                location.replace(
-                    "index.html"
-                );
-
-            }, 2000);
-
-        }
-
-
-        function error() {
-
-            var progress =
-                document.getElementById("progress");
-
-
-            setStatus(
-                "Erro ao instalar o cache"
-            );
-
-
-            if (progress) {
-
-                progress.className =
-                    "progress error";
-
-            }
-
-        }
-
-
-        if (!appCache) {
-
-            setStatus(
-                "Application Cache indisponível"
-            );
-
-            return;
-
-        }
-
-
-        appCache.addEventListener(
-            "progress",
-            function (event) {
-
-                if (
-                    !event ||
-                    !event.total
-                ) {
-                    return;
-                }
-
-
-                var pct =
-                    Math.round(
-                        event.loaded /
-                        event.total *
-                        100
-                    );
-
-
-                setStatus(
-                    "Instalando cache... " +
-                    pct +
-                    "%"
-                );
-
-
-                setProgress(pct);
-
-            },
-            false
-        );
-
-
-        appCache.addEventListener(
-            "cached",
-            success,
-            false
-        );
-
-
-        appCache.addEventListener(
-            "updateready",
-            success,
-            false
-        );
-
-
-        appCache.addEventListener(
-            "noupdate",
-            function () {
-
-                setStatus(
-                    "Cache já está atualizado"
-                );
-
-                setProgress(100);
-
-
-                setTimeout(function () {
-
-                    location.replace(
-                        "index.html"
-                    );
-
-                }, 1200);
-
-            },
-            false
-        );
-
-
-        appCache.addEventListener(
-            "error",
-            error,
-            false
-        );
-
-
-        appCache.addEventListener(
-            "obsolete",
-            function () {
-
-                setStatus(
-                    "Cache obsoleto"
-                );
-
-            },
-            false
-        );
-
-
-        appCache.addEventListener(
-            "checking",
-            function () {
-
-                setStatus(
-                    "Verificando cache..."
-                );
-
-            },
-            false
-        );
-
-
-        appCache.addEventListener(
-            "downloading",
-            function () {
-
-                setStatus(
-                    "Preparando cache..."
-                );
-
-            },
-            false
-        );
-
-    })();
-
-    </script>
-
+<title>mansoor0x · PS4 Exploit</title>
+<style>
+body {
+    background-color: #ffffff;
+    color: #111111;
+    font-size: 20px;
+    text-align: center;
+    margin: 0;
+    overflow: hidden;
+}
+.info {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    font-size: 22px;
+    font-family: monospace;
+    color: #111111;
+    transform: translate(-50%, -50%);
+}
+</style>
+<script>
+history.replaceState(null, null, 'index.html');
+var histlength = history.length;
+history.go(-histlength);
+
+function DLProgress(e) {
+    var pct = Math.round(e.loaded / e.total * 100);
+    msgs.innerHTML = "mansoor0x &middot; Installing ... " + pct + "%";
+}
+
+function DisplayCacheProgress() {
+    setTimeout(function () {
+        msgs.innerHTML = "mansoor0x &middot; Cache OK";
+    }, 2000);
+    setTimeout(function () {
+        location.reload();
+    }, 3000);
+}
+
+window.applicationCache.addEventListener("progress",    DLProgress,           false);
+window.applicationCache.oncached     = function (e) { DisplayCacheProgress(); };
+window.applicationCache.onupdateready = function (e) { DisplayCacheProgress(); };
+</script>
 </head>
-
 <body>
-
-    <div class="container">
-
-        <div class="logo">
-            KS<span>4</span>
-        </div>
-
-        <div class="subtitle">
-            KSOFCC · PS4 EXPLOIT
-        </div>
-
-        <div
-            id="msgs"
-            class="status"
-        >
-            Preparando cache...
-        </div>
-
-        <div class="progress-container">
-
-            <div
-                id="progress"
-                class="progress"
-            ></div>
-
-        </div>
-
-        <div class="footer">
-            <b>KS4 JB</b> · 2026
-        </div>
-
-    </div>
-
-    <script>
-
-        /* Bloquear seleção e ações de cópia */
-
-        document.addEventListener(
-            "contextmenu",
-            function (event) {
-                event.preventDefault();
-            }
-        );
-
-        document.addEventListener(
-            "copy",
-            function (event) {
-                event.preventDefault();
-            }
-        );
-
-        document.addEventListener(
-            "cut",
-            function (event) {
-                event.preventDefault();
-            }
-        );
-
-        document.addEventListener(
-            "paste",
-            function (event) {
-                event.preventDefault();
-            }
-        );
-
-        document.addEventListener(
-            "selectstart",
-            function (event) {
-                event.preventDefault();
-            }
-        );
-
-        document.addEventListener(
-            "dragstart",
-            function (event) {
-                event.preventDefault();
-            }
-        );
-
-    </script>
-
+<div id="msgs" class="info"></div>
 </body>
-
 </html>
