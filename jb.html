@@ -1,374 +1,462 @@
 <!doctype html>
+
 <html lang="pt-BR" manifest="cache.appcache">
 
 <head>
-    <meta charset="utf-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    >
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<title>KS4-JB · PS4 Exploit</title>
+
+<link rel="icon" type="image/png" href="Icon.png">
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: #0b0b0f;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#main-container {
+    position: relative;
+    width: 90%;
+    max-width: 520px;
+    min-height: 330px;
+    padding: 38px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #111117;
+    border: 1px solid #292932;
+    border-radius: 18px;
+}
+
+#brand {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+    color: #fff;
+    transition: color 0.25s ease;
+}
+
+#brand span {
+    color: #4d8dff;
+    transition: color 0.25s ease;
+}
+
+#subtitle {
+    color: #8f8f9d;
+    font-size: 14px;
+    margin-bottom: 34px;
+}
+
+#visual-indicator {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 26px;
+}
+
+.ps4-icon {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    display: block;
+    object-fit: contain;
+    z-index: 2;
+    transition: filter 0.25s ease;
+}
+
+.pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid #4d8dff;
+    animation: subtle-pulse 2s infinite ease-in-out;
+    transition: border-color 0.25s ease;
+}
+
+#spin {
+    position: absolute;
+    width: 125%;
+    height: 125%;
+    border: 2px solid transparent;
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: real-spin 0.9s linear infinite;
+    opacity: 0.25;
+}
+
+#status {
+    min-height: 22px;
+    color: #eee;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.5;
+    transition: color 0.25s ease;
+}
+
+#msg {
+    position: fixed;
+    bottom: 62px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: monospace;
+    font-size: 13px;
+    color: #ff5c5c;
+    display: none;
+}
+
+#wrap {
+    padding: 0;
+}
+
+#state,
+#out {
+    display: none;
+}
+
+body.log {
+    display: block;
+    overflow: auto;
+    padding: 20px;
+}
+
+body.log #main-container,
+body.log #footer {
+    display: none;
+}
+
+body.log #wrap {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+body.log #state {
+    display: block;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    font-family: monospace;
+}
+
+body.log #out {
+    display: block;
+    white-space: pre-wrap;
+    font: 12px/1.6 monospace;
+    background: #111117;
+    border: 1px solid #292932;
+    border-radius: 14px;
+    padding: 16px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    color: #eee;
+}
+
+.ok {
+    color: #4d8dff;
+}
+
+.bad,
+.danger {
+    color: #ff5c5c;
+}
+
+.warn {
+    color: #e0a84f;
+}
+
+.safe {
+    color: #4d8dff;
+}
+
+code {
+    color: #8f8f9d;
+    font-family: monospace;
+}
+
+#footer {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: monospace;
+    font-size: 11px;
+    color: #555560;
+    letter-spacing: 0.08em;
+}
+
+#footer b {
+    color: #777783;
+}
+
+
+/* =========================
+   ESTADO FINAL
+   ========================= */
+
+body.done #brand span {
+    color: #f2c94c;
+}
+
+body.done .pulse {
+    border-color: #f2c94c;
+    animation: none;
+    opacity: 1;
+}
+
+body.done #spin {
+    display: none;
+}
+
+body.done #status {
+    color: #f2c94c;
+    font-weight: 700;
+    font-size: 0;
+}
+
+body.done #status::after {
+    content: "Finalizado";
+    font-size: 15px;
+}
+
+body.done #msg {
+    display: none;
+}
+
+
+/* =========================
+   ESTADO DE ERRO
+   ========================= */
+
+body.fail #brand span {
+    color: #ff5c5c;
+}
+
+body.fail .pulse {
+    border-color: #ff5c5c;
+    animation: none;
+    opacity: 1;
+}
+
+body.fail #spin {
+    display: none;
+}
+
+body.fail #status {
+    color: #ff5c5c;
+    font-weight: 700;
+    font-size: 0;
+}
+
+body.fail #status::after {
+    content: "Erro durante a execução";
+    font-size: 15px;
+}
+
+body.fail #msg {
+    display: block;
+    color: #ff5c5c;
+}
+
+
+/* =========================
+   ANIMAÇÕES
+   ========================= */
+
+@keyframes real-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes subtle-pulse {
+    0% {
+        transform: scale(0.96);
+        opacity: 0.45;
+    }
+
+    50% {
+        transform: scale(1.04);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(0.96);
+        opacity: 0.45;
+    }
+}
+
+</style>
 
-    <title>KS4-JB · PS4 Exploit</title>
-
-    <link rel="icon" type="image/png" href="Icon.png">
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-
-            -webkit-user-select: none;
-            user-select: none;
-            -webkit-touch-callout: none;
-        }
-
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-        }
-
-        body {
-            background: #0b0b0f;
-            color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            overflow: hidden;
-        }
-
-        #main-container {
-            position: relative;
-
-            width: 90%;
-            max-width: 520px;
-            min-height: 330px;
-
-            padding: 38px 30px;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            text-align: center;
-
-            background: #111117;
-
-            border: 1px solid #292932;
-            border-radius: 18px;
-        }
-
-        #brand {
-            font-size: 42px;
-            font-weight: 800;
-            letter-spacing: -2px;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        #brand span {
-            color: #4d8dff;
-        }
-
-        #subtitle {
-            color: #8f8f9d;
-            font-size: 14px;
-            margin-bottom: 34px;
-        }
-
-        #visual-indicator {
-            position: relative;
-
-            width: 72px;
-            height: 72px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            margin-bottom: 26px;
-        }
-
-        .ps4-icon {
-            position: relative;
-
-            width: 44px;
-            height: 44px;
-
-            display: block;
-            object-fit: contain;
-
-            z-index: 2;
-        }
-
-        .pulse {
-            position: absolute;
-
-            width: 100%;
-            height: 100%;
-
-            border-radius: 50%;
-            border: 2px solid #4d8dff;
-
-            animation: subtle-pulse 2s infinite ease-in-out;
-        }
-
-        #spin {
-            position: absolute;
-
-            width: 125%;
-            height: 125%;
-
-            border: 2px solid transparent;
-            border-top-color: #fff;
-
-            border-radius: 50%;
-
-            animation: real-spin 0.9s linear infinite;
-
-            opacity: 0.25;
-        }
-
-        #status {
-            min-height: 22px;
-
-            color: #eee;
-
-            font-family: monospace;
-            font-size: 15px;
-            line-height: 1.5;
-        }
-
-        #msg {
-            position: fixed;
-
-            bottom: 62px;
-            left: 0;
-            right: 0;
-
-            text-align: center;
-
-            font-family: monospace;
-            font-size: 13px;
-
-            color: #ff5c5c;
-
-            display: none;
-        }
-
-        #wrap {
-            padding: 0;
-        }
-
-        #state,
-        #out {
-            display: none;
-        }
-
-        body.log {
-            display: block;
-            overflow: auto;
-            padding: 20px;
-        }
-
-        body.log #main-container,
-        body.log #footer {
-            display: none;
-        }
-
-        body.log #wrap {
-            display: block;
-
-            width: 100%;
-            max-width: 900px;
-
-            margin: 0 auto;
-        }
-
-        body.log #state {
-            display: block;
-
-            color: #fff;
-
-            font-size: 18px;
-            font-weight: 700;
-
-            margin-bottom: 12px;
-
-            font-family: monospace;
-        }
-
-        body.log #out {
-            display: block;
-
-            white-space: pre-wrap;
-
-            font: 12px/1.6 monospace;
-
-            background: #111117;
-
-            border: 1px solid #292932;
-            border-radius: 14px;
-
-            padding: 16px;
-
-            max-height: calc(100vh - 100px);
-
-            overflow-y: auto;
-
-            color: #eee;
-        }
-
-        .ok {
-            color: #4d8dff;
-        }
-
-        .bad,
-        .danger {
-            color: #ff5c5c;
-        }
-
-        .warn {
-            color: #e0a84f;
-        }
-
-        .safe {
-            color: #4d8dff;
-        }
-
-        code {
-            color: #8f8f9d;
-            font-family: monospace;
-        }
-
-        #footer {
-            position: fixed;
-
-            bottom: 20px;
-            left: 0;
-            right: 0;
-
-            text-align: center;
-
-            font-family: monospace;
-            font-size: 11px;
-
-            color: #555560;
-
-            letter-spacing: 0.08em;
-        }
-
-        #footer b {
-            color: #777783;
-        }
-
-        @keyframes real-spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes subtle-pulse {
-            0% {
-                transform: scale(0.96);
-                opacity: 0.45;
-            }
-
-            50% {
-                transform: scale(1.04);
-                opacity: 0.8;
-            }
-
-            100% {
-                transform: scale(0.96);
-                opacity: 0.45;
-            }
-        }
-    </style>
 </head>
 
 <body>
 
-    <div id="main-container">
+<div id="main-container">
 
-        <div id="brand">
-            KS<span>4</span> JB
-        </div>
+    <div id="brand">
+        KS<span>4</span> JB
+    </div>
 
-        <div id="subtitle">
-            KSOFCC · PS4 EXPLOIT
-        </div>
+    <div id="subtitle">
+        KSOFCC · PS4 EXPLOIT
+    </div>
 
-        <div id="visual-indicator">
+    <div id="visual-indicator">
 
-            <img
-                id="ps4-icon"
-                class="ps4-icon"
-                src="PSICON4.png"
-                alt=""
-                draggable="false"
-            >
+        <img
+            id="ps4-icon"
+            class="ps4-icon"
+            src="PSICON4.png"
+            alt=""
+            draggable="false"
+        >
 
-            <div id="spin"></div>
+        <div id="spin"></div>
 
-            <div class="pulse"></div>
-
-        </div>
-
-        <div id="status">
-            Preparando...
-        </div>
+        <div class="pulse"></div>
 
     </div>
 
-    <div id="msg">
-        Reinicie o console
+    <div id="status">
+        Preparando...
     </div>
 
-    <div id="wrap">
-        <div id="state"></div>
-        <div id="out"></div>
-    </div>
+</div>
 
-    <div id="footer">
-        <b>KS4-JB</b> · 2026
-    </div>
+<div id="msg">
+    Reinicie o console
+</div>
 
-    <script>
-        document.addEventListener("contextmenu", function (e) {
-            e.preventDefault();
-        });
+<div id="wrap">
 
-        document.addEventListener("copy", function (e) {
-            e.preventDefault();
-        });
+    <div id="state"></div>
 
-        document.addEventListener("cut", function (e) {
-            e.preventDefault();
-        });
+    <div id="out"></div>
 
-        document.addEventListener("paste", function (e) {
-            e.preventDefault();
-        });
+</div>
 
-        document.addEventListener("selectstart", function (e) {
-            e.preventDefault();
-        });
+<div id="footer">
+    <b>KS4-JB</b> · 2026
+</div>
 
-        document.addEventListener("dragstart", function (e) {
-            e.preventDefault();
-        });
-    </script>
 
-    <script type="module">
-        import "./jb.js?v=10";
-    </script>
+<script>
+
+document.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+});
+
+document.addEventListener("copy", function (e) {
+    e.preventDefault();
+});
+
+document.addEventListener("cut", function (e) {
+    e.preventDefault();
+});
+
+document.addEventListener("paste", function (e) {
+    e.preventDefault();
+});
+
+document.addEventListener("selectstart", function (e) {
+    e.preventDefault();
+});
+
+document.addEventListener("dragstart", function (e) {
+    e.preventDefault();
+});
+
+
+/*
+ * O jb.js altera a classe do <body> para:
+ *   done = finalizado
+ *   fail = erro
+ *
+ * Este observador mantém a interface sincronizada
+ * sem precisar alterar o jb.js.
+ */
+
+(function () {
+
+    function updateUI() {
+
+        if (document.body.classList.contains("done")) {
+
+            document.getElementById("status").setAttribute(
+                "aria-label",
+                "Finalizado"
+            );
+
+        } else if (document.body.classList.contains("fail")) {
+
+            document.getElementById("status").setAttribute(
+                "aria-label",
+                "Erro durante a execução"
+            );
+
+        }
+
+    }
+
+    const observer = new MutationObserver(function () {
+        updateUI();
+    });
+
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ["class"]
+    });
+
+    updateUI();
+
+})();
+
+</script>
+
+
+<script type="module">
+    import "./jb.js?v=10";
+</script>
 
 </body>
+
 </html>
