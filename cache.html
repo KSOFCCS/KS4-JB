@@ -178,8 +178,9 @@
             color: #777783;
         }
 
+
         /*
-         * Quando o cache termina.
+         * CACHE CONCLUÍDO
          */
 
         body.done #spin {
@@ -193,6 +194,7 @@
 
         body.done .pulse {
             animation: none;
+
             border-color: #f5c542;
             opacity: 0.65;
         }
@@ -205,8 +207,37 @@
             color: #f5c542;
         }
 
+
         /*
-         * Animações
+         * ERRO
+         */
+
+        body.error #spin {
+            animation: none;
+
+            border-top-color: #ff5c5c;
+            border-left-color: rgba(255, 92, 92, 0.12);
+            border-right-color: rgba(255, 92, 92, 0.12);
+            border-bottom-color: rgba(255, 92, 92, 0.12);
+        }
+
+        body.error .pulse {
+            animation: none;
+
+            border-color: #ff5c5c;
+        }
+
+        body.error #brand span {
+            color: #ff5c5c;
+        }
+
+        body.error #percent {
+            color: #ff5c5c;
+        }
+
+
+        /*
+         * ANIMAÇÕES
          */
 
         @keyframes real-spin {
@@ -232,8 +263,9 @@
             }
         }
 
+
         /*
-         * Tela pequena
+         * TELA PEQUENA
          */
 
         @media (max-width: 430px) {
@@ -296,7 +328,8 @@
     <script>
 
         /*
-         * Mantido do cache.html original.
+         * Volta para o index.html,
+         * igual ao cache.html original.
          */
 
         history.replaceState(
@@ -305,28 +338,34 @@
             "index.html"
         );
 
-        var histlength =
-            history.length;
+        var histlength = history.length;
 
         history.go(-histlength);
 
 
         /*
-         * Atualiza a porcentagem.
+         * ELEMENTOS DA INTERFACE
+         */
+
+        var statusElement =
+            document.getElementById("status");
+
+        var percentElement =
+            document.getElementById("percent");
+
+
+        /*
+         * PROGRESSO DO CACHE
          */
 
         function DLProgress(e) {
 
             var pct = 0;
 
-            /*
-             * Evita NaN caso o navegador não
-             * forneça um total válido.
-             */
-
             if (
                 e &&
-                e.total &&
+                typeof e.loaded === "number" &&
+                typeof e.total === "number" &&
                 e.total > 0
             ) {
 
@@ -336,43 +375,47 @@
 
             }
 
+            if (pct < 0) {
+                pct = 0;
+            }
+
             if (pct > 100) {
                 pct = 100;
             }
 
-            document.getElementById(
-                "status"
-            ).innerHTML =
+            statusElement.innerHTML =
                 "Instalando cache...";
 
-            document.getElementById(
-                "percent"
-            ).innerHTML =
+            percentElement.innerHTML =
                 pct + "%";
-
         }
 
 
         /*
-         * Cache concluído.
+         * CACHE INSTALADO / ATUALIZADO
          */
 
         function DisplayCacheProgress() {
 
-            document.getElementById(
-                "status"
-            ).innerHTML =
+            statusElement.innerHTML =
                 "Cache instalado com sucesso";
 
-            document.getElementById(
-                "percent"
-            ).innerHTML =
+            percentElement.innerHTML =
                 "100%";
+
+            document.body.classList.remove(
+                "error"
+            );
 
             document.body.classList.add(
                 "done"
             );
 
+
+            /*
+             * Dá tempo para mostrar
+             * o estado concluído.
+             */
 
             setTimeout(
                 function () {
@@ -382,16 +425,19 @@
                 },
                 3000
             );
-
         }
 
 
         /*
-         * Application Cache
+         * APPLICATION CACHE
          *
-         * A verificação abaixo é importante:
-         * alguns navegadores não possuem
-         * window.applicationCache.
+         * No PS4, se o navegador oferecer
+         * Application Cache, ele será usado
+         * normalmente.
+         *
+         * Em navegadores modernos que não
+         * possuem essa API, evitamos o erro
+         * "undefined.addEventListener".
          */
 
         if (
@@ -404,7 +450,7 @@
 
 
             /*
-             * Progresso do cache.
+             * DOWNLOAD EM ANDAMENTO
              */
 
             appCache.addEventListener(
@@ -415,12 +461,12 @@
 
 
             /*
-             * Cache criado pela primeira vez.
+             * PRIMEIRA INSTALAÇÃO
              */
 
             appCache.addEventListener(
                 "cached",
-                function (e) {
+                function () {
 
                     DisplayCacheProgress();
 
@@ -430,12 +476,12 @@
 
 
             /*
-             * Cache atualizado.
+             * CACHE ATUALIZADO
              */
 
             appCache.addEventListener(
                 "updateready",
-                function (e) {
+                function () {
 
                     DisplayCacheProgress();
 
@@ -445,26 +491,26 @@
 
 
             /*
-             * Sem atualização disponível.
+             * NENHUMA ATUALIZAÇÃO
+             *
+             * Significa que o cache já estava
+             * disponível.
              */
 
             appCache.addEventListener(
                 "noupdate",
-                function (e) {
+                function () {
 
-                    document.getElementById(
-                        "status"
-                    ).innerHTML =
+                    statusElement.innerHTML =
                         "Cache já está instalado";
 
-                    document.getElementById(
-                        "percent"
-                    ).innerHTML =
+                    percentElement.innerHTML =
                         "100%";
 
                     document.body.classList.add(
                         "done"
                     );
+
 
                     setTimeout(
                         function () {
@@ -481,46 +527,48 @@
 
 
             /*
-             * Erro no Application Cache.
+             * ERRO NO CACHE
              */
 
             appCache.addEventListener(
                 "error",
-                function (e) {
+                function () {
 
-                    document.getElementById(
-                        "status"
-                    ).innerHTML =
+                    statusElement.innerHTML =
                         "Erro ao preparar cache";
 
-                    document.getElementById(
-                        "percent"
-                    ).innerHTML =
+                    percentElement.innerHTML =
                         "ERRO";
+
+                    document.body.classList.remove(
+                        "done"
+                    );
+
+                    document.body.classList.add(
+                        "error"
+                    );
 
                 },
                 false
             );
 
+
         } else {
 
             /*
-             * Application Cache não existe
-             * neste navegador.
+             * IMPORTANTE:
              *
-             * Isso evita o erro:
-             * Cannot read properties of undefined
-             * (reading 'addEventListener')
+             * Isso somente aparece em navegadores
+             * que NÃO possuem Application Cache.
+             *
+             * Não tentamos chamar addEventListener
+             * em undefined.
              */
 
-            document.getElementById(
-                "status"
-            ).innerHTML =
+            statusElement.innerHTML =
                 "Application Cache indisponível";
 
-            document.getElementById(
-                "percent"
-            ).innerHTML =
+            percentElement.innerHTML =
                 "--";
 
         }
@@ -531,7 +579,7 @@
     <script>
 
         /*
-         * Bloqueios de interface.
+         * BLOQUEIOS DE INTERFACE
          */
 
         document.addEventListener(
