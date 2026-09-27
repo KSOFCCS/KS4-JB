@@ -18,7 +18,6 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-
             -webkit-user-select: none;
             user-select: none;
             -webkit-touch-callout: none;
@@ -34,32 +33,24 @@
             background: #0b0b0f;
             color: #fff;
             font-family: Arial, Helvetica, sans-serif;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             overflow: hidden;
         }
 
         #main-container {
             position: relative;
-
             width: 90%;
             max-width: 520px;
             min-height: 330px;
-
             padding: 38px 30px;
-
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-
             text-align: center;
-
             background: #111117;
-
             border: 1px solid #292932;
             border-radius: 18px;
         }
@@ -84,62 +75,46 @@
 
         #visual-indicator {
             position: relative;
-
             width: 72px;
             height: 72px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             margin-bottom: 26px;
         }
 
         .ps4-icon {
             position: relative;
-
             width: 44px;
             height: 44px;
-
             display: block;
             object-fit: contain;
-
             z-index: 2;
         }
 
         .pulse {
             position: absolute;
-
             width: 100%;
             height: 100%;
-
             border-radius: 50%;
             border: 2px solid #4d8dff;
-
             animation: subtle-pulse 2s infinite ease-in-out;
         }
 
         #spin {
             position: absolute;
-
             width: 125%;
             height: 125%;
-
             border: 2px solid transparent;
             border-top-color: #fff;
-
             border-radius: 50%;
-
             animation: real-spin 0.9s linear infinite;
-
             opacity: 0.25;
         }
 
         #status {
             min-height: 22px;
-
             color: #eee;
-
             font-family: monospace;
             font-size: 15px;
             line-height: 1.5;
@@ -147,11 +122,8 @@
 
         #percent {
             min-height: 20px;
-
             margin-top: 5px;
-
             color: #8faeff;
-
             font-family: monospace;
             font-size: 13px;
             line-height: 1.5;
@@ -159,18 +131,13 @@
 
         #footer {
             position: fixed;
-
             bottom: 20px;
             left: 0;
             right: 0;
-
             text-align: center;
-
             font-family: monospace;
             font-size: 11px;
-
             color: #555560;
-
             letter-spacing: 0.08em;
         }
 
@@ -178,14 +145,8 @@
             color: #777783;
         }
 
-
-        /*
-         * CACHE CONCLUÍDO
-         */
-
         body.done #spin {
             animation: none;
-
             border-top-color: #f5c542;
             border-left-color: rgba(245, 197, 66, 0.12);
             border-right-color: rgba(245, 197, 66, 0.12);
@@ -194,7 +155,6 @@
 
         body.done .pulse {
             animation: none;
-
             border-color: #f5c542;
             opacity: 0.65;
         }
@@ -207,14 +167,8 @@
             color: #f5c542;
         }
 
-
-        /*
-         * ERRO
-         */
-
         body.error #spin {
             animation: none;
-
             border-top-color: #ff5c5c;
             border-left-color: rgba(255, 92, 92, 0.12);
             border-right-color: rgba(255, 92, 92, 0.12);
@@ -223,7 +177,6 @@
 
         body.error .pulse {
             animation: none;
-
             border-color: #ff5c5c;
         }
 
@@ -234,11 +187,6 @@
         body.error #percent {
             color: #ff5c5c;
         }
-
-
-        /*
-         * ANIMAÇÕES
-         */
 
         @keyframes real-spin {
             to {
@@ -263,13 +211,7 @@
             }
         }
 
-
-        /*
-         * TELA PEQUENA
-         */
-
         @media (max-width: 430px) {
-
             #main-container {
                 padding: 34px 22px;
             }
@@ -277,7 +219,6 @@
             #brand {
                 font-size: 40px;
             }
-
         }
     </style>
 </head>
@@ -324,42 +265,16 @@
         <b>KS4-JB</b> · 2026
     </div>
 
-
     <script>
-
-        /*
-         * Volta para o index.html,
-         * igual ao cache.html original.
-         */
-
-        history.replaceState(
-            null,
-            null,
-            "index.html"
-        );
+        history.replaceState(null, null, "index.html");
 
         var histlength = history.length;
-
         history.go(-histlength);
 
-
-        /*
-         * ELEMENTOS DA INTERFACE
-         */
-
-        var statusElement =
-            document.getElementById("status");
-
-        var percentElement =
-            document.getElementById("percent");
-
-
-        /*
-         * PROGRESSO DO CACHE
-         */
+        var statusElement = document.getElementById("status");
+        var percentElement = document.getElementById("percent");
 
         function DLProgress(e) {
-
             var pct = 0;
 
             if (
@@ -368,11 +283,7 @@
                 typeof e.total === "number" &&
                 e.total > 0
             ) {
-
-                pct = Math.round(
-                    (e.loaded / e.total) * 100
-                );
-
+                pct = Math.round((e.loaded / e.total) * 100);
             }
 
             if (pct < 0) {
@@ -383,75 +294,25 @@
                 pct = 100;
             }
 
-            statusElement.innerHTML =
-                "Instalando cache...";
-
-            percentElement.innerHTML =
-                pct + "%";
+            statusElement.innerHTML = "Instalando cache...";
+            percentElement.innerHTML = pct + "%";
         }
-
-
-        /*
-         * CACHE INSTALADO / ATUALIZADO
-         */
 
         function DisplayCacheProgress() {
+            statusElement.innerHTML = "Cache instalado com sucesso";
+            percentElement.innerHTML = "100%";
 
-            statusElement.innerHTML =
-                "Cache instalado com sucesso";
+            document.body.classList.remove("error");
+            document.body.classList.add("done");
 
-            percentElement.innerHTML =
-                "100%";
-
-            document.body.classList.remove(
-                "error"
-            );
-
-            document.body.classList.add(
-                "done"
-            );
-
-
-            /*
-             * Dá tempo para mostrar
-             * o estado concluído.
-             */
-
-            setTimeout(
-                function () {
-
-                    location.reload();
-
-                },
-                3000
-            );
+            setTimeout(function () {
+                location.reload();
+            }, 3000);
         }
 
+        if (typeof window.applicationCache !== "undefined") {
 
-        /*
-         * APPLICATION CACHE
-         *
-         * No PS4, se o navegador oferecer
-         * Application Cache, ele será usado
-         * normalmente.
-         *
-         * Em navegadores modernos que não
-         * possuem essa API, evitamos o erro
-         * "undefined.addEventListener".
-         */
-
-        if (
-            typeof window.applicationCache !==
-            "undefined"
-        ) {
-
-            var appCache =
-                window.applicationCache;
-
-
-            /*
-             * DOWNLOAD EM ANDAMENTO
-             */
+            var appCache = window.applicationCache;
 
             appCache.addEventListener(
                 "progress",
@@ -459,171 +320,80 @@
                 false
             );
 
-
-            /*
-             * PRIMEIRA INSTALAÇÃO
-             */
-
             appCache.addEventListener(
                 "cached",
                 function () {
-
                     DisplayCacheProgress();
-
                 },
                 false
             );
-
-
-            /*
-             * CACHE ATUALIZADO
-             */
 
             appCache.addEventListener(
                 "updateready",
                 function () {
-
                     DisplayCacheProgress();
-
                 },
                 false
             );
-
-
-            /*
-             * NENHUMA ATUALIZAÇÃO
-             *
-             * Significa que o cache já estava
-             * disponível.
-             */
 
             appCache.addEventListener(
                 "noupdate",
                 function () {
+                    statusElement.innerHTML = "Cache já está instalado";
+                    percentElement.innerHTML = "100%";
 
-                    statusElement.innerHTML =
-                        "Cache já está instalado";
+                    document.body.classList.add("done");
 
-                    percentElement.innerHTML =
-                        "100%";
-
-                    document.body.classList.add(
-                        "done"
-                    );
-
-
-                    setTimeout(
-                        function () {
-
-                            location.reload();
-
-                        },
-                        3000
-                    );
-
+                    setTimeout(function () {
+                        location.reload();
+                    }, 3000);
                 },
                 false
             );
-
-
-            /*
-             * ERRO NO CACHE
-             */
 
             appCache.addEventListener(
                 "error",
                 function () {
+                    statusElement.innerHTML = "Erro ao preparar cache";
+                    percentElement.innerHTML = "ERRO";
 
-                    statusElement.innerHTML =
-                        "Erro ao preparar cache";
-
-                    percentElement.innerHTML =
-                        "ERRO";
-
-                    document.body.classList.remove(
-                        "done"
-                    );
-
-                    document.body.classList.add(
-                        "error"
-                    );
-
+                    document.body.classList.remove("done");
+                    document.body.classList.add("error");
                 },
                 false
             );
 
-
         } else {
 
-            /*
-             * IMPORTANTE:
-             *
-             * Isso somente aparece em navegadores
-             * que NÃO possuem Application Cache.
-             *
-             * Não tentamos chamar addEventListener
-             * em undefined.
-             */
-
-            statusElement.innerHTML =
-                "Application Cache indisponível";
-
-            percentElement.innerHTML =
-                "--";
-
+            statusElement.innerHTML = "Application Cache indisponível";
+            percentElement.innerHTML = "--";
         }
-
     </script>
 
-
     <script>
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault();
+        });
 
-        /*
-         * BLOQUEIOS DE INTERFACE
-         */
+        document.addEventListener("copy", function (e) {
+            e.preventDefault();
+        });
 
-        document.addEventListener(
-            "contextmenu",
-            function (e) {
-                e.preventDefault();
-            }
-        );
+        document.addEventListener("cut", function (e) {
+            e.preventDefault();
+        });
 
-        document.addEventListener(
-            "copy",
-            function (e) {
-                e.preventDefault();
-            }
-        );
+        document.addEventListener("paste", function (e) {
+            e.preventDefault();
+        });
 
-        document.addEventListener(
-            "cut",
-            function (e) {
-                e.preventDefault();
-            }
-        );
+        document.addEventListener("selectstart", function (e) {
+            e.preventDefault();
+        });
 
-        document.addEventListener(
-            "paste",
-            function (e) {
-                e.preventDefault();
-            }
-        );
-
-        document.addEventListener(
-            "selectstart",
-            function (e) {
-                e.preventDefault();
-            }
-        );
-
-        document.addEventListener(
-            "dragstart",
-            function (e) {
-                e.preventDefault();
-            }
-        );
-
+        document.addEventListener("dragstart", function (e) {
+            e.preventDefault();
+        });
     </script>
 
 </body>
