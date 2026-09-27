@@ -1,50 +1,375 @@
-<html manifest="cache.appcache">
+<!doctype html>
+<html lang="pt-BR" manifest="cache.appcache">
+
 <head>
-<title>mansoor0x · PS4 Exploit</title>
-<style>
-body {
-    background-color: #ffffff;
-    color: #111111;
-    font-size: 20px;
-    text-align: center;
-    margin: 0;
-    overflow: hidden;
-}
-.info {
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    font-size: 22px;
-    font-family: monospace;
-    color: #111111;
-    transform: translate(-50%, -50%);
-}
-</style>
-<script>
-history.replaceState(null, null, 'index.html');
-var histlength = history.length;
-history.go(-histlength);
 
-function DLProgress(e) {
-    var pct = Math.round(e.loaded / e.total * 100);
-    msgs.innerHTML = "mansoor0x &middot; Installing ... " + pct + "%";
-}
+    <link rel="icon" type="image/png" href="Icon.png">
 
-function DisplayCacheProgress() {
-    setTimeout(function () {
-        msgs.innerHTML = "mansoor0x &middot; Cache OK";
-    }, 2000);
-    setTimeout(function () {
-        location.reload();
-    }, 3000);
-}
+    <meta charset="utf-8">
 
-window.applicationCache.addEventListener("progress",    DLProgress,           false);
-window.applicationCache.oncached     = function (e) { DisplayCacheProgress(); };
-window.applicationCache.onupdateready = function (e) { DisplayCacheProgress(); };
-</script>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>KS4-JB · PS4 Exploit</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        body {
+            background: #ffffff;
+            color: #111111;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+
+        #main-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            transform: translate(-50%, -50%);
+        }
+
+        #brand {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 1;
+            color: #111111;
+        }
+
+        #brand span {
+            color: #4d8dff;
+        }
+
+        #subtitle {
+            margin-top: 8px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #777777;
+            font-weight: 600;
+        }
+
+        /* Indicador de carregamento */
+
+        #visual-indicator {
+            position: relative;
+            width: 96px;
+            height: 96px;
+            margin: 34px auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /*
+         * Anel girando ao redor do PS4.
+         */
+        #spin {
+            position: absolute;
+
+            width: 78px;
+            height: 78px;
+
+            border-radius: 50%;
+
+            border: 2px solid rgba(77, 141, 255, 0.18);
+            border-top-color: #4d8dff;
+
+            animation: rotate 1s linear infinite;
+        }
+
+        /*
+         * PSICON4 no centro.
+         *
+         * A imagem funciona como máscara para permitir
+         * uma cor sólida, sem usar filter.
+         */
+        #ps4-icon {
+            position: relative;
+
+            width: 44px;
+            height: 44px;
+
+            z-index: 2;
+
+            background-color: #4d8dff;
+
+            -webkit-mask-image: url("PSICON4.png");
+            mask-image: url("PSICON4.png");
+
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+
+            -webkit-mask-position: center;
+            mask-position: center;
+
+            -webkit-mask-size: contain;
+            mask-size: contain;
+
+            animation: iconPulse 1.6s ease-in-out infinite;
+
+            transition: background-color 0.3s ease;
+        }
+
+        #status {
+            min-height: 24px;
+
+            font-size: 17px;
+            font-weight: 600;
+
+            color: #555555;
+        }
+
+        #percent {
+            margin-top: 9px;
+
+            min-height: 22px;
+
+            font-size: 15px;
+            font-family: monospace;
+            font-weight: 600;
+
+            color: #4d8dff;
+        }
+
+        #footer {
+            position: absolute;
+
+            bottom: 18px;
+            left: 0;
+
+            width: 100%;
+
+            font-size: 11px;
+            letter-spacing: 1px;
+
+            color: #999999;
+        }
+
+        #footer b {
+            color: #4d8dff;
+        }
+
+        /* Sucesso */
+
+        body.done #ps4-icon {
+            background-color: #f5c542;
+            animation: none;
+        }
+
+        body.done #spin {
+            animation: none;
+
+            border-color: rgba(245, 197, 66, 0.20);
+            border-top-color: #f5c542;
+        }
+
+        body.done #percent {
+            color: #f5c542;
+        }
+
+        body.done #brand span {
+            color: #f5c542;
+        }
+
+        /* Animações */
+
+        @keyframes rotate {
+
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+        @keyframes iconPulse {
+
+            0%,
+            100% {
+                transform: scale(0.94);
+            }
+
+            50% {
+                transform: scale(1);
+            }
+
+        }
+
+    </style>
+
+    <script>
+
+        history.replaceState(null, null, 'index.html');
+
+        var histlength = history.length;
+
+        history.go(-histlength);
+
+
+        function DLProgress(e) {
+
+            var pct = Math.round(e.loaded / e.total * 100);
+
+            document.getElementById("status").innerHTML =
+                "Instalando cache...";
+
+            document.getElementById("percent").innerHTML =
+                pct + "%";
+
+        }
+
+
+        function DisplayCacheProgress() {
+
+            document.getElementById("status").innerHTML =
+                "Cache instalado com sucesso";
+
+            document.getElementById("percent").innerHTML =
+                "100%";
+
+            document.body.classList.add("done");
+
+            setTimeout(function () {
+
+                location.reload();
+
+            }, 3000);
+
+        }
+
+
+        window.applicationCache.addEventListener(
+            "progress",
+            DLProgress,
+            false
+        );
+
+
+        window.applicationCache.oncached = function (e) {
+
+            DisplayCacheProgress();
+
+        };
+
+
+        window.applicationCache.onupdateready = function (e) {
+
+            DisplayCacheProgress();
+
+        };
+
+    </script>
+
 </head>
+
+
 <body>
-<div id="msgs" class="info"></div>
+
+    <div id="main-container">
+
+        <div id="brand">
+            KS<span>4</span>
+        </div>
+
+        <div id="subtitle">
+            KSOFCC · PS4 EXPLOIT
+        </div>
+
+
+        <div id="visual-indicator">
+
+            <div id="spin"></div>
+
+            <div id="ps4-icon"></div>
+
+        </div>
+
+
+        <div id="status">
+            Preparando cache...
+        </div>
+
+
+        <div id="percent">
+            0%
+        </div>
+
+    </div>
+
+
+    <div id="footer">
+        <b>KS4-JB</b> · 2026
+    </div>
+
+
+    <script>
+
+        document.addEventListener(
+            "contextmenu",
+            function (e) {
+                e.preventDefault();
+            }
+        );
+
+        document.addEventListener(
+            "copy",
+            function (e) {
+                e.preventDefault();
+            }
+        );
+
+        document.addEventListener(
+            "cut",
+            function (e) {
+                e.preventDefault();
+            }
+        );
+
+        document.addEventListener(
+            "paste",
+            function (e) {
+                e.preventDefault();
+            }
+        );
+
+        document.addEventListener(
+            "selectstart",
+            function (e) {
+                e.preventDefault();
+            }
+        );
+
+        document.addEventListener(
+            "dragstart",
+            function (e) {
+                e.preventDefault();
+            }
+        );
+
+    </script>
+
 </body>
+
 </html>
