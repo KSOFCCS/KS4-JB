@@ -95,9 +95,6 @@
             margin-bottom: 26px;
         }
 
-        /*
-         * Mesmo ícone usado no jb.html.
-         */
         .ps4-icon {
             position: relative;
 
@@ -110,9 +107,6 @@
             z-index: 2;
         }
 
-        /*
-         * Mesmo pulso do jb.html.
-         */
         .pulse {
             position: absolute;
 
@@ -125,9 +119,6 @@
             animation: subtle-pulse 2s infinite ease-in-out;
         }
 
-        /*
-         * Mesmo spinner do jb.html.
-         */
         #spin {
             position: absolute;
 
@@ -326,12 +317,28 @@
 
         function DLProgress(e) {
 
-            var pct =
-                Math.round(
-                    e.loaded /
-                    e.total *
-                    100
+            var pct = 0;
+
+            /*
+             * Evita NaN caso o navegador não
+             * forneça um total válido.
+             */
+
+            if (
+                e &&
+                e.total &&
+                e.total > 0
+            ) {
+
+                pct = Math.round(
+                    (e.loaded / e.total) * 100
                 );
+
+            }
+
+            if (pct > 100) {
+                pct = 100;
+            }
 
             document.getElementById(
                 "status"
@@ -381,29 +388,142 @@
 
         /*
          * Application Cache
+         *
+         * A verificação abaixo é importante:
+         * alguns navegadores não possuem
+         * window.applicationCache.
          */
 
-        window.applicationCache.addEventListener(
-            "progress",
-            DLProgress,
-            false
-        );
+        if (
+            typeof window.applicationCache !==
+            "undefined"
+        ) {
+
+            var appCache =
+                window.applicationCache;
 
 
-        window.applicationCache.oncached =
-            function (e) {
+            /*
+             * Progresso do cache.
+             */
 
-                DisplayCacheProgress();
+            appCache.addEventListener(
+                "progress",
+                DLProgress,
+                false
+            );
 
-            };
+
+            /*
+             * Cache criado pela primeira vez.
+             */
+
+            appCache.addEventListener(
+                "cached",
+                function (e) {
+
+                    DisplayCacheProgress();
+
+                },
+                false
+            );
 
 
-        window.applicationCache.onupdateready =
-            function (e) {
+            /*
+             * Cache atualizado.
+             */
 
-                DisplayCacheProgress();
+            appCache.addEventListener(
+                "updateready",
+                function (e) {
 
-            };
+                    DisplayCacheProgress();
+
+                },
+                false
+            );
+
+
+            /*
+             * Sem atualização disponível.
+             */
+
+            appCache.addEventListener(
+                "noupdate",
+                function (e) {
+
+                    document.getElementById(
+                        "status"
+                    ).innerHTML =
+                        "Cache já está instalado";
+
+                    document.getElementById(
+                        "percent"
+                    ).innerHTML =
+                        "100%";
+
+                    document.body.classList.add(
+                        "done"
+                    );
+
+                    setTimeout(
+                        function () {
+
+                            location.reload();
+
+                        },
+                        3000
+                    );
+
+                },
+                false
+            );
+
+
+            /*
+             * Erro no Application Cache.
+             */
+
+            appCache.addEventListener(
+                "error",
+                function (e) {
+
+                    document.getElementById(
+                        "status"
+                    ).innerHTML =
+                        "Erro ao preparar cache";
+
+                    document.getElementById(
+                        "percent"
+                    ).innerHTML =
+                        "ERRO";
+
+                },
+                false
+            );
+
+        } else {
+
+            /*
+             * Application Cache não existe
+             * neste navegador.
+             *
+             * Isso evita o erro:
+             * Cannot read properties of undefined
+             * (reading 'addEventListener')
+             */
+
+            document.getElementById(
+                "status"
+            ).innerHTML =
+                "Application Cache indisponível";
+
+            document.getElementById(
+                "percent"
+            ).innerHTML =
+                "--";
+
+        }
 
     </script>
 
