@@ -19,9 +19,7 @@
 
     <script>
         (function () {
-
             try {
-
                 var ac = window.applicationCache;
 
                 if (!ac) {
@@ -32,23 +30,18 @@
                     ac.status ===
                     window.applicationCache.UNCACHED
                 ) {
-
                     window.location.replace(
                         "cache.html"
                     );
 
                     return;
                 }
-
             } catch (e) {
-
             }
-
         })();
     </script>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
@@ -158,6 +151,15 @@
 
         .unknown {
             color: #a7a7b3;
+        }
+
+        .goldhen-info {
+            margin-top: 16px;
+
+            color: #f5c542;
+
+            font-family: monospace;
+            font-size: 13px;
         }
 
         .continue {
@@ -365,7 +367,6 @@
         }
 
         @media (max-width: 430px) {
-
             .container {
                 padding: 32px 22px;
             }
@@ -374,9 +375,7 @@
                 grid-template-columns:
                     repeat(2, 1fr);
             }
-
         }
-
     </style>
 
 </head>
@@ -517,6 +516,10 @@
             <p>
                 Uma interface para desbloquear seu PS4.
             </p>
+
+            <div class="goldhen-info">
+                GoldHEN 2.4b18.12 · versão mais recente usada no desbloqueio
+            </div>
 
             <div class="warning">
                 ⚠ Aviso: não execute novamente caso o desbloqueio já esteja ativo no console.
