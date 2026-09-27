@@ -1,14 +1,54 @@
 <!DOCTYPE html>
-<html manifest="cache.appcache">
+<html lang="pt-BR" manifest="cache.appcache">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" type="image/png" href="Icon.png">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="Icon.png"
+    >
 
     <title>KS4-JB · PS4 Exploit</title>
 
+    <script>
+        (function () {
+
+            try {
+
+                var ac = window.applicationCache;
+
+                if (!ac) {
+                    return;
+                }
+
+                if (
+                    ac.status ===
+                    window.applicationCache.UNCACHED
+                ) {
+
+                    window.location.replace(
+                        "cache.html"
+                    );
+
+                    return;
+                }
+
+            } catch (e) {
+
+            }
+
+        })();
+    </script>
+
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -23,20 +63,24 @@
         body {
             background: #0b0b0f;
             color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             overflow: hidden;
             cursor: pointer;
 
-            /* Bloqueia seleção de texto */
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
 
-            /* Evita menu de seleção em alguns navegadores */
             -webkit-touch-callout: none;
         }
 
@@ -54,9 +98,13 @@
         .container {
             width: 90%;
             max-width: 520px;
+
             padding: 38px 30px;
+
             text-align: center;
+
             background: #111117;
+
             border: 1px solid #292932;
             border-radius: 18px;
         }
@@ -80,9 +128,11 @@
 
         #console {
             min-height: 60px;
+
             font-family: monospace;
             font-size: 15px;
             line-height: 1.45;
+
             text-align: center;
             color: #d9d9e2;
         }
@@ -112,11 +162,15 @@
 
         .continue {
             margin-top: 8px;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             gap: 6px;
+
             color: #9b9ba8;
+
             font-family: monospace;
             font-size: 14px;
         }
@@ -139,21 +193,29 @@
 
         .top-buttons {
             position: fixed;
+
             top: 18px;
             left: 18px;
+
             display: flex;
             align-items: center;
+
             gap: 8px;
+
             z-index: 10;
         }
 
         .icon-button {
             width: 42px;
             height: 42px;
+
             border-radius: 12px;
+
             border: 1px solid #292932;
+
             background: #111117;
             color: #fff;
+
             cursor: pointer;
 
             display: flex;
@@ -176,15 +238,20 @@
 
         .modal {
             position: fixed;
+
             inset: 0;
+
             background: rgba(0, 0, 0, .75);
 
             display: none;
+
             align-items: center;
             justify-content: center;
 
             padding: 20px;
+
             z-index: 20;
+
             cursor: default;
         }
 
@@ -195,10 +262,12 @@
         .modal-content {
             width: 100%;
             max-width: 520px;
+
             max-height: 85vh;
             overflow-y: auto;
 
             background: #111117;
+
             border: 1px solid #292932;
             border-radius: 18px;
 
@@ -209,6 +278,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             margin-bottom: 20px;
         }
 
@@ -220,13 +290,17 @@
         .close {
             border: 0;
             background: transparent;
+
             color: #888894;
+
             font-size: 25px;
+
             cursor: pointer;
         }
 
         .modal-content p {
             color: #a0a0ad;
+
             line-height: 1.6;
             font-size: 14px;
         }
@@ -234,40 +308,58 @@
         .version {
             color: #777783;
             font-size: 13px;
+
             margin-bottom: 18px;
         }
 
         .warning {
             background: #151922;
+
             border: 1px solid #29354d;
+
             color: #9baccb;
+
             border-radius: 10px;
+
             padding: 12px;
+
             font-size: 13px;
+
             margin-top: 16px;
         }
 
         .firmware-title {
             margin-top: 25px;
             margin-bottom: 12px;
+
             color: #fff;
+
             font-size: 14px;
             font-weight: bold;
         }
 
         .firmware-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
             gap: 8px;
         }
 
         .firmware-grid div {
             background: #18181f;
+
             border: 1px solid #292932;
+
             border-radius: 8px;
+
             padding: 10px 5px;
+
             text-align: center;
+
             color: #cfcfd8;
+
             font-family: monospace;
             font-size: 13px;
         }
@@ -279,91 +371,90 @@
             }
 
             .firmware-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns:
+                    repeat(2, 1fr);
             }
 
         }
+
     </style>
+
 </head>
 
 <body>
 
     <div class="top-buttons">
 
-        <!-- INFORMAÇÕES -->
-
         <button
             class="icon-button"
             id="infoBtn"
-            aria-label="Informações">
+            aria-label="Informações"
+        >
 
             <svg
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2">
+                stroke-width="2"
+            >
 
                 <circle
                     cx="12"
                     cy="12"
-                    r="9">
-                </circle>
+                    r="9"
+                ></circle>
 
                 <line
                     x1="12"
                     y1="10"
                     x2="12"
-                    y2="16">
-                </line>
+                    y2="16"
+                ></line>
 
                 <circle
                     cx="12"
                     cy="7"
                     r="0.8"
-                    fill="currentColor">
-                </circle>
+                    fill="currentColor"
+                ></circle>
 
             </svg>
 
         </button>
 
-
-        <!-- CACHE -->
-
         <button
             class="icon-button"
             id="cacheBtn"
-            aria-label="Cache">
+            aria-label="Cache"
+        >
 
             <svg
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2">
+                stroke-width="2"
+            >
 
                 <ellipse
                     cx="12"
                     cy="5"
                     rx="7"
-                    ry="3">
-                </ellipse>
+                    ry="3"
+                ></ellipse>
 
                 <path
-                    d="M5 5v7c0 1.7 3.1 3 7 3s7-1.3 7-3V5">
-                </path>
+                    d="M5 5v7c0 1.7 3.1 3 7 3s7-1.3 7-3V5"
+                ></path>
 
                 <path
-                    d="M5 12v7c0 1.7 3.1 3 7 3s7-1.3 7-3v-7">
-                </path>
+                    d="M5 12v7c0 1.7 3 3 7 3s7-1.3 7-3v-7"
+                ></path>
 
             </svg>
 
         </button>
 
     </div>
-
-
-    <!-- CONTEÚDO PRINCIPAL -->
 
     <div class="container">
 
@@ -384,7 +475,8 @@
             <img
                 class="cross-icon"
                 src="PS4 Cross.png"
-                alt="X">
+                alt="X"
+            >
 
             <span>para continuar</span>
 
@@ -396,12 +488,10 @@
 
     </div>
 
-
-    <!-- MODAL -->
-
     <div
         class="modal"
-        id="infoModal">
+        id="infoModal"
+    >
 
         <div class="modal-content">
 
@@ -413,10 +503,9 @@
 
                 <button
                     class="close"
-                    id="closeModal">
-
+                    id="closeModal"
+                >
                     ×
-
                 </button>
 
             </div>
@@ -454,12 +543,12 @@
 
     </div>
 
-
     <script>
 
         var consoleBox =
-            document.getElementById("console");
-
+            document.getElementById(
+                "console"
+            );
 
         var SUPPORTED = {
 
@@ -474,30 +563,36 @@
 
         };
 
-
-        function addLine(text, className) {
+        function addLine(
+            text,
+            className
+        ) {
 
             var line =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             line.className =
-                "firmware-line " + className;
+                "firmware-line " +
+                (
+                    className || ""
+                );
 
-            line.textContent = text;
+            line.textContent =
+                text;
 
-            consoleBox.appendChild(line);
+            consoleBox.appendChild(
+                line
+            );
 
         }
-
-
-        /*
-         * IDENTIFICA O TIPO DE DISPOSITIVO
-         */
 
         function detectDevice() {
 
             var ua =
-                navigator.userAgent || "";
+                navigator.userAgent ||
+                "";
 
             if (
                 /PlayStation 4/i.test(ua) ||
@@ -521,15 +616,11 @@
 
         }
 
-
-        /*
-         * DETECÇÃO DO FIRMWARE
-         */
-
         function detectFirmware() {
 
             var ua =
-                navigator.userAgent || "";
+                navigator.userAgent ||
+                "";
 
             var patterns = [
 
@@ -543,7 +634,6 @@
 
             var firmware = null;
 
-
             for (
                 var i = 0;
                 i < patterns.length;
@@ -551,16 +641,23 @@
             ) {
 
                 var match =
-                    patterns[i].exec(ua);
+                    patterns[i].exec(
+                        ua
+                    );
 
                 if (match) {
 
                     var major =
-                        parseInt(match[1], 10);
+                        parseInt(
+                            match[1],
+                            10
+                        );
 
                     var minor =
-                        parseInt(match[2], 10);
-
+                        parseInt(
+                            match[2],
+                            10
+                        );
 
                     if (
                         !isNaN(major) &&
@@ -568,7 +665,8 @@
                     ) {
 
                         firmware =
-                            major + "." +
+                            major +
+                            "." +
                             (
                                 minor < 10
                                     ? "0" + minor
@@ -583,16 +681,19 @@
 
             }
 
-
             if (firmware) {
 
                 addLine(
-                    "Firmware: " + firmware,
+                    "Firmware: " +
+                    firmware,
                     "info"
                 );
 
-
-                if (SUPPORTED[firmware]) {
+                if (
+                    SUPPORTED[
+                        firmware
+                    ]
+                ) {
 
                     addLine(
                         "Compatibilidade: OK",
@@ -624,11 +725,6 @@
 
         }
 
-
-        /*
-         * CACHE SILENCIOSO
-         */
-
         try {
 
             var appCache =
@@ -644,228 +740,203 @@
 
             }
 
-        } catch (e) {}
+        } catch (e) {
 
-
-        /*
-         * BOTÃO DE INFORMAÇÕES
-         */
+        }
 
         document
-            .getElementById("infoBtn")
+            .getElementById(
+                "infoBtn"
+            )
             .addEventListener(
                 "click",
-                function(event) {
+                function (event) {
 
                     event.stopPropagation();
 
                     document
-                        .getElementById("infoModal")
-                        .classList.add("show");
+                        .getElementById(
+                            "infoModal"
+                        )
+                        .classList.add(
+                            "show"
+                        );
 
                 }
             );
 
-
-        /*
-         * FECHAR MODAL
-         */
-
         document
-            .getElementById("closeModal")
+            .getElementById(
+                "closeModal"
+            )
             .addEventListener(
                 "click",
-                function(event) {
+                function (event) {
 
                     event.stopPropagation();
 
                     document
-                        .getElementById("infoModal")
-                        .classList.remove("show");
+                        .getElementById(
+                            "infoModal"
+                        )
+                        .classList.remove(
+                            "show"
+                        );
 
                 }
             );
 
-
-        /*
-         * FECHAR CLICANDO FORA
-         */
-
         document
-            .getElementById("infoModal")
+            .getElementById(
+                "infoModal"
+            )
             .addEventListener(
                 "click",
-                function(event) {
+                function (event) {
 
                     if (
                         event.target ===
-                        document.getElementById("infoModal")
+                        document.getElementById(
+                            "infoModal"
+                        )
                     ) {
 
                         document
-                            .getElementById("infoModal")
-                            .classList.remove("show");
+                            .getElementById(
+                                "infoModal"
+                            )
+                            .classList.remove(
+                                "show"
+                            );
 
                     }
 
                 }
             );
 
-
-        /*
-         * BOTÃO DE CACHE
-         */
-
         document
-            .getElementById("cacheBtn")
+            .getElementById(
+                "cacheBtn"
+            )
             .addEventListener(
                 "click",
-                function(event) {
+                function (event) {
 
                     event.stopPropagation();
 
-                    location.href = "cache.html";
+                    window.location.href =
+                        "cache.html";
 
                 }
             );
 
-
-        /*
-         * CLIQUE NA ÁREA PRINCIPAL
-         *
-         * Vai para a página de desbloqueio.
-         */
-
         document.addEventListener(
             "click",
-            function(event) {
+            function (event) {
 
                 if (
-                    event.target.closest("#infoBtn") ||
-                    event.target.closest("#cacheBtn") ||
-                    event.target.closest("#infoModal")
+                    event.target.closest(
+                        "#infoBtn"
+                    ) ||
+                    event.target.closest(
+                        "#cacheBtn"
+                    ) ||
+                    event.target.closest(
+                        "#infoModal"
+                    )
                 ) {
+
                     return;
+
                 }
 
-                location.href = "jb.html";
+                window.location.href =
+                    "jb.html";
 
             }
         );
-
-
-        /*
-         * TOUCH
-         */
 
         document.addEventListener(
             "touchend",
-            function(event) {
+            function (event) {
 
                 if (
-                    event.target.closest("#infoBtn") ||
-                    event.target.closest("#cacheBtn") ||
-                    event.target.closest("#infoModal")
+                    event.target.closest(
+                        "#infoBtn"
+                    ) ||
+                    event.target.closest(
+                        "#cacheBtn"
+                    ) ||
+                    event.target.closest(
+                        "#infoModal"
+                    )
                 ) {
+
                     return;
+
                 }
 
-                location.href = "jb.html";
+                window.location.href =
+                    "jb.html";
 
             },
-            { passive: true }
+            {
+                passive: true
+            }
         );
-
-
-        /*
-         * BLOQUEIA MENU DE CONTEXTO
-         */
 
         document.addEventListener(
             "contextmenu",
-            function(event) {
+            function (event) {
 
                 event.preventDefault();
 
             }
         );
-
-
-        /*
-         * BLOQUEIA COPIAR
-         */
 
         document.addEventListener(
             "copy",
-            function(event) {
+            function (event) {
 
                 event.preventDefault();
 
             }
         );
-
-
-        /*
-         * BLOQUEIA RECORTAR
-         */
 
         document.addEventListener(
             "cut",
-            function(event) {
+            function (event) {
 
                 event.preventDefault();
 
             }
         );
-
-
-        /*
-         * BLOQUEIA COLAR
-         */
 
         document.addEventListener(
             "paste",
-            function(event) {
+            function (event) {
 
                 event.preventDefault();
 
             }
         );
-
-
-        /*
-         * BLOQUEIA ARRASTAR
-         */
 
         document.addEventListener(
             "dragstart",
-            function(event) {
+            function (event) {
 
                 event.preventDefault();
 
             }
         );
 
-
-        /*
-         * INFORMAÇÕES DO DISPOSITIVO
-         *
-         * Mantemos a função disponível para futuras
-         * personalizações sem adicionar outra caixa
-         * visual à interface.
-         */
-
         var deviceType =
             detectDevice();
-
-
-        /*
-         * INICIA DETECÇÃO
-         */
 
         detectFirmware();
 
     </script>
 
 </body>
+
 </html>
