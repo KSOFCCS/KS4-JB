@@ -56,6 +56,10 @@ body {
     background: #111117;
     border: 1px solid #292932;
     border-radius: 18px;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 #brand {
@@ -105,7 +109,9 @@ body {
     border-radius: 50%;
     border: 2px solid #4d8dff;
     animation: subtle-pulse 2s infinite ease-in-out;
-    transition: border-color 0.25s ease;
+    transition:
+        border-color 0.25s ease,
+        opacity 0.25s ease;
 }
 
 #spin {
@@ -229,8 +235,13 @@ code {
 
 
 /* =========================
-   ESTADO FINAL
+   ESTADO FINALIZADO
    ========================= */
+
+body.done #main-container {
+    border-color: #f2c94c;
+    box-shadow: 0 0 18px rgba(242, 201, 76, 0.18);
+}
 
 body.done #brand span {
     color: #f2c94c;
@@ -265,6 +276,11 @@ body.done #msg {
 /* =========================
    ESTADO DE ERRO
    ========================= */
+
+body.fail #main-container {
+    border-color: #ff5c5c;
+    box-shadow: 0 0 18px rgba(255, 92, 92, 0.18);
+}
 
 body.fail #brand span {
     color: #ff5c5c;
@@ -407,12 +423,11 @@ document.addEventListener("dragstart", function (e) {
 
 
 /*
- * O jb.js altera a classe do <body> para:
- *   done = finalizado
- *   fail = erro
+ * Detecta automaticamente quando o jb.js
+ * altera o estado do <body>.
  *
- * Este observador mantém a interface sincronizada
- * sem precisar alterar o jb.js.
+ * done = finalizado
+ * fail = erro
  */
 
 (function () {
