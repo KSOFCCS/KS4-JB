@@ -1,18 +1,24 @@
-<!DOCTYPE html><html lang="pt-BR" manifest="cache.appcache"><head>
-    <meta charset="UTF-8"><meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<!DOCTYPE html>
+<html lang="pt-BR" manifest="cache.appcache">
+<head>
 
-<link
-    rel="icon"
-    type="image/png"
-    href="Icon.png"
->
+    <meta charset="UTF-8">
 
-<title>KS4-JB · PS4 Exploit</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="Icon.png"
+    >
+
+    <title>KS4-JB · PS4 Exploit</title>
 
 <style>
+
     * {
         box-sizing: border-box;
     }
@@ -181,7 +187,6 @@
     .icon-button {
         width: 42px;
         height: 42px;
-
         border-radius: 12px;
 
         border: 1px solid #292932;
@@ -211,7 +216,6 @@
 
     .modal {
         position: fixed;
-
         inset: 0;
 
         background: rgba(0, 0, 0, .75);
@@ -243,7 +247,6 @@
 
         border: 1px solid #292932;
         border-radius: 18px;
-
         padding: 26px;
     }
 
@@ -338,6 +341,7 @@
     }
 
     @media (max-width: 430px) {
+
         .container {
             padding: 32px 22px;
         }
@@ -346,10 +350,16 @@
             grid-template-columns:
                 repeat(2, 1fr);
         }
+
     }
+
 </style>
 
-</head><body><div class="top-buttons">
+</head>
+
+<body>
+
+<div class="top-buttons">
 
     <button
         class="icon-button"
@@ -440,7 +450,7 @@
 
         <img
             class="cross-icon"
-            src="PS4 Cross.png"
+            src="PS4Cross.png"
             alt="X"
         >
 
@@ -515,10 +525,41 @@
 
 <script>
 
+    (function () {
+
+        try {
+
+            var ac =
+                window.applicationCache;
+
+            if (!ac) {
+                return;
+            }
+
+            if (
+                ac.status ===
+                window.applicationCache.UNCACHED
+            ) {
+
+                window.location.replace(
+                    "cache.html"
+                );
+
+                return;
+            }
+
+        } catch (e) {
+
+        }
+
+    })();
+
+
     var consoleBox =
         document.getElementById(
             "console"
         );
+
 
     var SUPPORTED = {
 
@@ -532,6 +573,7 @@
         "13.52": true
 
     };
+
 
     function addLine(
         text,
@@ -557,6 +599,7 @@
         );
 
     }
+
 
     function detectDevice() {
 
@@ -586,6 +629,7 @@
 
     }
 
+
     function detectFirmware() {
 
         var ua =
@@ -603,6 +647,7 @@
         ];
 
         var firmware = null;
+
 
         for (
             var i = 0;
@@ -629,6 +674,7 @@
                         10
                     );
 
+
                 if (
                     !isNaN(major) &&
                     !isNaN(minor)
@@ -651,6 +697,7 @@
 
         }
 
+
         if (firmware) {
 
             addLine(
@@ -658,6 +705,7 @@
                 firmware,
                 "info"
             );
+
 
             if (
                 SUPPORTED[
@@ -695,6 +743,7 @@
 
     }
 
+
     try {
 
         var appCache =
@@ -713,6 +762,7 @@
     } catch (e) {
 
     }
+
 
     document
         .getElementById(
@@ -735,6 +785,7 @@
             }
         );
 
+
     document
         .getElementById(
             "closeModal"
@@ -755,6 +806,7 @@
 
             }
         );
+
 
     document
         .getElementById(
@@ -784,6 +836,7 @@
             }
         );
 
+
     document
         .getElementById(
             "cacheBtn"
@@ -799,6 +852,7 @@
 
             }
         );
+
 
     document.addEventListener(
         "click",
@@ -825,6 +879,7 @@
 
         }
     );
+
 
     document.addEventListener(
         "touchend",
@@ -855,6 +910,7 @@
         }
     );
 
+
     document.addEventListener(
         "contextmenu",
         function (event) {
@@ -863,6 +919,7 @@
 
         }
     );
+
 
     document.addEventListener(
         "copy",
@@ -873,6 +930,7 @@
         }
     );
 
+
     document.addEventListener(
         "cut",
         function (event) {
@@ -881,6 +939,7 @@
 
         }
     );
+
 
     document.addEventListener(
         "paste",
@@ -891,6 +950,7 @@
         }
     );
 
+
     document.addEventListener(
         "dragstart",
         function (event) {
@@ -899,6 +959,7 @@
 
         }
     );
+
 
     var deviceType =
         detectDevice();
