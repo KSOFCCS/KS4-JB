@@ -53,9 +53,7 @@
             background: #111117;
             border: 1px solid #292932;
             border-radius: 18px;
-            transition:
-                border-color 0.35s ease,
-                box-shadow 0.35s ease;
+            transition: border-color 0.35s ease;
         }
 
         #brand {
@@ -174,7 +172,6 @@
 
         body.done #main-container {
             border-color: #f5c542;
-            box-shadow: 0 0 18px rgba(245, 197, 66, 0.16);
         }
 
         body.done #spin {
@@ -207,7 +204,6 @@
 
         body.error #main-container {
             border-color: #ff5c5c;
-            box-shadow: 0 0 18px rgba(255, 92, 92, 0.14);
         }
 
         body.error #spin {
@@ -521,16 +517,6 @@
                 "error",
                 function () {
                     showError();
-                },
-                false
-            );
-
-            appCache.addEventListener(
-                "cached",
-                function () {
-                    try {
-                        appCache.swapCache();
-                    } catch (e) {}
                 },
                 false
             );
