@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="pt-BR" manifest="cache.appcache">
 
 <head>
@@ -58,8 +57,7 @@ body {
     border-radius: 18px;
 
     transition:
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
+        border-color 0.3s ease;
 }
 
 #brand {
@@ -99,7 +97,6 @@ body {
     display: block;
     object-fit: contain;
     z-index: 2;
-    transition: filter 0.25s ease;
 }
 
 .pulse {
@@ -233,14 +230,8 @@ code {
     color: #777783;
 }
 
-
-/* =========================
-   ESTADO FINALIZADO
-   ========================= */
-
 body.done #main-container {
     border-color: #f2c94c;
-    box-shadow: 0 0 18px rgba(242, 201, 76, 0.18);
 }
 
 body.done #brand span {
@@ -272,14 +263,8 @@ body.done #msg {
     display: none;
 }
 
-
-/* =========================
-   ESTADO DE ERRO
-   ========================= */
-
 body.fail #main-container {
     border-color: #ff5c5c;
-    box-shadow: 0 0 18px rgba(255, 92, 92, 0.18);
 }
 
 body.fail #brand span {
@@ -311,11 +296,6 @@ body.fail #msg {
     display: block;
     color: #ff5c5c;
 }
-
-
-/* =========================
-   ANIMAÇÕES
-   ========================= */
 
 @keyframes real-spin {
     to {
@@ -394,7 +374,6 @@ body.fail #msg {
     <b>KS4-JB</b> · 2026
 </div>
 
-
 <script>
 
 document.addEventListener("contextmenu", function (e) {
@@ -420,15 +399,6 @@ document.addEventListener("selectstart", function (e) {
 document.addEventListener("dragstart", function (e) {
     e.preventDefault();
 });
-
-
-/*
- * Detecta automaticamente quando o jb.js
- * altera o estado do <body>.
- *
- * done = finalizado
- * fail = erro
- */
 
 (function () {
 
@@ -466,7 +436,6 @@ document.addEventListener("dragstart", function (e) {
 })();
 
 </script>
-
 
 <script type="module">
     import "./jb.js?v=10";
