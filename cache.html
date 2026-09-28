@@ -53,6 +53,9 @@
             background: #111117;
             border: 1px solid #292932;
             border-radius: 18px;
+            transition:
+                border-color 0.35s ease,
+                box-shadow 0.35s ease;
         }
 
         #brand {
@@ -65,6 +68,7 @@
 
         #brand span {
             color: #4d8dff;
+            transition: color 0.35s ease;
         }
 
         #subtitle {
@@ -99,6 +103,9 @@
             border-radius: 50%;
             border: 2px solid #4d8dff;
             animation: subtle-pulse 2s infinite ease-in-out;
+            transition:
+                border-color 0.35s ease,
+                opacity 0.35s ease;
         }
 
         #spin {
@@ -110,6 +117,9 @@
             border-radius: 50%;
             animation: real-spin 0.9s linear infinite;
             opacity: 0.25;
+            transition:
+                border-color 0.35s ease,
+                opacity 0.35s ease;
         }
 
         #status {
@@ -118,6 +128,7 @@
             font-family: monospace;
             font-size: 15px;
             line-height: 1.5;
+            transition: color 0.35s ease;
         }
 
         #percent {
@@ -127,6 +138,22 @@
             font-family: monospace;
             font-size: 13px;
             line-height: 1.5;
+            transition: color 0.35s ease;
+        }
+
+        #redirect {
+            min-height: 18px;
+            margin-top: 8px;
+            color: #666672;
+            font-family: monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        #redirect.show {
+            opacity: 1;
         }
 
         #footer {
@@ -145,12 +172,18 @@
             color: #777783;
         }
 
+        body.done #main-container {
+            border-color: #f5c542;
+            box-shadow: 0 0 18px rgba(245, 197, 66, 0.16);
+        }
+
         body.done #spin {
             animation: none;
             border-top-color: #f5c542;
             border-left-color: rgba(245, 197, 66, 0.12);
             border-right-color: rgba(245, 197, 66, 0.12);
             border-bottom-color: rgba(245, 197, 66, 0.12);
+            opacity: 0.5;
         }
 
         body.done .pulse {
@@ -163,8 +196,18 @@
             color: #f5c542;
         }
 
+        body.done #status {
+            color: #f5c542;
+            font-weight: 700;
+        }
+
         body.done #percent {
             color: #f5c542;
+        }
+
+        body.error #main-container {
+            border-color: #ff5c5c;
+            box-shadow: 0 0 18px rgba(255, 92, 92, 0.14);
         }
 
         body.error #spin {
@@ -173,19 +216,30 @@
             border-left-color: rgba(255, 92, 92, 0.12);
             border-right-color: rgba(255, 92, 92, 0.12);
             border-bottom-color: rgba(255, 92, 92, 0.12);
+            opacity: 0.5;
         }
 
         body.error .pulse {
             animation: none;
             border-color: #ff5c5c;
+            opacity: 0.65;
         }
 
         body.error #brand span {
             color: #ff5c5c;
         }
 
+        body.error #status {
+            color: #ff5c5c;
+            font-weight: 700;
+        }
+
         body.error #percent {
             color: #ff5c5c;
+        }
+
+        body.error #redirect {
+            color: #8f5555;
         }
 
         @keyframes real-spin {
@@ -252,11 +306,15 @@
         </div>
 
         <div id="status">
-            Preparando cache...
+            Preparando...
         </div>
 
         <div id="percent">
             0%
+        </div>
+
+        <div id="redirect">
+            Redirecionando para o KS4-JB...
         </div>
 
     </div>
@@ -268,22 +326,83 @@
     <script>
         history.replaceState(null, null, "index.html");
 
-        var histlength = history.length;
-        history.go(-histlength);
-
         var statusElement = document.getElementById("status");
         var percentElement = document.getElementById("percent");
+        var redirectElement = document.getElementById("redirect");
 
-        function DLProgress(e) {
+        var redirectTimer = null;
+        var finished = false;
+
+        function showPreparing() {
+            document.body.classList.remove("done", "error");
+
+            statusElement.textContent = "Preparando...";
+            percentElement.textContent = "0%";
+            redirectElement.classList.remove("show");
+        }
+
+        function showInstalling() {
+            document.body.classList.remove("done", "error");
+
+            statusElement.textContent = "Instalando cache...";
+            redirectElement.classList.remove("show");
+        }
+
+        function showUpdating() {
+            document.body.classList.remove("done", "error");
+
+            statusElement.textContent = "Atualizando cache...";
+            redirectElement.classList.remove("show");
+        }
+
+        function showSuccess(message) {
+            if (finished) {
+                return;
+            }
+
+            finished = true;
+
+            document.body.classList.remove("error");
+            document.body.classList.add("done");
+
+            statusElement.textContent = message;
+            percentElement.textContent = "100%";
+            redirectElement.classList.add("show");
+
+            redirectTimer = setTimeout(function () {
+                window.location.replace("index.html");
+            }, 2500);
+        }
+
+        function showError() {
+            if (finished) {
+                return;
+            }
+
+            finished = true;
+
+            document.body.classList.remove("done");
+            document.body.classList.add("error");
+
+            statusElement.textContent = "Erro ao instalar o cache";
+            percentElement.textContent = "ERRO";
+            redirectElement.classList.remove("show");
+        }
+
+        function updateProgress(event) {
+            if (finished) {
+                return;
+            }
+
             var pct = 0;
 
             if (
-                e &&
-                typeof e.loaded === "number" &&
-                typeof e.total === "number" &&
-                e.total > 0
+                event &&
+                typeof event.loaded === "number" &&
+                typeof event.total === "number" &&
+                event.total > 0
             ) {
-                pct = Math.round((e.loaded / e.total) * 100);
+                pct = Math.round((event.loaded / event.total) * 100);
             }
 
             if (pct < 0) {
@@ -294,36 +413,63 @@
                 pct = 100;
             }
 
-            statusElement.innerHTML = "Instalando cache...";
-            percentElement.innerHTML = pct + "%";
+            percentElement.textContent = pct + "%";
+
+            if (appCache.status === appCache.UPDATEREADY) {
+                showUpdating();
+            } else {
+                showInstalling();
+            }
         }
 
-        function DisplayCacheProgress() {
-            statusElement.innerHTML = "Cache instalado com sucesso";
-            percentElement.innerHTML = "100%";
-
-            document.body.classList.remove("error");
-            document.body.classList.add("done");
+        function redirectToIndex() {
+            redirectElement.classList.add("show");
 
             setTimeout(function () {
-                location.reload();
-            }, 3000);
+                window.location.replace("index.html");
+            }, 1800);
         }
 
-        if (typeof window.applicationCache !== "undefined") {
+        showPreparing();
+
+        if (typeof window.applicationCache === "undefined") {
+            showError();
+            statusElement.textContent = "Erro ao instalar o cache";
+            percentElement.textContent = "INDISPONÍVEL";
+        } else {
 
             var appCache = window.applicationCache;
 
             appCache.addEventListener(
+                "checking",
+                function () {
+                    if (!finished) {
+                        showPreparing();
+                    }
+                },
+                false
+            );
+
+            appCache.addEventListener(
+                "downloading",
+                function () {
+                    if (!finished) {
+                        showInstalling();
+                    }
+                },
+                false
+            );
+
+            appCache.addEventListener(
                 "progress",
-                DLProgress,
+                updateProgress,
                 false
             );
 
             appCache.addEventListener(
                 "cached",
                 function () {
-                    DisplayCacheProgress();
+                    showSuccess("Cache instalado com sucesso");
                 },
                 false
             );
@@ -331,7 +477,11 @@
             appCache.addEventListener(
                 "updateready",
                 function () {
-                    DisplayCacheProgress();
+                    try {
+                        appCache.swapCache();
+                    } catch (e) {}
+
+                    showSuccess("Cache atualizado com sucesso");
                 },
                 false
             );
@@ -339,14 +489,30 @@
             appCache.addEventListener(
                 "noupdate",
                 function () {
-                    statusElement.innerHTML = "Cache já está instalado";
-                    percentElement.innerHTML = "100%";
+                    if (finished) {
+                        return;
+                    }
 
+                    finished = true;
+
+                    document.body.classList.remove("error");
                     document.body.classList.add("done");
 
-                    setTimeout(function () {
-                        location.reload();
-                    }, 3000);
+                    statusElement.textContent = "Cache já está instalado";
+                    percentElement.textContent = "100%";
+                    redirectElement.classList.add("show");
+
+                    redirectToIndex();
+                },
+                false
+            );
+
+            appCache.addEventListener(
+                "obsolete",
+                function () {
+                    if (!finished) {
+                        showError();
+                    }
                 },
                 false
             );
@@ -354,19 +520,20 @@
             appCache.addEventListener(
                 "error",
                 function () {
-                    statusElement.innerHTML = "Erro ao preparar cache";
-                    percentElement.innerHTML = "ERRO";
-
-                    document.body.classList.remove("done");
-                    document.body.classList.add("error");
+                    showError();
                 },
                 false
             );
 
-        } else {
-
-            statusElement.innerHTML = "Application Cache indisponível";
-            percentElement.innerHTML = "--";
+            appCache.addEventListener(
+                "cached",
+                function () {
+                    try {
+                        appCache.swapCache();
+                    } catch (e) {}
+                },
+                false
+            );
         }
     </script>
 
