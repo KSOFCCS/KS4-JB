@@ -2,552 +2,867 @@
 <html lang="pt-BR" manifest="cache.appcache">
 
 <head>
-    <meta charset="utf-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    >
+<meta charset="utf-8">
 
-    <title>KS4-JB · PS4 Exploit</title>
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
-    <link rel="icon" type="image/png" href="Icon.png">
+<title>KS4-JB · PS4 Exploit</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-user-select: none;
-            user-select: none;
-            -webkit-touch-callout: none;
-        }
+<link
+    rel="icon"
+    type="image/png"
+    href="Icon.png"
+>
 
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-        }
+<style>
 
-        body {
-            background: #0b0b0f;
-            color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 
-        #main-container {
-            position: relative;
-            width: 90%;
-            max-width: 520px;
-            min-height: 330px;
-            padding: 38px 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: #111117;
-            border: 1px solid #292932;
-            border-radius: 18px;
-            transition: border-color 0.35s ease;
-        }
+    -webkit-user-select: none;
+    user-select: none;
 
-        #brand {
-            font-size: 42px;
-            font-weight: 800;
-            letter-spacing: -2px;
-            margin-bottom: 8px;
-            color: #fff;
-        }
+    -webkit-touch-callout: none;
+}
 
-        #brand span {
-            color: #4d8dff;
-            transition: color 0.35s ease;
-        }
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
 
-        #subtitle {
-            color: #8f8f9d;
-            font-size: 14px;
-            margin-bottom: 34px;
-        }
+body {
+    background: #0b0b0f;
+    color: #fff;
 
-        #visual-indicator {
-            position: relative;
-            width: 72px;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 26px;
-        }
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-        .ps4-icon {
-            position: relative;
-            width: 44px;
-            height: 44px;
-            display: block;
-            object-fit: contain;
-            z-index: 2;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        .pulse {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 2px solid #4d8dff;
-            animation: subtle-pulse 2s infinite ease-in-out;
-            transition:
-                border-color 0.35s ease,
-                opacity 0.35s ease;
-        }
+    overflow: hidden;
+}
 
-        #spin {
-            position: absolute;
-            width: 125%;
-            height: 125%;
-            border: 2px solid transparent;
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: real-spin 0.9s linear infinite;
-            opacity: 0.25;
-            transition:
-                border-color 0.35s ease,
-                opacity 0.35s ease;
-        }
+#main-container {
 
-        #status {
-            min-height: 22px;
-            color: #eee;
-            font-family: monospace;
-            font-size: 15px;
-            line-height: 1.5;
-            transition: color 0.35s ease;
-        }
+    position: relative;
 
-        #percent {
-            min-height: 20px;
-            margin-top: 5px;
-            color: #8faeff;
-            font-family: monospace;
-            font-size: 13px;
-            line-height: 1.5;
-            transition: color 0.35s ease;
-        }
+    width: 90%;
+    max-width: 520px;
 
-        #redirect {
-            min-height: 18px;
-            margin-top: 8px;
-            color: #666672;
-            font-family: monospace;
-            font-size: 11px;
-            line-height: 1.4;
-            opacity: 0;
-            transition: opacity 0.35s ease;
-        }
+    min-height: 330px;
 
-        #redirect.show {
-            opacity: 1;
-        }
+    padding: 38px 30px;
 
-        #footer {
-            position: fixed;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-family: monospace;
-            font-size: 11px;
-            color: #555560;
-            letter-spacing: 0.08em;
-        }
+    display: flex;
+    flex-direction: column;
 
-        #footer b {
-            color: #777783;
-        }
+    justify-content: center;
+    align-items: center;
 
-        body.done #main-container {
-            border-color: #f5c542;
-        }
+    text-align: center;
 
-        body.done #spin {
-            animation: none;
-            border-top-color: #f5c542;
-            border-left-color: rgba(245, 197, 66, 0.12);
-            border-right-color: rgba(245, 197, 66, 0.12);
-            border-bottom-color: rgba(245, 197, 66, 0.12);
-            opacity: 0.5;
-        }
+    background: #111117;
 
-        body.done .pulse {
-            animation: none;
-            border-color: #f5c542;
-            opacity: 0.65;
-        }
+    border: 1px solid #292932;
+    border-radius: 18px;
 
-        body.done #brand span {
-            color: #f5c542;
-        }
+    transition:
+        border-color 0.35s ease;
 
-        body.done #status {
-            color: #f5c542;
-            font-weight: 700;
-        }
+}
 
-        body.done #percent {
-            color: #f5c542;
-        }
+#brand {
 
-        body.error #main-container {
-            border-color: #ff5c5c;
-        }
+    font-size: 42px;
+    font-weight: 800;
 
-        body.error #spin {
-            animation: none;
-            border-top-color: #ff5c5c;
-            border-left-color: rgba(255, 92, 92, 0.12);
-            border-right-color: rgba(255, 92, 92, 0.12);
-            border-bottom-color: rgba(255, 92, 92, 0.12);
-            opacity: 0.5;
-        }
+    letter-spacing: -2px;
 
-        body.error .pulse {
-            animation: none;
-            border-color: #ff5c5c;
-            opacity: 0.65;
-        }
+    margin-bottom: 8px;
 
-        body.error #brand span {
-            color: #ff5c5c;
-        }
+    color: #fff;
 
-        body.error #status {
-            color: #ff5c5c;
-            font-weight: 700;
-        }
+}
 
-        body.error #percent {
-            color: #ff5c5c;
-        }
+#brand span {
 
-        body.error #redirect {
-            color: #8f5555;
-        }
+    color: #4d8dff;
 
-        @keyframes real-spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
+    transition:
+        color 0.35s ease;
 
-        @keyframes subtle-pulse {
-            0% {
-                transform: scale(0.96);
-                opacity: 0.45;
-            }
+}
 
-            50% {
-                transform: scale(1.04);
-                opacity: 0.8;
-            }
+#subtitle {
 
-            100% {
-                transform: scale(0.96);
-                opacity: 0.45;
-            }
-        }
+    color: #8f8f9d;
 
-        @media (max-width: 430px) {
-            #main-container {
-                padding: 34px 22px;
-            }
+    font-size: 14px;
 
-            #brand {
-                font-size: 40px;
-            }
-        }
-    </style>
+    margin-bottom: 34px;
+
+}
+
+#visual-indicator {
+
+    position: relative;
+
+    width: 72px;
+    height: 72px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 26px;
+
+}
+
+.ps4-icon {
+
+    position: relative;
+
+    width: 44px;
+    height: 44px;
+
+    display: block;
+
+    object-fit: contain;
+
+    z-index: 2;
+
+}
+
+.pulse {
+
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+
+    border: 2px solid #4d8dff;
+
+    animation:
+        subtle-pulse 2s infinite ease-in-out;
+
+    transition:
+        border-color 0.35s ease,
+        opacity 0.35s ease;
+
+}
+
+#spin {
+
+    position: absolute;
+
+    width: 125%;
+    height: 125%;
+
+    border: 2px solid transparent;
+
+    border-top-color: #fff;
+
+    border-radius: 50%;
+
+    animation:
+        real-spin 0.9s linear infinite;
+
+    opacity: 0.25;
+
+}
+
+#status {
+
+    min-height: 22px;
+
+    color: #eee;
+
+    font-family: monospace;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+
+}
+
+#percent {
+
+    min-height: 20px;
+
+    margin-top: 5px;
+
+    color: #8faeff;
+
+    font-family: monospace;
+
+    font-size: 13px;
+
+}
+
+#redirect {
+
+    min-height: 18px;
+
+    margin-top: 8px;
+
+    color: #666672;
+
+    font-family: monospace;
+
+    font-size: 11px;
+
+    line-height: 1.4;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.35s ease;
+
+}
+
+#redirect.show {
+    opacity: 1;
+}
+
+#footer {
+
+    position: fixed;
+
+    bottom: 20px;
+
+    left: 0;
+    right: 0;
+
+    text-align: center;
+
+    font-family: monospace;
+
+    font-size: 11px;
+
+    color: #555560;
+
+    letter-spacing: 0.08em;
+
+}
+
+#footer b {
+    color: #777783;
+}
+
+body.done #main-container {
+    border-color: #f5c542;
+}
+
+body.done #spin {
+
+    animation: none;
+
+    border-top-color: #f5c542;
+
+    border-left-color:
+        rgba(245, 197, 66, 0.12);
+
+    border-right-color:
+        rgba(245, 197, 66, 0.12);
+
+    border-bottom-color:
+        rgba(245, 197, 66, 0.12);
+
+    opacity: 0.5;
+
+}
+
+body.done .pulse {
+
+    animation: none;
+
+    border-color: #f5c542;
+
+    opacity: 0.65;
+
+}
+
+body.done #brand span {
+    color: #f5c542;
+}
+
+body.done #status {
+
+    color: #f5c542;
+
+    font-weight: 700;
+
+}
+
+body.done #percent {
+    color: #f5c542;
+}
+
+body.error #main-container {
+    border-color: #ff5c5c;
+}
+
+body.error #spin {
+
+    animation: none;
+
+    border-top-color: #ff5c5c;
+
+    opacity: 0.5;
+
+}
+
+body.error .pulse {
+
+    animation: none;
+
+    border-color: #ff5c5c;
+
+    opacity: 0.65;
+
+}
+
+body.error #brand span {
+    color: #ff5c5c;
+}
+
+body.error #status {
+
+    color: #ff5c5c;
+
+    font-weight: 700;
+
+}
+
+body.error #percent {
+    color: #ff5c5c;
+}
+
+body.error #redirect {
+    color: #8f5555;
+}
+
+@keyframes real-spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+@keyframes subtle-pulse {
+
+    0% {
+        transform: scale(0.96);
+        opacity: 0.45;
+    }
+
+    50% {
+        transform: scale(1.04);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(0.96);
+        opacity: 0.45;
+    }
+
+}
+
+@media (max-width: 430px) {
+
+    #main-container {
+        padding: 34px 22px;
+    }
+
+    #brand {
+        font-size: 40px;
+    }
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-    <div id="main-container">
+<div id="main-container">
 
-        <div id="brand">
-            KS<span>4</span> JB
-        </div>
+<div id="brand">
+KS<span>4</span> JB
+</div>
 
-        <div id="subtitle">
-            KSOFCC · PS4 EXPLOIT
-        </div>
+<div id="subtitle">
+KSOFCC · PS4 EXPLOIT
+</div>
 
-        <div id="visual-indicator">
+<div id="visual-indicator">
 
-            <img
-                id="ps4-icon"
-                class="ps4-icon"
-                src="PSICON4.png"
-                alt=""
-                draggable="false"
-            >
+<img
+    id="ps4-icon"
+    class="ps4-icon"
+    src="PSICON4.png"
+    alt=""
+    draggable="false"
+>
 
-            <div id="spin"></div>
+<div id="spin"></div>
 
-            <div class="pulse"></div>
+<div class="pulse"></div>
 
-        </div>
+</div>
 
-        <div id="status">
-            Preparando...
-        </div>
+<div id="status">
+Preparando...
+</div>
 
-        <div id="percent">
-            0%
-        </div>
+<div id="percent">
+0%
+</div>
 
-        <div id="redirect">
-            Redirecionando para o KS4-JB...
-        </div>
+<div id="redirect">
+Redirecionando para o KS4-JB...
+</div>
 
-    </div>
+</div>
 
-    <div id="footer">
-        <b>KS4-JB</b> · 2026
-    </div>
+<div id="footer">
+<b>KS4-JB</b> · 2026
+</div>
 
-    <script>
-        history.replaceState(null, null, "index.html");
+<script>
 
-        var statusElement = document.getElementById("status");
-        var percentElement = document.getElementById("percent");
-        var redirectElement = document.getElementById("redirect");
+var CACHE_KEY =
+    "ks4jb_cache_installed";
 
-        var redirectTimer = null;
-        var finished = false;
+var statusElement =
+    document.getElementById("status");
 
-        function showPreparing() {
-            document.body.classList.remove("done", "error");
+var percentElement =
+    document.getElementById("percent");
 
-            statusElement.textContent = "Preparando...";
-            percentElement.textContent = "0%";
-            redirectElement.classList.remove("show");
-        }
+var redirectElement =
+    document.getElementById("redirect");
 
-        function showInstalling() {
-            document.body.classList.remove("done", "error");
+var appCache =
+    window.applicationCache;
 
-            statusElement.textContent = "Instalando cache...";
-            redirectElement.classList.remove("show");
-        }
+var finished = false;
 
-        function showUpdating() {
-            document.body.classList.remove("done", "error");
+var manual =
+    window.location.search.indexOf(
+        "manual=1"
+    ) !== -1;
 
-            statusElement.textContent = "Atualizando cache...";
-            redirectElement.classList.remove("show");
-        }
 
-        function showSuccess(message) {
-            if (finished) {
-                return;
-            }
+function setInstalled() {
 
-            finished = true;
+    try {
 
-            document.body.classList.remove("error");
-            document.body.classList.add("done");
+        localStorage.setItem(
+            CACHE_KEY,
+            "1"
+        );
 
-            statusElement.textContent = message;
-            percentElement.textContent = "100%";
-            redirectElement.classList.add("show");
+    } catch (e) {}
 
-            redirectTimer = setTimeout(function () {
-                window.location.replace("index.html");
-            }, 2500);
-        }
+}
 
-        function showError() {
-            if (finished) {
-                return;
-            }
 
-            finished = true;
+function showPreparing() {
 
-            document.body.classList.remove("done");
-            document.body.classList.add("error");
+    document.body.classList.remove(
+        "done",
+        "error"
+    );
 
-            statusElement.textContent = "Erro ao instalar o cache";
-            percentElement.textContent = "ERRO";
-            redirectElement.classList.remove("show");
-        }
+    statusElement.textContent =
+        "Preparando...";
 
-        function updateProgress(event) {
-            if (finished) {
-                return;
-            }
+    percentElement.textContent =
+        "0%";
 
-            var pct = 0;
+    redirectElement.classList.remove(
+        "show"
+    );
 
-            if (
-                event &&
-                typeof event.loaded === "number" &&
-                typeof event.total === "number" &&
-                event.total > 0
-            ) {
-                pct = Math.round((event.loaded / event.total) * 100);
-            }
+}
 
-            if (pct < 0) {
-                pct = 0;
-            }
 
-            if (pct > 100) {
-                pct = 100;
-            }
+function showInstalling() {
 
-            percentElement.textContent = pct + "%";
+    document.body.classList.remove(
+        "done",
+        "error"
+    );
 
-            if (appCache.status === appCache.UPDATEREADY) {
-                showUpdating();
-            } else {
-                showInstalling();
-            }
-        }
+    statusElement.textContent =
+        "Instalando cache...";
 
-        function redirectToIndex() {
-            redirectElement.classList.add("show");
+    redirectElement.classList.remove(
+        "show"
+    );
 
-            setTimeout(function () {
-                window.location.replace("index.html");
-            }, 1800);
-        }
+}
 
-        showPreparing();
 
-        if (typeof window.applicationCache === "undefined") {
-            showError();
-            statusElement.textContent = "Erro ao instalar o cache";
-            percentElement.textContent = "INDISPONÍVEL";
+function showSuccess(message) {
+
+    if (finished) {
+        return;
+    }
+
+    finished = true;
+
+    setInstalled();
+
+    document.body.classList.remove(
+        "error"
+    );
+
+    document.body.classList.add(
+        "done"
+    );
+
+    statusElement.textContent =
+        message;
+
+    percentElement.textContent =
+        "100%";
+
+    redirectElement.classList.add(
+        "show"
+    );
+
+    setTimeout(
+        function () {
+
+            window.location.replace(
+                "index.html"
+            );
+
+        },
+        1500
+    );
+
+}
+
+
+function showAlreadyInstalled() {
+
+    if (finished) {
+        return;
+    }
+
+    finished = true;
+
+    setInstalled();
+
+    document.body.classList.remove(
+        "error"
+    );
+
+    document.body.classList.add(
+        "done"
+    );
+
+    statusElement.textContent =
+        "Cache já está instalado";
+
+    percentElement.textContent =
+        "100%";
+
+    redirectElement.classList.add(
+        "show"
+    );
+
+    setTimeout(
+        function () {
+
+            window.location.replace(
+                "index.html"
+            );
+
+        },
+        1500
+    );
+
+}
+
+
+function showError(message) {
+
+    if (finished) {
+        return;
+    }
+
+    finished = true;
+
+    document.body.classList.remove(
+        "done"
+    );
+
+    document.body.classList.add(
+        "error"
+    );
+
+    statusElement.textContent =
+        message ||
+        "Erro ao instalar o cache";
+
+    percentElement.textContent =
+        "ERRO";
+
+    redirectElement.classList.remove(
+        "show"
+    );
+
+}
+
+
+function updateProgress(event) {
+
+    if (finished) {
+        return;
+    }
+
+    var percent = 0;
+
+    if (
+        event &&
+        typeof event.loaded === "number" &&
+        typeof event.total === "number" &&
+        event.total > 0
+    ) {
+
+        percent =
+            Math.round(
+                (event.loaded /
+                event.total) *
+                100
+            );
+
+    }
+
+    if (percent < 0) {
+        percent = 0;
+    }
+
+    if (percent > 100) {
+        percent = 100;
+    }
+
+    percentElement.textContent =
+        percent + "%";
+
+    showInstalling();
+
+}
+
+
+showPreparing();
+
+
+if (!appCache) {
+
+    showError(
+        "Cache indisponível"
+    );
+
+} else {
+
+    var currentStatus =
+        appCache.status;
+
+
+    if (
+        currentStatus ===
+        appCache.IDLE
+    ) {
+
+        if (manual) {
+
+            showAlreadyInstalled();
+
         } else {
 
-            var appCache = window.applicationCache;
+            setInstalled();
 
-            appCache.addEventListener(
-                "checking",
-                function () {
-                    if (!finished) {
-                        showPreparing();
-                    }
-                },
-                false
+            window.location.replace(
+                "index.html"
             );
 
-            appCache.addEventListener(
-                "downloading",
-                function () {
-                    if (!finished) {
-                        showInstalling();
-                    }
-                },
-                false
-            );
-
-            appCache.addEventListener(
-                "progress",
-                updateProgress,
-                false
-            );
-
-            appCache.addEventListener(
-                "cached",
-                function () {
-                    showSuccess("Cache instalado com sucesso");
-                },
-                false
-            );
-
-            appCache.addEventListener(
-                "updateready",
-                function () {
-                    try {
-                        appCache.swapCache();
-                    } catch (e) {}
-
-                    showSuccess("Cache atualizado com sucesso");
-                },
-                false
-            );
-
-            appCache.addEventListener(
-                "noupdate",
-                function () {
-                    if (finished) {
-                        return;
-                    }
-
-                    finished = true;
-
-                    document.body.classList.remove("error");
-                    document.body.classList.add("done");
-
-                    statusElement.textContent = "Cache já está instalado";
-                    percentElement.textContent = "100%";
-                    redirectElement.classList.add("show");
-
-                    redirectToIndex();
-                },
-                false
-            );
-
-            appCache.addEventListener(
-                "obsolete",
-                function () {
-                    if (!finished) {
-                        showError();
-                    }
-                },
-                false
-            );
-
-            appCache.addEventListener(
-                "error",
-                function () {
-                    showError();
-                },
-                false
-            );
         }
-    </script>
 
-    <script>
-        document.addEventListener("contextmenu", function (e) {
-            e.preventDefault();
-        });
+    } else {
 
-        document.addEventListener("copy", function (e) {
-            e.preventDefault();
-        });
+        appCache.addEventListener(
+            "checking",
+            function () {
 
-        document.addEventListener("cut", function (e) {
-            e.preventDefault();
-        });
+                if (!finished) {
+                    showPreparing();
+                }
 
-        document.addEventListener("paste", function (e) {
-            e.preventDefault();
-        });
+            },
+            false
+        );
 
-        document.addEventListener("selectstart", function (e) {
-            e.preventDefault();
-        });
 
-        document.addEventListener("dragstart", function (e) {
-            e.preventDefault();
-        });
-    </script>
+        appCache.addEventListener(
+            "downloading",
+            function () {
+
+                if (!finished) {
+                    showInstalling();
+                }
+
+            },
+            false
+        );
+
+
+        appCache.addEventListener(
+            "progress",
+            updateProgress,
+            false
+        );
+
+
+        appCache.addEventListener(
+            "cached",
+            function () {
+
+                showSuccess(
+                    "Cache instalado com sucesso"
+                );
+
+            },
+            false
+        );
+
+
+        appCache.addEventListener(
+            "updateready",
+            function () {
+
+                try {
+                    appCache.swapCache();
+                } catch (e) {}
+
+                showSuccess(
+                    "Cache atualizado com sucesso"
+                );
+
+            },
+            false
+        );
+
+
+        appCache.addEventListener(
+            "noupdate",
+            function () {
+
+                showAlreadyInstalled();
+
+            },
+            false
+        );
+
+
+        appCache.addEventListener(
+            "obsolete",
+            function () {
+
+                showError(
+                    "Cache obsoleto"
+                );
+
+            },
+            false
+        );
+
+
+        appCache.addEventListener(
+            "error",
+            function () {
+
+                showError(
+                    "Erro ao instalar o cache"
+                );
+
+            },
+            false
+        );
+
+    }
+
+}
+
+
+document.addEventListener(
+    "contextmenu",
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+
+document.addEventListener(
+    "copy",
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+
+document.addEventListener(
+    "cut",
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+
+document.addEventListener(
+    "paste",
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+
+document.addEventListener(
+    "selectstart",
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+
+document.addEventListener(
+    "dragstart",
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+</script>
 
 </body>
 </html>
