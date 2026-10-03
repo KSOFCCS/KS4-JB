@@ -32,7 +32,7 @@ body {
 }
 
 body {
-    background: #0b0b0f;
+    background: #070b10;
     color: #fff;
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
@@ -41,8 +41,51 @@ body {
     overflow: hidden;
 }
 
+.pattern {
+    position: fixed;
+    inset: -15%;
+    overflow: hidden;
+    pointer-events: none;
+    transform: rotate(-3deg);
+    z-index: 0;
+}
+
+.symbol {
+    position: absolute;
+    color: #1b3853;
+    line-height: 1;
+    user-select: none;
+    will-change: transform;
+    animation: drift linear infinite;
+}
+
+.s1  { left: 2%;  top: 8%;  font-size: 15px; opacity: .50; animation-duration: 34s; animation-delay: -12s; }
+.s2  { left: 9%;  top: 31%; font-size: 10px; opacity: .35; animation-duration: 42s; animation-delay: -20s; }
+.s3  { left: 17%; top: 14%; font-size: 22px; opacity: .27; animation-duration: 48s; animation-delay: -31s; }
+.s4  { left: 25%; top: 44%; font-size: 13px; opacity: .48; animation-duration: 37s; animation-delay: -8s; }
+.s5  { left: 33%; top: 7%;  font-size: 17px; opacity: .31; animation-duration: 45s; animation-delay: -26s; }
+.s6  { left: 42%; top: 27%; font-size: 9px;  opacity: .52; animation-duration: 39s; animation-delay: -17s; }
+.s7  { left: 51%; top: 12%; font-size: 24px; opacity: .24; animation-duration: 52s; animation-delay: -40s; }
+.s8  { left: 61%; top: 38%; font-size: 14px; opacity: .40; animation-duration: 43s; animation-delay: -22s; }
+.s9  { left: 70%; top: 8%;  font-size: 11px; opacity: .50; animation-duration: 36s; animation-delay: -5s; }
+.s10 { left: 78%; top: 29%; font-size: 20px; opacity: .28; animation-duration: 49s; animation-delay: -34s; }
+.s11 { left: 88%; top: 15%; font-size: 13px; opacity: .44; animation-duration: 41s; animation-delay: -18s; }
+.s12 { left: 96%; top: 43%; font-size: 18px; opacity: .25; animation-duration: 47s; animation-delay: -29s; }
+.s13 { left: 5%;  top: 64%; font-size: 20px; opacity: .26; animation-duration: 51s; animation-delay: -42s; }
+.s14 { left: 14%; top: 82%; font-size: 11px; opacity: .48; animation-duration: 38s; animation-delay: -13s; }
+.s15 { left: 23%; top: 68%; font-size: 16px; opacity: .34; animation-duration: 46s; animation-delay: -25s; }
+.s16 { left: 32%; top: 91%; font-size: 9px;  opacity: .50; animation-duration: 35s; animation-delay: -7s; }
+.s17 { left: 41%; top: 72%; font-size: 23px; opacity: .23; animation-duration: 53s; animation-delay: -38s; }
+.s18 { left: 50%; top: 88%; font-size: 13px; opacity: .43; animation-duration: 44s; animation-delay: -16s; }
+.s19 { left: 59%; top: 65%; font-size: 18px; opacity: .29; animation-duration: 40s; animation-delay: -30s; }
+.s20 { left: 68%; top: 85%; font-size: 10px; opacity: .52; animation-duration: 48s; animation-delay: -21s; }
+.s21 { left: 77%; top: 69%; font-size: 21px; opacity: .25; animation-duration: 54s; animation-delay: -44s; }
+.s22 { left: 87%; top: 89%; font-size: 14px; opacity: .38; animation-duration: 37s; animation-delay: -11s; }
+.s23 { left: 96%; top: 73%; font-size: 19px; opacity: .27; animation-duration: 50s; animation-delay: -35s; }
+
 #main-container {
     position: relative;
+    z-index: 2;
     width: 90%;
     max-width: 520px;
     min-height: 330px;
@@ -133,6 +176,7 @@ body {
 
 #msg {
     position: fixed;
+    z-index: 2;
     bottom: 62px;
     left: 0;
     right: 0;
@@ -144,6 +188,8 @@ body {
 }
 
 #wrap {
+    position: relative;
+    z-index: 2;
     padding: 0;
 }
 
@@ -216,6 +262,7 @@ code {
 
 #footer {
     position: fixed;
+    z-index: 2;
     bottom: 20px;
     left: 0;
     right: 0;
@@ -297,6 +344,20 @@ body.fail #msg {
     color: #ff5c5c;
 }
 
+@keyframes drift {
+    0% {
+        transform: translate3d(-25px, 25px, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate3d(45px, -35px, 0) rotate(8deg);
+    }
+
+    100% {
+        transform: translate3d(-25px, 25px, 0) rotate(0deg);
+    }
+}
+
 @keyframes real-spin {
     to {
         transform: rotate(360deg);
@@ -325,6 +386,34 @@ body.fail #msg {
 </head>
 
 <body>
+
+<div class="pattern">
+
+    <span class="symbol s1">○</span>
+    <span class="symbol s2">×</span>
+    <span class="symbol s3">□</span>
+    <span class="symbol s4">△</span>
+    <span class="symbol s5">×</span>
+    <span class="symbol s6">○</span>
+    <span class="symbol s7">△</span>
+    <span class="symbol s8">□</span>
+    <span class="symbol s9">○</span>
+    <span class="symbol s10">×</span>
+    <span class="symbol s11">△</span>
+    <span class="symbol s12">□</span>
+    <span class="symbol s13">□</span>
+    <span class="symbol s14">×</span>
+    <span class="symbol s15">△</span>
+    <span class="symbol s16">○</span>
+    <span class="symbol s17">□</span>
+    <span class="symbol s18">△</span>
+    <span class="symbol s19">○</span>
+    <span class="symbol s20">×</span>
+    <span class="symbol s21">△</span>
+    <span class="symbol s22">○</span>
+    <span class="symbol s23">×</span>
+
+</div>
 
 <div id="main-container">
 
@@ -442,4 +531,4 @@ document.addEventListener("dragstart", function (e) {
   </script>
 
   </body>
-</html>
+</html>que 
