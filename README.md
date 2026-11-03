@@ -1,46 +1,73 @@
 # KS4-JB
-KS4-JB — PS4 WebKit Host: interface web independente para PS4, com suporte a diferentes firmwares e integração de componentes da comunidade, incluindo GoldHEN e trabalhos relacionados ao ecossistema de exploits do PS4.
 
-**Hosts Disponíveis:** 
-https://ks4-jb.netlify.app/ 
-https://ksofccs.github.io/KS4-JB/
+**An independent PlayStation 4 WebKit Host with GoldHEN integration.**
 
-## Firmwares Compatíveis:
-- 11.00
-- 11.50
-- 12.00
-- 12.50
-- 13.00
-- 13.02
-- 13.50
-- 13.52
+KS4-JB is a web-based host designed for PlayStation 4, featuring a simple interface, firmware compatibility and locally cached resources for subsequent access.
 
-## Como usar?
+## Features
 
-1. Abra o KS4-JB no Navegador de Internet do PS4.
-2. No primeiro acesso, aguarde a criação e instalação do **cache**.
-3. Aguarde até que a interface informe que o cache está pronto.
-4. Quando aparecer a mensagem para continuar, pressione **X**.
-5. O processo será iniciado pela própria interface.
+- Independent PlayStation 4 WebKit Host.
+- GoldHEN integration.
+- Support for multiple firmware versions.
+- Offline cache support.
+- Simple and lightweight interface.
+- Alternative hosting options.
 
-### Acessos seguintes
+## Supported Firmwares
 
-Depois que o cache estiver criado, o host poderá utilizar os arquivos armazenados localmente, reduzindo a necessidade de baixar novamente os mesmos recursos.
+| Firmware | Support |
+|---|---|
+| 11.00 | Supported |
+| 11.50 | Supported |
+| 12.00 | Supported |
+| 12.50 | Supported |
+| 13.00 | Supported |
+| 13.02 | Supported |
+| 13.50 | Supported |
+| 13.52 | Supported |
 
-O botão de **Cache** disponível na interface também permite acessar diretamente a página de gerenciamento do cache.
+## Hosts
 
-## Créditos
+Access KS4-JB through one of the following hosts:
 
-O KS4-JB utiliza trabalhos, pesquisas e componentes desenvolvidos pela comunidade.
+- **Netlify:** https://ks4-jb.netlify.app/
+- **GitHub Pages:** https://ksofccs.github.io/KS4-JB/
 
-Agradecimentos a todos os pesquisadores, desenvolvedores e colaboradores envolvidos no desenvolvimento do ecossistema PS4, incluindo:
+## Usage
+
+1. Open one of the available hosts using the PlayStation 4 Internet Browser.
+2. On the first visit, wait for the cache preparation and installation process.
+3. Once the interface indicates that the cache is ready, press **X** to continue.
+4. Follow the instructions displayed by the host.
+
+## Cache
+
+KS4-JB includes a cache system designed to store required resources locally on the console.
+
+After the initial setup, subsequent visits can use the cached files, reducing the need to download the same resources again.
+
+The **Cache** button provides direct access to the cache management page.
+
+## Credits
+
+KS4-JB incorporates research, contributions and components from the PlayStation 4 homebrew community.
+
+Special thanks to:
 
 - **mansoor0x**
 - **Raw13**
 - **TheFlow**
 - **sleirsgoevy**
-- **SiSTRo / GoldHEN**
-- e todos os demais colaboradores envolvidos nos projetos e pesquisas utilizados como base.
+- **SiSTRo** — GoldHEN
+- All other developers, researchers and contributors whose work helped make this project possible.
 
-Todos os componentes de terceiros permanecem pertencentes aos seus respectivos autores e projetos.
+Third-party components remain the property of their respective authors and projects.
 
+## Disclaimer
+
+KS4-JB is an independent community project and is not affiliated with, endorsed by, or associated with Sony Interactive Entertainment.
+
+All third-party software and components belong to their respective authors.
+
+## Version
+**KS4-JB – v1.2**
