@@ -62,4 +62,4 @@ O KS4-JB é um projeto independente da comunidade e não possui vínculo, associ
 Todos os softwares e componentes de terceiros pertencem aos seus respectivos autores.
 
 ## Versão
-**KS4-JB – v1.1**
+**KS4-JB – v1.2**
