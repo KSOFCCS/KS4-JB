@@ -1,58 +1,48 @@
 <!doctype html>
 <html lang="pt-BR" manifest="cache.appcache">
-
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0b0b0f">
+    <title>KS4-JB · Cache Installer</title>
+    <link rel="icon" type="image/png" href="Icon.png">
+    <style>
 
-<meta charset="utf-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
-
-<title>KS4-JB · PS4 Exploit</title>
-
-<link
-    rel="icon"
-    type="image/png"
-    href="Icon.png"
->
-
-<style>
-
+:root {
+    --bg: #0b0b0f;
+    --panel: #111117;
+    --panel-inner: #0c0c12;
+    --line: #292932;
+    --bright: #fff;
+    --fg: #d7d7e0;
+    --dim: #858594;
+    --accent: #168cff;
+    --success: #f2c94c;
+    --error: #ff5c5c;
+    --sans: Arial, Helvetica, sans-serif;
+    --mono: Consolas, monospace;
+}
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-
     -webkit-user-select: none;
     user-select: none;
-
     -webkit-touch-callout: none;
 }
-
-html,
+html, body { width: 100%; min-height: 100%; }
 body {
-    width: 100%;
-    height: 100%;
-}
-
-body {
-    background: #0b0b0f;
-    color: #fff;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+    min-height: 100vh;
+    padding: 28px 0 22px;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: var(--bg);
+    color: var(--bright);
+    font-family: var(--sans);
 }
-
 .pattern {
     position: fixed;
     inset: -15%;
@@ -61,39 +51,29 @@ body {
     transform: rotate(-3deg);
     z-index: 0;
 }
-
 .symbol {
     position: absolute;
-
     color: #1b3853;
-
     line-height: 1;
-
-    user-select: none;
-
     will-change: transform;
-
-    animation:
-        drift linear infinite;
+    animation: drift linear infinite;
 }
-
-.s1  { left: 2%;  top: 8%;  font-size: 15px; opacity: .50; animation-duration: 34s; animation-delay: -12s; }
-.s2  { left: 9%;  top: 31%; font-size: 10px; opacity: .35; animation-duration: 42s; animation-delay: -20s; }
+.s1  { left: 2%; top: 8%; font-size: 15px; opacity: .50; animation-duration: 34s; animation-delay: -12s; }
+.s2  { left: 9%; top: 31%; font-size: 10px; opacity: .35; animation-duration: 42s; animation-delay: -20s; }
 .s3  { left: 17%; top: 14%; font-size: 22px; opacity: .27; animation-duration: 48s; animation-delay: -31s; }
 .s4  { left: 25%; top: 44%; font-size: 13px; opacity: .48; animation-duration: 37s; animation-delay: -8s; }
-.s5  { left: 33%; top: 7%;  font-size: 17px; opacity: .31; animation-duration: 45s; animation-delay: -26s; }
-.s6  { left: 42%; top: 27%; font-size: 9px;  opacity: .52; animation-duration: 39s; animation-delay: -17s; }
+.s5  { left: 33%; top: 7%; font-size: 17px; opacity: .31; animation-duration: 45s; animation-delay: -26s; }
+.s6  { left: 42%; top: 27%; font-size: 9px; opacity: .52; animation-duration: 39s; animation-delay: -17s; }
 .s7  { left: 51%; top: 12%; font-size: 24px; opacity: .24; animation-duration: 52s; animation-delay: -40s; }
 .s8  { left: 61%; top: 38%; font-size: 14px; opacity: .40; animation-duration: 43s; animation-delay: -22s; }
-.s9  { left: 70%; top: 8%;  font-size: 11px; opacity: .50; animation-duration: 36s; animation-delay: -5s; }
+.s9  { left: 70%; top: 8%; font-size: 11px; opacity: .50; animation-duration: 36s; animation-delay: -5s; }
 .s10 { left: 78%; top: 29%; font-size: 20px; opacity: .28; animation-duration: 49s; animation-delay: -34s; }
 .s11 { left: 88%; top: 15%; font-size: 13px; opacity: .44; animation-duration: 41s; animation-delay: -18s; }
 .s12 { left: 96%; top: 43%; font-size: 18px; opacity: .25; animation-duration: 47s; animation-delay: -29s; }
-
-.s13 { left: 5%;  top: 64%; font-size: 20px; opacity: .26; animation-duration: 51s; animation-delay: -42s; }
+.s13 { left: 5%; top: 64%; font-size: 20px; opacity: .26; animation-duration: 51s; animation-delay: -42s; }
 .s14 { left: 14%; top: 82%; font-size: 11px; opacity: .48; animation-duration: 38s; animation-delay: -13s; }
 .s15 { left: 23%; top: 68%; font-size: 16px; opacity: .34; animation-duration: 46s; animation-delay: -25s; }
-.s16 { left: 32%; top: 91%; font-size: 9px;  opacity: .50; animation-duration: 35s; animation-delay: -7s; }
+.s16 { left: 32%; top: 91%; font-size: 9px; opacity: .50; animation-duration: 35s; animation-delay: -7s; }
 .s17 { left: 41%; top: 72%; font-size: 23px; opacity: .23; animation-duration: 53s; animation-delay: -38s; }
 .s18 { left: 50%; top: 88%; font-size: 13px; opacity: .43; animation-duration: 44s; animation-delay: -16s; }
 .s19 { left: 59%; top: 65%; font-size: 18px; opacity: .29; animation-duration: 40s; animation-delay: -30s; }
@@ -103,453 +83,223 @@ body {
 .s23 { left: 96%; top: 73%; font-size: 19px; opacity: .27; animation-duration: 50s; animation-delay: -35s; }
 
 @keyframes drift {
-
-    0% {
-        transform:
-            translate3d(-25px, 25px, 0)
-            rotate(0deg);
-    }
-
-    50% {
-        transform:
-            translate3d(45px, -35px, 0)
-            rotate(8deg);
-    }
-
-    100% {
-        transform:
-            translate3d(-25px, 25px, 0)
-            rotate(0deg);
-    }
-
+    0% { transform: translate3d(-25px, 25px, 0) rotate(0deg); }
+    50% { transform: translate3d(45px, -35px, 0) rotate(8deg); }
+    100% { transform: translate3d(-25px, 25px, 0) rotate(0deg); }
 }
-
 #main-container {
-
     position: relative;
     z-index: 2;
-
     width: 90%;
-    max-width: 520px;
-
-    min-height: 330px;
-
-    padding: 38px 30px;
-
+    max-width: 490px;
+    min-height: 410px;
+    padding: 0 30px 22px;
     display: flex;
     flex-direction: column;
-
-    justify-content: center;
     align-items: center;
-
     text-align: center;
-
-    background: #111117;
-
-    border: 1px solid #292932;
-    border-radius: 18px;
-
-    transition:
-        border-color 0.35s ease;
-
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color .25s ease;
 }
-
-#brand {
-
-    font-size: 42px;
-    font-weight: 800;
-
-    letter-spacing: -2px;
-
-    margin-bottom: 8px;
-
-    color: #fff;
-
-}
-
-#brand span {
-
-    color: #4d8dff;
-
-    transition:
-        color 0.35s ease;
-
-}
-
-#subtitle {
-
-    color: #8f8f9d;
-
-    font-size: 14px;
-
-    margin-bottom: 34px;
-
-}
-
-#visual-indicator {
-
-    position: relative;
-
-    width: 72px;
-    height: 72px;
-
+#header {
+    width: calc(100% + 60px);
+    min-height: 76px;
+    padding: 0 25px;
     display: flex;
-
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    background: #0e0e14;
+}
+#brand {
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -1.2px;
+    color: var(--bright);
+}
+#brand span { color: var(--accent); transition: color .25s ease; }
+#header-info { text-align: right; }
+#header-info strong {
+    display: block;
+    color: #b7b7c4;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+#header-info span {
+    display: block;
+    margin-top: 4px;
+    color: #666675;
+    font: 10px var(--mono);
+}
+#subtitle {
+    margin-top: 28px;
+    margin-bottom: 24px;
+    color: var(--dim);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+}
+#visual-indicator {
+    position: relative;
+    width: 104px;
+    height: 104px;
+    display: flex;
     align-items: center;
     justify-content: center;
-
-    margin-bottom: 26px;
-
+    margin-bottom: 24px;
+    border: 1px solid #252a34;
+    border-radius: 50%;
+    background: #0d0d13;
 }
-
 .ps4-icon {
-
     position: relative;
-
-    width: 44px;
-    height: 44px;
-
-    display: block;
-
+    z-index: 2;
+    width: 54px;
+    height: 54px;
     object-fit: contain;
-
-    z-index: 2;
-
 }
-
 .pulse {
-
     position: absolute;
-
-    width: 100%;
-    height: 100%;
-
+    inset: 7px;
+    border: 1px solid #24527b;
     border-radius: 50%;
-
-    border: 2px solid #4d8dff;
-
-    animation:
-        subtle-pulse 2s infinite ease-in-out;
-
-    transition:
-        border-color 0.35s ease,
-        opacity 0.35s ease;
-
+    animation: subtle-pulse 2.4s infinite ease-in-out;
+    transition: border-color .25s ease, opacity .25s ease;
 }
-
 #spin {
-
     position: absolute;
-
-    width: 125%;
-    height: 125%;
-
+    inset: -5px;
     border: 2px solid transparent;
-
-    border-top-color: #fff;
-
+    border-top-color: #aebdce;
     border-radius: 50%;
-
-    animation:
-        real-spin 0.9s linear infinite;
-
-    opacity: 0.25;
-
+    animation: real-spin 1.2s linear infinite;
+    opacity: .45;
 }
-
-#status {
-
-    min-height: 22px;
-
-    color: #eee;
-
-    font-family: monospace;
-
-    font-size: 15px;
-
-    line-height: 1.5;
-
-}
-
-#percent {
-
-    min-height: 20px;
-
-    margin-top: 5px;
-
-    color: #8faeff;
-
-    font-family: monospace;
-
-    font-size: 13px;
-
-}
-
-#redirect {
-
-    min-height: 18px;
-
-    margin-top: 8px;
-
-    color: #666672;
-
-    font-family: monospace;
-
-    font-size: 11px;
-
-    line-height: 1.4;
-
-    opacity: 0;
-
-    transition:
-        opacity 0.35s ease;
-
-}
-
-#redirect.show {
-    opacity: 1;
-}
-
-#footer {
-
-    position: fixed;
-
-    bottom: 20px;
-
-    left: 0;
-    right: 0;
-
-    text-align: center;
-
-    font-family: monospace;
-
-    font-size: 11px;
-
-    color: #555560;
-
-    letter-spacing: 0.08em;
-
-    z-index: 2;
-
-}
-
-#footer b {
-    color: #777783;
-}
-
-body.done #main-container {
-    border-color: #f5c542;
-}
-
-body.done #spin {
-
-    animation: none;
-
-    border-top-color: #f5c542;
-
-    border-left-color:
-        rgba(245, 197, 66, 0.12);
-
-    border-right-color:
-        rgba(245, 197, 66, 0.12);
-
-    border-bottom-color:
-        rgba(245, 197, 66, 0.12);
-
-    opacity: 0.5;
-
-}
-
-body.done .pulse {
-
-    animation: none;
-
-    border-color: #f5c542;
-
-    opacity: 0.65;
-
-}
-
-body.done #brand span {
-    color: #f5c542;
-}
-
-body.done #status {
-
-    color: #f5c542;
-
-    font-weight: 700;
-
-}
-
-body.done #percent {
-    color: #f5c542;
-}
-
-body.error #main-container {
-    border-color: #ff5c5c;
-}
-
-body.error #spin {
-
-    animation: none;
-
-    border-top-color: #ff5c5c;
-
-    opacity: 0.5;
-
-}
-
-body.error .pulse {
-
-    animation: none;
-
-    border-color: #ff5c5c;
-
-    opacity: 0.65;
-
-}
-
-body.error #brand span {
-    color: #ff5c5c;
-}
-
-body.error #status {
-
-    color: #ff5c5c;
-
-    font-weight: 700;
-
-}
-
-body.error #percent {
-    color: #ff5c5c;
-}
-
-body.error #redirect {
-    color: #8f5555;
-}
-
-@keyframes real-spin {
-
-    to {
-        transform: rotate(360deg);
-    }
-
-}
-
+@keyframes real-spin { to { transform: rotate(360deg); } }
 @keyframes subtle-pulse {
+    0%, 100% { transform: scale(.97); opacity: .45; }
+    50% { transform: scale(1.03); opacity: .8; }
+}
+#status {
+    width: 100%;
+    min-height: 44px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg);
+    background: var(--panel-inner);
+    border: 1px solid #292932;
+    border-radius: 5px;
+    font: 13px/1.4 var(--mono);
+    transition: color .25s ease, border-color .25s ease;
+}
+#percent {
+    min-height: 20px;
+    margin-top: 12px;
+    color: #8faeff;
+    font: 13px var(--mono);
+    letter-spacing: .4px;
+}
+#redirect {
+    min-height: 18px;
+    margin-top: 8px;
+    color: #777785;
+    font: 11px/1.4 var(--mono);
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+#redirect.show { opacity: 1; }
+#footer {
+    width: 100%;
+    margin-top: 22px;
+    padding-top: 15px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: #555560;
+    font: 10px var(--mono);
+    letter-spacing: .7px;
+}
+#footer b { color: #858594; font-weight: 600; }
 
-    0% {
-        transform: scale(0.96);
-        opacity: 0.45;
-    }
+body.done #main-container { border-color: var(--success); }
+body.done #brand span { color: var(--success); }
+body.done .pulse { border-color: var(--success); animation: none; opacity: 1; }
+body.done #spin {
+    animation: none;
+    border-top-color: var(--success);
+    border-left-color: rgba(242, 201, 76, .12);
+    border-right-color: rgba(242, 201, 76, .12);
+    border-bottom-color: rgba(242, 201, 76, .12);
+    opacity: .5;
+}
+body.done #status, body.done #percent { color: var(--success); }
+body.done #status { font-weight: 700; }
+body.error #main-container { border-color: var(--error); }
+body.error #brand span { color: var(--error); }
+body.error .pulse { border-color: var(--error); animation: none; opacity: 1; }
+body.error #spin { animation: none; transform: none; border-color: rgba(255, 92, 92, 0.25); border-top-color: var(--error); opacity: .8; }
+body.error #status, body.error #percent { color: var(--error); }
+body.error #status { font-weight: 700; }
+body.error #redirect { color: #8f5555; }
 
-    50% {
-        transform: scale(1.04);
-        opacity: 0.8;
-    }
-
-    100% {
-        transform: scale(0.96);
-        opacity: 0.45;
-    }
-
+@media (max-width: 480px) {
+    body { padding: 20px 0; }
+    #main-container { min-height: 390px; padding: 0 22px 18px; }
+    #header { width: calc(100% + 44px); padding: 0 19px; min-height: 68px; }
+    #brand { font-size: 24px; }
+    #subtitle { margin-top: 25px; margin-bottom: 22px; font-size: 10px; }
+}
+@media (max-height: 560px) {
+    body { align-items: flex-start; }
+    #main-container { margin: 12px auto; }
 }
 
-@media (max-width: 430px) {
-
-    #main-container {
-        padding: 34px 22px;
-    }
-
-    #brand {
-        font-size: 40px;
-    }
-
-}
-
-</style>
-
+    </style>
 </head>
-
 <body>
+    <div class="pattern" aria-hidden="true">
+        <span class="symbol s1">○</span><span class="symbol s2">×</span>
+        <span class="symbol s3">□</span><span class="symbol s4">△</span>
+        <span class="symbol s5">×</span><span class="symbol s6">○</span>
+        <span class="symbol s7">△</span><span class="symbol s8">□</span>
+        <span class="symbol s9">○</span><span class="symbol s10">×</span>
+        <span class="symbol s11">△</span><span class="symbol s12">□</span>
+        <span class="symbol s13">□</span><span class="symbol s14">×</span>
+        <span class="symbol s15">△</span><span class="symbol s16">○</span>
+        <span class="symbol s17">□</span><span class="symbol s18">△</span>
+        <span class="symbol s19">○</span><span class="symbol s20">×</span>
+        <span class="symbol s21">△</span><span class="symbol s22">○</span>
+        <span class="symbol s23">×</span>
+    </div>
 
-<div class="pattern">
+    <main id="main-container">
+        <header id="header">
+            <div id="brand">KS<span>4</span>-JB</div>
+            <div id="header-info">
+                <strong>PLAYSTATION 4</strong>
+                <span>EXPLOIT</span>
+            </div>
+        </header>
 
-<span class="symbol s1">○</span>
-<span class="symbol s2">×</span>
-<span class="symbol s3">□</span>
-<span class="symbol s4">△</span>
-<span class="symbol s5">×</span>
-<span class="symbol s6">○</span>
-<span class="symbol s7">△</span>
-<span class="symbol s8">□</span>
-<span class="symbol s9">○</span>
-<span class="symbol s10">×</span>
-<span class="symbol s11">△</span>
-<span class="symbol s12">□</span>
+        <div id="subtitle">KSOFCC · INSTALAÇÃO DE CACHE</div>
 
-<span class="symbol s13">□</span>
-<span class="symbol s14">×</span>
-<span class="symbol s15">△</span>
-<span class="symbol s16">○</span>
-<span class="symbol s17">□</span>
-<span class="symbol s18">△</span>
-<span class="symbol s19">○</span>
-<span class="symbol s20">×</span>
-<span class="symbol s21">△</span>
-<span class="symbol s22">○</span>
-<span class="symbol s23">×</span>
+        <div id="visual-indicator">
+            <img id="ps4-icon" class="ps4-icon" src="PSICON4.png" alt="" draggable="false">
+            <div id="spin"></div>
+            <div class="pulse"></div>
+        </div>
 
-</div>
+        <div id="status" aria-live="polite">Preparando...</div>
+        <div id="percent">0%</div>
+        <div id="redirect">Redirecionando para o KS4-JB...</div>
 
-<div id="main-container">
+        <footer id="footer"><b>KS4-JB</b> · KSOFCC · 2026</footer>
+    </main>
 
-<div id="brand">
-KS<span>4</span> JB
-</div>
-
-<div id="subtitle">
-KSOFCC · PS4 EXPLOIT
-</div>
-
-<div id="visual-indicator">
-
-<img
-    id="ps4-icon"
-    class="ps4-icon"
-    src="PSICON4.png"
-    alt=""
-    draggable="false"
->
-
-<div id="spin"></div>
-
-<div class="pulse"></div>
-
-</div>
-
-<div id="status">
-Preparando...
-</div>
-
-<div id="percent">
-0%
-</div>
-
-<div id="redirect">
-Redirecionando para o KS4-JB...
-</div>
-
-</div>
-
-<div id="footer">
-<b>KS4-JB</b> · 2026
-</div>
-
-<script>
-
+    <script>
 var CACHE_KEY =
     "ks4jb_cache_installed";
 
@@ -964,8 +714,6 @@ document.addEventListener(
         event.preventDefault();
     }
 );
-
-</script>
-
+    </script>
 </body>
 </html>
